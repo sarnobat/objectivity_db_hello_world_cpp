@@ -1,0 +1,142 @@
+<ObjectivityPlugins>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ExportPlacement"/>
+      <Value name="category" value="Import/Export"/>
+    <Value name="alias" value="FdToPmd"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ImportPlacement"/>
+    <Value name="category" value="Import/Export"/>
+    <Value name="alias" value="PmdToFD"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ModelToDot"/>
+    <Value name="hidden" value="true"/>
+    <Value name="category" value="Reporting"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="QueryToDot"/>
+    <Value name="hidden" value="true"/>
+    <Value name="category" value="Reporting"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ListStorage"/>
+    <Value name="category" value="Storage Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="AddStorageLocation"/>
+    <Value name="category" value="Storage Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="RemoveStorageLocation"/>
+    <Value name="category" value="Storage Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="CreateContainers"/>
+    <Value name="category" value="Provisioning"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="AddKeySpecification"/>
+    <Value name="category" value="Index Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="AddIndexSpecification"/>
+    <Value name="category" value="Index Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="AddIndex"/>
+    <Value name="category" value="Index Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="DropIndex"/>
+    <Value name="category" value="Index Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ListIndexes"/>
+    <Value name="category" value="Index Management"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="CreateFd"/>
+    <Value name="category" value="FD Life-cycle"/>
+    <Value name="alias" value="NewFD"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="DeleteFd"/>
+    <Value name="category" value="FD Life-cycle"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ExportSchema"/>
+    <Value name="category" value="Import/Export"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ExportData"/>
+    <Value name="hidden" value="true"/>
+    <Value name="category" value="Import/Export"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ImportSchema"/>
+    <Value name="category" value="Import/Export"/>
+  </Plugin>
+  <Plugin extensionPoint="Tool">
+    <CppImplementation
+      library="libooPmdTools.11.1.dylib"
+
+      key="ImportData"/>
+    <Value name="hidden" value="true"/>
+    <Value name="category" value="Import/Export"/>
+  </Plugin>
+</ObjectivityPlugins>

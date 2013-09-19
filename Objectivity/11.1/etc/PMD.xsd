@@ -1,0 +1,1147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+      Placement Model Document (PMD) schema.    Copyright (c) 2012 Objectivity, inc. All rights reserved.
+    </xs:documentation>
+	</xs:annotation>
+	<xs:element name="PMD">
+		<xs:annotation>
+			<xs:documentation>Placement Model Document; expresses the design of a placement model.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="IndexTypesSnapshot" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A snapshot of the available index types at the time the PMD was created.  Set automatically -- do not edit.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="IndexType" type="IndexTypeType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>An available index type.  Set automatically -- do not edit.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SchemaSnapshot" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A snapshot of the federated database's schema at the time the PMD was created.  Set automatically -- do not edit.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Class" type="ClassType" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>A schema class to which a placement rule can refer.  Set automatically -- do not edit.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MainStorageGroup" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The federated database's main storage group.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="StorageGroupConfiguration" type="StorageGroupConfigurationType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Settings for the federated database's main storage group.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="StorageAcquisitionPolicy" type="StorageAcquisitionPolicyType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>The storage acquisition policy for the federated database's main storage group.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PlacementModel" type="PlacementModelType" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="pmdSchemaVersion" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Set automatically -- do not edit.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="AssociationEndType">
+		<xs:annotation>
+			<xs:documentation>An attribute representing one end of an association between two schema classes.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AttributeType">
+				<xs:attribute name="cardinality" type="CardinalityType" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AttributeType">
+		<xs:annotation>
+			<xs:documentation>Name of an attribute to which placement relationships can refer.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ByRelatedObjectType">
+		<xs:annotation>
+			<xs:documentation>Each partition of the scope corresponds to a related object provided by the application.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="relatedObjectClass" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The class of the related object by which the scope is partitioned.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="CardinalityType">
+		<xs:annotation>
+			<xs:documentation>The cardinality of a schema relationship.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ToOne"/>
+			<xs:enumeration value="ToMany"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ChangeLogItemType">
+		<xs:annotation>
+			<xs:documentation>A log item that describes a change made to a PMD.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="user" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The user that initiated the logged change. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="timestamp" type="xs:dateTime" use="required">
+			<xs:annotation>
+				<xs:documentation>The date/time of the logged change. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="logMessage" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>A description of the logged change. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ClassType">
+		<xs:annotation>
+			<xs:documentation>A class in the schema of the federated database.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="1" maxOccurs="1">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="StringAttribute" type="StringAttributeType"/>
+				<xs:element name="NumericAttribute" type="NumericAttributeType"/>
+				<xs:element name="DateTimeAttribute" type="DateTimeAttributeType"/>
+				<xs:element name="DateAttribute" type="DateAttributeType"/>
+				<xs:element name="AssociationEnd" type="AssociationEndType">
+					<xs:annotation>
+						<xs:documentation>A reference attribute or a relationship attribute to which placement relationships can refer.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Subclasses" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Classes that derive from the enclosing schema class.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Class" type="ClassType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>A schema class to which a placement rule can refer. Set automatically -- do not edit.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Fully qualified name of the schema class.  Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="objectSize" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>The size in bytes of an instance of the schema class. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ConfigurationSpecializationType">
+		<xs:annotation>
+			<xs:documentation>Reserved for future development. A configuration flag for which the rules in the rule folder are specialized. A matching flag in the applicable configuration file must be set to true to enable the rule folder's contents to be considered for determining placement.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="configurationFlag" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The name of the configuration flag. If the applicable configuration file has a Boolean attribute with this name set to true, then the rules in this folder will take precedence over rules that are not in folders with such a specialization.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ContainerAcquisitionPolicyType">
+		<xs:annotation>
+			<xs:documentation>An object placer's policy for acquiring containers in which to place persistent objects.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="waitPolicy" type="WaitPolicyType" use="optional" default="NoWait">
+			<xs:annotation>
+				<xs:documentation>Policy specifying whether to wait forever, not wait at all, or wait for a specified number of seconds.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="waitSeconds" type="xs:unsignedInt" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>The number of seconds to wait, if waitPolicy is set to WaitLimit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="actionOnTimeout" type="ContainerActionOnTimeoutType" use="optional" default="CreateNewContainer">
+			<xs:annotation>
+				<xs:documentation>Action to take after the wait period is over, or if timeout occurs without waiting.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="ContainerActionOnTimeoutType">
+		<xs:annotation>
+			<xs:documentation>Action to take if a lock cannot be obtained on a container.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CreateNewContainer">
+				<xs:annotation>
+					<xs:documentation>Create a new container, if possible.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ApplicationException">
+				<xs:annotation>
+					<xs:documentation>Raise an exception for the application to handle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ContainerConfigurationType">
+		<xs:annotation>
+			<xs:documentation>Characteristics of each container created by an object placer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ObjectCountLimit" type="ObjectCountLimitType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The limit on the number of objects of the specified class that can be placed in each container.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerLevelIndex" type="IndexType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Add a container level index based on the index specification to each container created by the object placer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="initialNumberOfPages" type="xs:unsignedInt" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>The initial number of pages in each new container. A value of 0 indicates 100 if the object placer's scope is set to SingleContainerGroup, or 2 if the object placer's scope is set to ContainerGroupPerObject.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="growByPolicy" type="ContainerGrowByPolicyType" use="optional" default="PercentageOfCurrentSize">
+			<xs:annotation>
+				<xs:documentation>Policy for interpreting the growBy value as a percentage or (supported in a future release) as a number of pages.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="growBy" type="xs:unsignedInt" use="optional" default="100">
+			<xs:annotation>
+				<xs:documentation>Amount by which to grow a container, when it needs to grow to accommodate more persistent objects. Interpretation of this value depends on the growByPolicy.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="pageLimit" type="xs:unsignedInt" use="optional" default="50000">
+			<xs:annotation>
+				<xs:documentation>The maximum number of logical pages a container can have before it is considered full.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="placeInOwnFile" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>If true, each container is created as an external container, which is placed in its own file.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="containerPageSize" type="xs:unsignedInt" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>The size, in bytes, of each page in a container; applies only if the container is in its own file. A value of 0 indicates the page size of the enclosing database.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fileSizeLimit" type="xs:string" use="optional" default="0m">
+			<xs:annotation>
+				<xs:documentation>The maximum size to which a container's file may grow; applies only if the container is in its own file. A value of 0 indicates no maximum. To express the value in kilobytes, megabytes, or gigabytes, append 'k', 'm', or 'g' to the value. The value may include up to 3, 6, or 9 decimal places when you append 'k', 'm', or 'g', respectively.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="maintainObjectCounts" type="xs:boolean" use="optional" default="true">
+			<xs:annotation>
+				<xs:documentation>If true, each container maintains a count for each type of object placed into it. Object counts provide information and optimize queries.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="totalObjectCountLimit" type="xs:unsignedInt" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>The total number of application-created objects that can be added to a container before it is considered full.  A value of 0 indicates no such limit. The container must maintain object counts.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ContainerGroupConfigurationType">
+		<xs:complexContent>
+			<xs:extension base="GroupConfigurationType">
+				<xs:sequence>
+					<xs:element name="GroupLevelIndex" type="IndexType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Reserved for future development. Add a group-level index based on the index specification to each container group created by the object placer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ContainerConfiguration" type="ContainerConfigurationType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="ContainerGrowByPolicyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Pages">
+				<xs:annotation>
+					<xs:documentation>Reserved for future development. Grow by a number of pages.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PercentageOfCurrentSize">
+				<xs:annotation>
+					<xs:documentation>Grow by a percentage of the container's current size.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="ContainerPlacerScopeGroupChoices">
+		<xs:annotation>
+			<xs:documentation>Group choices for a container-placer scope.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="SingleDatabaseGroup">
+				<xs:annotation>
+					<xs:documentation>Place all applicable containers into the same database group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatabaseGroupPerContainer">
+				<xs:annotation>
+					<xs:documentation>Start a new database group for each applicable container.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="ContainerPlacerScopePartitionType">
+		<xs:annotation>
+			<xs:documentation>A partition of a container-placer scope; may consist of one or more database groups.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="PartitioningSchemeChoices"/>
+			<xs:group ref="ContainerPlacerScopeGroupChoices"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContainerPlacerScopeType">
+		<xs:complexContent>
+			<xs:extension base="ScopeType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:group ref="ContainerPlacerScopeGroupChoices"/>
+						<xs:element name="Partition" type="ContainerPlacerScopePartitionType"/>
+					</xs:choice>
+					<xs:element name="DatabaseGroupConfiguration" type="DatabaseGroupConfigurationType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Settings for the database groups created by the container placer and maintained in its scope.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContainerPlacerType">
+		<xs:complexContent>
+			<xs:extension base="PlacerType">
+				<xs:sequence>
+					<xs:element name="Scope" type="ContainerPlacerScopeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The scope owned by the container placer; may consist of one or more database groups.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="databasePlacer" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>Name of the database placer to use for placing the file of a new database, or for placing the file of any external container belonging to a database.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatabaseConfigurationType">
+		<xs:annotation>
+			<xs:documentation>Characteristics of each database created by a container placer.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="databasePageSize" type="xs:unsignedInt" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>The size, in bytes, of each page in a database.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="initialDatabaseSize" type="xs:string" use="optional" default="0m">
+			<xs:annotation>
+				<xs:documentation>The initial size of each database. A value of 0 indicates the default size. To express the value in kilobytes, megabytes, or gigabytes, append 'k', 'm', or 'g' to the value. The value may include up to 3, 6, or 9 decimal places when you append 'k', 'm', or 'g', respectively.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fileSizeLimit" type="xs:string" use="optional" default="0m">
+			<xs:annotation>
+				<xs:documentation>The maximum size to which a database's file may grow. A value of 0 indicates no maximum. To express the value in kilobytes, megabytes, or gigabytes, append 'k', 'm', or 'g' to the value. The value may include up to 3, 6, or 9 decimal places when you append 'k', 'm', or 'g', respectively.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DatabaseGroupConfigurationType">
+		<xs:complexContent>
+			<xs:extension base="GroupConfigurationType">
+				<xs:sequence>
+					<xs:element name="DatabaseConfiguration" type="DatabaseConfigurationType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="DatabasePlacerScopeGroupChoices">
+		<xs:annotation>
+			<xs:documentation>Group choices for a database-placer scope.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="SingleStorageGroup">
+				<xs:annotation>
+					<xs:documentation>Place all applicable databases into the same storage group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StorageGroupPerDatabase">
+				<xs:annotation>
+					<xs:documentation>Start a new storage group for each applicable database.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="DatabasePlacerScopePartitionType">
+		<xs:annotation>
+			<xs:documentation>A partition of a database-placer scope; may consist of one or more storage groups.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="PartitioningSchemeChoices"/>
+			<xs:group ref="DatabasePlacerScopeGroupChoices"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DatabasePlacerScopeType">
+		<xs:complexContent>
+			<xs:extension base="ScopeType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:group ref="DatabasePlacerScopeGroupChoices"/>
+						<xs:element name="Partition" type="DatabasePlacerScopePartitionType"/>
+					</xs:choice>
+					<xs:element name="StorageGroupConfiguration" type="StorageGroupConfigurationType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Settings for the storage groups in a database placer's scope.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StorageAcquisitionPolicy" type="StorageAcquisitionPolicyType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A database placer's policy for acquiring the storage in which to place a database file or one of its container files.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatabasePlacerType">
+		<xs:complexContent>
+			<xs:extension base="PlacerType">
+				<xs:sequence>
+					<xs:element name="Scope" type="DatabasePlacerScopeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The scope owned by the database placer; may consist of one or more storage groups.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DateAttributeType">
+		<xs:annotation>
+			<xs:documentation>A date attribute that can be used for indexing objects or for partitioning a placer's scope.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeAttributeType">
+		<xs:annotation>
+			<xs:documentation>A date/time attribute that can be that can be used for indexing objects or for partitioning a placer's scope.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GroupConfigurationType">
+		<xs:annotation>
+			<xs:documentation>Characteristics of a group of placement resources (containers, databases, or file-storage locations and zones).</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="selection" type="SelectionType" use="optional" default="Any">
+			<xs:annotation>
+				<xs:documentation>The policy for selecting a resource from the group, for purposes of placing into that resource.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="IndexSpecificationType">
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The index specification's name, which must be unique  within the model.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="xs:string" use="optional" default="Traditional">
+			<xs:annotation>
+				<xs:documentation>The type of index to use.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="indexedClass" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The class of objects to be indexed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="keySpecification" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The key specification for the indexes; specifies the combination of attributes whose values are to be used for sorting indexed objects.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isUnique" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>If true, indicates that indexes based on the specification do not allow duplicate keys.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isObsolete" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>If true schema changes have rendered the specification obsolete and no indexes can be added based on it.  Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="IndexTypeType">
+		<xs:annotation>
+			<xs:documentation>A type of index over persistent objects in a federated database.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KeyCharacteristics" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Constraints on a key specified for indexes of this type, and on the key's usage by query operations. Set automatically -- do not edit.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SupportedAttributeTypes">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Numeric" minOccurs="0"/>
+									<xs:element name="String" minOccurs="0"/>
+									<xs:element name="Date" minOccurs="0"/>
+									<xs:element name="DateTime" minOccurs="0"/>
+									<xs:element name="Reference" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="allAttributesAreRequired" type="xs:boolean" use="required">
+						<xs:annotation>
+							<xs:documentation>If true, indexes of this type are used to optimize a query only if the query's predicate includes all indexed attributes in the key. Set automatically -- do not edit.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="attributesAreOrdered" type="xs:boolean" use="required">
+						<xs:annotation>
+							<xs:documentation>If true, the ordering of multiple attributes in the key is significant; indexes of this type are used to optimize a query only if the query's predicate includes at least the first indexed attribute. Set automatically -- do not edit.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="minimumNumberOfAttributes" type="xs:unsignedInt" use="required">
+						<xs:annotation>
+							<xs:documentation>The minimum number of attributes that must be specified in the key for indexes of this type to be usable. Set automatically -- do not edit.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="maximumNumberOfAttributes" type="xs:unsignedInt" use="required">
+						<xs:annotation>
+							<xs:documentation>Indicates the maximum number of attributes that may be specified in the key for indexes of this type to be usable. Set automatically -- do not edit.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The name of the index type.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>A description of the index type.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isOrdered" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>If true, the data structures used for indexes of this type are ordered (rather than unordered), so the indexes can be used to optimize a predicate query that must sort its result set based on the values of indexed attributes. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="duplicatesAreAllowed" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>If true, multiple entries in an index of this type can have the same key value (the index is not defined as unique).  If false, each entry in an index of this type must be unique. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="supportsRangeAccess" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>If true, indexes of this type can be used to optimize a predicate query that specifies value-range conditions on an indexed attribute. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="IndexType">
+		<xs:attribute name="specification" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Name of the index specification that index(s) are to be based on.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="KeySpecificationType">
+		<xs:annotation>
+			<xs:documentation>A combination of key fields, which are the attributes whose values are to be used for sorting the objects in an index.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KeyedAttribute" type="KeyedAttributeType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An attribute that the key is based on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The key specification's name , which must be unique within the model.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="keyedClass" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The class of objects the key is for.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isObsolete" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>If true schema changes have rendered the specification obsolete and no index specifications can be added based on it.  Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="KeyedAttributeType">
+		<xs:annotation>
+			<xs:documentation>An attribute to be used as a key field for indexing objects.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="attributeName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The name of the keyed attribute.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="maxStoredStringLength" type="xs:int" use="optional" default="24">
+			<xs:annotation>
+				<xs:documentation>When the keyed attribute is a string attribute, this specifies the maximum storage to allocate within the index for its value.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NumericAttributeType">
+		<xs:annotation>
+			<xs:documentation>A numeric attribute that can be used for indexing objects or for partitioning a placer's scope.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AttributeType">
+				<xs:attribute name="type" type="NumericType" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="NumericType">
+		<xs:annotation>
+			<xs:documentation>The possible types of a numeric attribute.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Int8"/>
+			<xs:enumeration value="Int16"/>
+			<xs:enumeration value="Int32"/>
+			<xs:enumeration value="Int64"/>
+			<xs:enumeration value="UInt8"/>
+			<xs:enumeration value="UInt16"/>
+			<xs:enumeration value="UInt32"/>
+			<xs:enumeration value="UInt64"/>
+			<xs:enumeration value="Float32"/>
+			<xs:enumeration value="Float64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ObjectCountLimitType">
+		<xs:attribute name="objectClass" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The class of objects to which the object-count limit applies.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="objectLimit" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>The maximum number of objects of the specified class.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="containerIsFullAtLimit" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>If true, the container is considered full when the limit is reached for objects of the specified class. If false, objects of other types can still be placed into the container.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:group name="ObjectPlacerScopeGroupChoices">
+		<xs:annotation>
+			<xs:documentation>Group choices for an object-placer scope.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="SingleContainerGroup">
+				<xs:annotation>
+					<xs:documentation>Place all applicable objects into the same container group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerGroupPerObject">
+				<xs:annotation>
+					<xs:documentation>Start a new container group for each applicable object.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="ObjectPlacerScopePartitionType">
+		<xs:annotation>
+			<xs:documentation>A partition of an object-placer scope; may consist of one or more container groups.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="PartitioningSchemeChoices"/>
+			<xs:group ref="ObjectPlacerScopeGroupChoices"/>
+			<xs:element name="PartitionLevelIndex" type="IndexType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Reserved for future development. Add a partition-level index based on the index specification to each partition created by the object placer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ObjectPlacerScopeType">
+		<xs:complexContent>
+			<xs:extension base="ScopeType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:group ref="ObjectPlacerScopeGroupChoices"/>
+						<xs:element name="Partition" type="ObjectPlacerScopePartitionType"/>
+					</xs:choice>
+					<xs:element name="ContainerGroupConfiguration" type="ContainerGroupConfigurationType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Settings for the container groups created by the object placer and maintained in its scope.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ContainerAcquisitionPolicy" type="ContainerAcquisitionPolicyType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The object placer's policy for acquiring a container in which to place a persistent object.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ScopeLevelIndex" type="IndexType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Reserved for future development. Add a scope-level index based on the index specification to the scope of the object placer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ObjectPlacerType">
+		<xs:complexContent>
+			<xs:extension base="PlacerType">
+				<xs:sequence>
+					<xs:element name="Scope" type="ObjectPlacerScopeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The scope owned by the object placer; may consist of one or more container groups.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="placeOnNewPage" type="xs:boolean" use="optional" default="false">
+					<xs:annotation>
+						<xs:documentation>If true, each object is placed on a new page within the selected container.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="containerPlacer" type="xs:string" use="optional" default="Default">
+					<xs:annotation>
+						<xs:documentation>Name of the container placer to use for placing a new container.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="PartitioningSchemeChoices">
+		<xs:annotation>
+			<xs:documentation>Choices for keying partitions within a scope.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="ByRelatedObject" type="ByRelatedObjectType"/>
+		</xs:choice>
+	</xs:group>
+	<xs:simpleType name="PlaceIntoType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RelatedObjectScope">
+				<xs:annotation>
+					<xs:documentation>Use the scope containing the application-specified related object (a scope belonging to another placer).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OwnScope">
+				<xs:annotation>
+					<xs:documentation>Use the placer's own scope.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PlacementModelStatusType">
+		<xs:annotation>
+			<xs:documentation>The status of a placement model.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Current">
+				<xs:annotation>
+					<xs:documentation>The latest version of the placement model; it is used for placing new persistent objects.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Historical">
+				<xs:annotation>
+					<xs:documentation>A version of the placement model that is no longer current but should not be deleted from the PMD. The version was previously used for placing persistent objects, and the scopes of its placers are still populated.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EmptyHistorical">
+				<xs:annotation>
+					<xs:documentation>A version of the placement model that is no longer current and can be deleted from the PMD. Although the version was previously used for placing persistent objects, the scopes of its placers are now empty.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PlacementModelType">
+		<xs:annotation>
+			<xs:documentation>A description of a placement model.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ChangeLog" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Record of changes made to the model. Set automatically -- do not edit.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ChangeLogItem" type="ChangeLogItemType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Record of a change made to the model. Set automatically -- do not edit.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="KeySpecifications" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collection of key specifications available for use in defining index specifications.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="KeySpecification" type="KeySpecificationType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>A key specification that can be used in defining an index specification.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="IndexSpecifications" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collection of index specifications available for use in adding indexes to object placer scopes.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="IndexSpecification" type="IndexSpecificationType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>An index specification that can be used when adding specific indexes within object placer scopes.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DatabasePlacers">
+				<xs:annotation>
+					<xs:documentation>A collection of database placers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DatabasePlacer" type="DatabasePlacerType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>A placer that places the files of new databases and their external containers into storage locations.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ContainerPlacers">
+				<xs:annotation>
+					<xs:documentation>Collection of container placers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ContainerPlacer" type="ContainerPlacerType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>A placer that places new containers into databases.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ObjectPlacers">
+				<xs:annotation>
+					<xs:documentation>Collection of object placers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ObjectPlacer" type="ObjectPlacerType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>A placer that places objects into containers; the objects are matched by one or more placement rules.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Rules">
+				<xs:annotation>
+					<xs:documentation>Collection of placement rules and/or rule folders.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="RuleFolder" type="RuleFolderType"/>
+						<xs:element name="Rule" type="RuleType"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The name of the placement model. Required only for internal, system-defined models -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>A description of the placement model's purpose and scope.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="version" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>Placement model's version.  Starts at 1 and increments with each newly installed model. Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="status" type="PlacementModelStatusType" use="required">
+			<xs:annotation>
+				<xs:documentation>Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="id" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Set automatically -- do not edit.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PlacementRelationshipType">
+		<xs:annotation>
+			<xs:documentation>A relationship between objects being placed and the related objects provided by the application.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SchemaRelationship" type="SchemaRelationshipType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="relatedObjectClass" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The class of the related objects. An object of this class must be provided by the application to activate the enclosing rule. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PlacerType">
+		<xs:annotation>
+			<xs:documentation>Base type for all placers.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>
+          The placer's name, which must be unique among placers of the same type (ObjectPlacer, ContainerPlacer or DatabasePlacer) within the model.
+        </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>An optional description.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="placeInto" type="PlaceIntoType" use="required">
+			<xs:annotation>
+				<xs:documentation>Selects the scope that the placer will use.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PurposeSpecializationType">
+		<xs:annotation>
+			<xs:documentation>A purpose for which the rules in the rule folder are specialized. A matching purpose must be specified by an application to enable the rule folder's contents to be considered for determining placement.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="purpose" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The purpose's name. If the application specifies a purpose and it matches this name, then rules in this folder will take precedence over rules that are not in folders with such a specialization.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="RuleFolderType">
+		<xs:annotation>
+			<xs:documentation>A folder for organizing placement rules.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="PurposeSpecialization" type="PurposeSpecializationType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="ConfigurationSpecialization" type="ConfigurationSpecializationType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="RuleFolder" type="RuleFolderType"/>
+				<xs:element name="Rule" type="RuleType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The rule folder's name.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The rule folder's description.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="RuleType">
+		<xs:annotation>
+			<xs:documentation>A description that identifies objects to be placed by a particular object placer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PlacementRelationship" type="PlacementRelationshipType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="description" type="xs:string" use="optional"/>
+		<xs:attribute name="objectClass" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The class of objects to which the rule applies.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="objectPlacer" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The object placer to use for placing objects qualified by the rule.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="SchemaRelationshipType">
+		<xs:annotation>
+			<xs:documentation>A schema relationship to which the enclosing placement relationship corresponds.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="toRelatedAssociationEnd" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>The end of the schema relationship that is defined by the class of the object being placed; this attribute will hold a reference to the related object.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fromRelatedAssociationEnd" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>The end of the schema relationship that is defined by the class of the related object; this attribute will hold a reference to the object being placed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ScopeType">
+		<xs:annotation>
+			<xs:documentation>The characteristics of a placer's scope.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="id" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifier of the existing scope that the placer is configured to use. Set automatically. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="SelectionType">
+		<xs:annotation>
+			<xs:documentation>Options for distributing placement within a resource group.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Any">
+				<xs:annotation>
+					<xs:documentation>(Containers or databases) Select a resource according to an internal algorithm. (Storage locations) Select and use the first location until full or unavailable, then select and use the next, and so on, in the order maintained by the storage group.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Random-Relaxed">
+				<xs:annotation>
+					<xs:documentation>Select a resource at random for a given request and continue to use it for subsequent similar requests until full or otherwise unavailable. (Not applicable to storage locations; use Random.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RoundRobin-Relaxed">
+				<xs:annotation>
+					<xs:documentation>Select a resource in a round-robin manner and continue to use it for subsequent similar requests until full or otherwise unavailable. (Not applicable to storage locations; use RoundRobin.)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Random">
+				<xs:annotation>
+					<xs:documentation>Select a resource at random for every request.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RoundRobin">
+				<xs:annotation>
+					<xs:documentation>Select a resource in a round-robin manner for every request.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StorageAcquisitionPolicyType">
+		<xs:annotation>
+			<xs:documentation>Policy for accessing storage locations in which to place files.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="waitSeconds" type="xs:unsignedInt" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation>Reserved for future development. The number of seconds to wait for access to a host.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="storageUnavailablePolicy" type="StorageUnavailablePolicyType" use="optional" default="UseDefault">
+			<xs:annotation>
+				<xs:documentation>Response when no storage locations exist or none of their hosts can be accessed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="StorageGroupConfigurationType">
+		<xs:complexContent>
+			<xs:extension base="GroupConfigurationType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="StorageUnavailablePolicyType">
+		<xs:annotation>
+			<xs:documentation>Policy for responding when no storage locations are available within a storage group.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UseDefault">
+				<xs:annotation>
+					<xs:documentation>Obtain a storage location from the main storage group, if possible; otherwise, use the storage location of the federated database's system-database file.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ApplicationException">
+				<xs:annotation>
+					<xs:documentation>Raise an exception for the application to handle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StringAttributeType">
+		<xs:annotation>
+			<xs:documentation>A string attribute that can be used for indexing objects or for partitioning a placer's scope.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AttributeType">
+				<xs:attribute name="isFixedLength" type="xs:boolean" use="required"/>
+				<xs:attribute name="fixedLength" type="xs:unsignedInt" use="optional" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="WaitPolicyType">
+		<xs:annotation>
+			<xs:documentation>Policy for waiting to acquire a resource (container, database, or storage location).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NoWait">
+				<xs:annotation>
+					<xs:documentation>Do not wait.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WaitForever">
+				<xs:annotation>
+					<xs:documentation>Wait forever.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WaitLimit">
+				<xs:annotation>
+					<xs:documentation>Wait a specified number of seconds.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

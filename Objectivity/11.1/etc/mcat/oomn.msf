@@ -1,0 +1,225 @@
+$quote "
+$set 1
+7000 "Name service completed without errors."
+
+7001 "Federated Database name not specified."
+
+7002 "NULL pointer specified."
+
+7003 "Missing or malformed name service policy file."
+
+7004 "No name service policy specified."
+
+7005 "Specified name service policy invalid."
+
+7006 "Specified name service not found."
+
+7007 "No Federated Database information specified or found."
+
+7008 "Federated Database already exists."
+
+7009 "Object Manager error."
+7010 "FD information malformed."
+7011 "Unable to open the Boot File for read access."
+7012 "Unable to open the Boot File for write access."
+7013 "Invalid access mode provided for opening the Boot File."
+7014 "Boot File name must be of the form <host>::<full_file_path>."
+7015 "Unable to open boot file \"%s%s%s\": %s"
+7016 "Error reading boot file \"%s%s%s\": %s"
+7017 "Error writing boot file: %s"
+
+7026 "Name Service error %i occurred."
+
+$set 2
+7001 "\nThanks for using Objectivity/DB Lock Monitor. \
+Goodbye.\n\n"
+7002 "Invalid input.\n"
+7003 "End-of-file encountered.\n"
+7004 "\nPossible commands:\n\
+  h (help)\n\
+  q (quit)\n\
+  d (display lock table)\n\
+  w (display waiters)\n"
+7005 "  l (lock)\n\
+  u (unlock)\n\
+  e (end transaction)\n\
+  s (release)\n\
+  m (switch summary/detail mode)\n\
+Command: "
+7006 "Sorry, cannot continue.\n"
+7007 "Sorry, cannot continue.\n"
+7008 "Lock Monitor can't open %s to redirect I/O\n"
+7014 "%s: Cannot determine Lock Server node. Processing terminated.\n"
+7017 "%s: Cannot communicate with Lock Server on node \"%s\".\n\
+           Processing terminated.\n"
+7018 "Lock Table for Lock Server on node \"%s\" - your UID is %d\n\n", 
+7019 "      UID            HostID   PID    TransID  APID  M T FdbID  DbID OclID\n\
+-------------------------------------------------------------------------\n"
+7020 " %9u"
+7021 "%18.18s"
+7022 " %5u"
+7023 " %10u"
+7024 " IS"
+7025 " IC"
+7026 " IX"
+7027 "  S"
+7028 "  R"
+7029 "  C"
+7030 "  X"
+7031 " ?%3d?"
+7032 " F"
+7033 " %5u\n"
+7034 " D"
+7035 " %5u"
+7036 " %5u\n"
+7037 " C"
+7038 " %5u"
+7039 " %5u"
+7040 " %5u\n"
+7041 " P"
+7042 " %5u"
+7043 " %5u"
+7044 " %5u\n"
+7045 " ?%3d?\n"
+7046 "-- hit RETURN to continue -- "
+7047 "%s"
+7048 "%*1c%*[^\n]"
+7049 "%s"
+7050 "\nLock table displayed, status = %d.\n"
+7051 "\nThe Objectivity/DB Lock Monitor supports the following functions:\n"
+7052 "  To exit the Lock Monitor, press 'q' followed by <Return>.\n
+  To display the lock table, press 'd' followed by <Return>.\n"
+7053 "  To display all waiters, press 'w' followed by <Return>.\n\
+  To release a transient lock, press 'u' followed by <Return>.\n"
+7055 "  To end a transaction, press 'e' followed by <Return>.\n\
+  To release a persistent lock, press 's' followed by <Return>.\n"
+7056 "  To change summary/detail mode, press 'm' followed by <Return>.\n"
+7057 "\nProcessed Lock command, status = %d\n"
+7058 "  Possible summary/detail modes:\n\
+    s (Summary)\n\
+    d (Detail)\n\
+  Summary/detail mode: "
+7059 "%80s%*[^\n]"
+7060 "\nProcessed Release command, status = %d\n"
+7061 "User ID: "
+7062 "%d"
+7063 "\nProcessed Release-by-UID command, status = %d\n"
+7064 "\nProcessed Reserve command, status = %d\n"
+7065 "\nProcessed Unlock command, status = %d\n"
+7066 "Transaction ID: "
+7125 "AP ID: "
+7067 "%ld"
+7126 "%u"
+7068 "\nProcessed Unlock-by-TransID command, status = %d\n"
+7069 "Displaying waiters - your UID = %d\n"
+7070 "      UID            HostID   PID    TransID  WtSec M T FdbID  DbID OclID\n\
+-------------------------------------------------------------------------\n"
+7071 "%9u"
+7072 "%18.18s"
+7073 " %5d"
+7074 " %10u"
+7075 " %5d" 
+7076 " IS"
+7077 " IC"
+7078 " IX"
+7079 "  S"
+7080 "  R"
+7081 "  C"
+7082 "  X"
+7083 " ?%3d?"
+7084 " F"
+7085 " %5u\n"
+7086 " D"
+7087 " %5u"
+7088 " %5u\n"
+7089 " C"
+7090 " %5u"
+7091 " %5u"
+7092 " %5u\n"
+7093 " P"
+7094 " %5u"
+7095 " %5u"
+7096 " %5u"
+7097 " %5u\n"
+7098 " %5u\n"
+7099 " ?%3d?\n"
+7100 "%s"
+7101 "Waiters displayed, status = %d\n" 
+7102 "Number of requests: " 
+7103 "Request number %d:\n\
+  Possible resource types:\n\
+      f (Federated Database)\n\
+      d (Database)\n\
+      c (Ocluster)\n\
+  Resource type: "
+7104 "  Possible modes:\n\
+    1 (IS)\n\
+    2 (IC)\n\
+    6 (IX)\n\
+    3 (S)\n\
+    4 (R)\n\
+    5 (C)\n\
+    7 (X)\n\
+  Mode: "
+7105 "  Possible modes:\n\
+    3 (S)\n\
+    4 (R)\n\
+    5 (C)\n\
+    7 (X)\n\
+  Mode: "
+7106 "  FD ID: "
+7107 "  DB ID: " 
+7108 "  OC ID: "
+7109 "  Opage ID: "
+
+
+7110 "Lock Monitor Utility"
+7117 "\
+%s\n\
+    [-detail]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+7118 "\
+List the contents of a %s Lock Server lock table.\n"
+7119 "\
+-detail       Display intention locks.\n\
+-notitle      Don't print the program title banner.\n\
+               In title banner:\n\
+                   M = Mode, T = Type,\n\
+               In detail line:\n\
+                   U = Update, R = Read,\n\
+                   C = Container, D = Database, F = Federated Database\n\
+-help         Print out a help message and exit.\n\
+bootFilePath  Path to a Boot File for the FD. If not specified, the\n\
+              value of the environment variable OO_FD_BOOT is used.\n\n"
+7120 "\
+%s\n\
+    [-detail]\n\
+    [-menu]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+7121 "\
+List and optionally modify the contents of a %s Lock Server lock table.\n"
+7122 "\
+-detail       Display intention locks.\n\
+-menu         Use a menu driven interface.\n\
+-notitle      Don't print the program title banner.\n\
+-help         Print out a help message and exit.\n\
+bootFilePath  Path to a Boot File for the FD. If not specified, the\n\
+              value of the environment variable OO_FD_BOOT is used.\n\n"
+7123 "\nLock table displayed, no entries.\n"
+7124 "\nLock table displayed, %d entries.\n"
+7125 "found %d versions.\n"
+7126 " %5u"
+7127 ".\n"
+7129 "      UID            HostID   PID    TransID  APID  M T FdbID  DbID OclID Versn\n\
+-------------------------------------------------------------------------------\n"
+7130 " %5u %5u\n"
+7131 " M"
+7132 " K"
+
+$set 3
+1 "ascii"
+2 "Version: "

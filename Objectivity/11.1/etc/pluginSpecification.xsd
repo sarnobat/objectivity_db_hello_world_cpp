@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by Lenny Hoffman (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="ObjectivityPlugins">
+    <xs:annotation>
+      <xs:documentation>Comment describing your root element</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Plugin" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:choice>
+                <xs:element name="CppImplementation">
+                  <xs:complexType>
+                    <xs:attribute name="library" type="xs:string" use="required"/>
+                    <xs:attribute name="key" type="xs:string" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="JavaImplementation">
+                  <xs:complexType>
+                    <xs:attribute name="jar" type="xs:string" use="required"/>
+                    <xs:attribute name="class" type="xs:string" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="DotNetImplementation">
+                  <xs:complexType>
+                    <xs:attribute name="assembly" type="xs:string" use="required"/>
+                    <xs:attribute name="class" type="xs:string" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="PythonImplementation">
+                  <xs:complexType>
+                    <xs:attribute name="module" type="xs:string" use="required"/>
+                    <xs:attribute name="class" type="xs:string" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="Capability">
+                  <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="version" type="xs:string" use="optional"/>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="Value">
+                  <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="value" type="xs:string" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="extensionPoint"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

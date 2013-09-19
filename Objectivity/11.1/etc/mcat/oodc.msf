@@ -1,0 +1,400 @@
+$quote "
+
+$ dc.msf covers a range from 2700-2999
+$ SET 1 - ERRORS
+$ Range      File               
+$ ----------  -----------------  
+$ 2700-2709  odcBrIterOC.c      
+$ 2710-2719  odcTidyFD.c        
+$ 2720-2729  odcTidyDB.c        
+$ 2730-2739  odcDumpCat.c       
+$ 2740-2749  odcChFDInt.c       
+$ 2750-2759  odcChangeDB.c      
+$ 2760-2769  odcEncodeSch.c    
+$ 2770-2779  odcDecodeSch.c    
+$ 2780-2784  odcGetLS.c         
+$ 2785-2789  odcCheckLS.c       
+$ 2790-2799  odcCreateFD.c      
+$ 2800-2804  odcLockFD.c        
+$ 2805-2809  odcUnlockFD.c      
+$ 2810-2819  odcDeleteDB.c      
+$ 2820-2829  odcCopyDB.c        
+$ 2830-2839  odcAttachDB.c      
+$ 2840-2849    "                
+$ 2850-2859  odcCopyFD.c        
+$ 2860-2869    "                
+$ 2870-2879  odcError.c         
+$ 2880-2889  odcGetFI.c        
+$ 2890-2899  odcUtil.c         
+$ 2900-2904  odcCatMvDBs.c     
+$ 2905-2909  odcChkIfFileInFD.c
+$ 2910-2919  odcMigrateDBID.c  
+$ 2920-2929  odcAppHelper.c    
+$ 2930-2934  odcDeleteFD.c      
+$ 2935-2939  *
+$ 2940-2949  odcONSerr.c        
+$ 2950-2959   "                 
+$ 2960-2969  odcInstallFd.c     
+$ 2970-2974  odcCatMvDbs.c second set
+$ 2975-2979  * 
+$ 2980-2989  * 
+$ 2990-2999  * 
+
+$set 1
+
+$ 2700=> **** odcBrIterOC ****
+2700 "DC: Unable to open the System Namespace."
+2701 "DC: Unable to read the System Namespace."
+2702 "DC: Unable to close the System Namespace."
+2703 "DC: Unable to open Database ID = %d."
+2704 "DC: FD contains no user Databases."
+
+$ 2725=> **** OOTIDY API ****
+2725 "DC: Unable to open the System Namespace."
+2726 "DC: Unable to read the System Namespace."
+2727 "DC: Unable to open Database ID = %d."
+
+$ 2730=> **** DUMP CATALOG API ****
+2730 "DC: Unable to obtain file information."
+2731 "DC: No native OS format available for file %s:%s."
+2732 "DC: Internal Error - Unknown file type %d."
+
+
+$ 2740=> **** CHANGE FD API ****
+2740 "DC: Unable to open the system namespace."
+2741 "DC: Unable to read the system namespace."
+2742 "DC: Unable to close the system namespace."
+2743 "DC: Unable to close the system namespace."
+2744 "DC: Unable to obtain a lock on the Federated Database."
+2745 "DC: You must terminate the Lock Server process on host \"%s\" before running this application without a Lock Server."
+
+$ 2750=> **** OOCHANGE DB API ****
+2750 "DC: The Database name cannot be changed."
+2751 "DC: A non-zero Database ID is required."
+2752 "DC: Both Host and File Path arguments are required."
+2753 "DC: Unable to close the System Namespace."
+2754 "DC: Unable to close the Database."
+
+$ 2760=> **** ENCODE API ****
+2760 "DC: Unable to open the schema. No changes made."
+2761 "DC: Unable to encode the schema.  No changes made."
+2762 "DC: The schema is already encoded."
+2763 "DC: Failed to cleanup the schema. Please run again."
+2764 "DC: Internal Error: odcEncodeSchema requires a password."
+2765 "DC: Internal Error: odcEncodeSchema requires a non-zero FDID."
+2766 "DC: Unable to encode the schema. No changes made."
+
+$ 2770=> **** DECODE API ****
+2770 "DC: Unable to open the schema. No changes made."
+2771 "DC: Unable to decode the schema.  No changes made."
+2772 "DC: Wrong password given for decoding schema."
+2773 "DC: The schema is not encoded."
+2774 "DC: Failed to cleanup the schema. Please run again."
+2775 "DC: Internal Error: odcDecodeSchema requires a password."
+2776 "DC: Internal Error: odcDecodeSchema requires a non-zero FDID."
+2777 "DC: Unable to decode the schema. No changes made."
+
+$ 2780=> **** GET LOCK SERVER NAME API ****
+2780 "DC: The Object Manager has not been initialized."
+2781 "DC: Unable to return string via a nil pointer."
+2782 "DC: Invalid Federated Database ID."
+
+$ 2785=> **** odcCheckLS.c ****
+
+$ 2790=> **** odcCreateFD.c ****
+2790 "DC: Unable to create the Federated Database \"%s\". A Federerated Database File already exists."
+
+$ 2800-2804 **** odcLockFD.c ***  
+2800 "DC: Unable to write the temporary lock file in directory /usr/tmp."
+
+$ 2805-2809  **** odcUnlockFD.c ***  
+2805 "DC: Unable to open the log file %s."
+2806 "DC: Invalid format for the log file %s."
+2807 "DC: The Federated Database was not previously locked."
+
+$ 2810-2819  **** odcDeleteDB.c ***    
+2810 "DC: Unable to obtain information about the Database (ID = %d) due to an error."
+2811 "DC: Unable to remove the Database (ID = %d) from the catalog due to an error."
+2812 "DC: Unable to remove the Database (ID = %d) because the corresponding file (host = %s, path = %s) could not be found."
+2813 "DC: Unable to remove the Database (ID = %d) due to an error."
+
+$ 2820-2829  **** odcCopyDB.c ***  
+2820 "DC: Unable to locate the Database \"%s\". It is likely that a Database with this name does not exist."
+2821 "DC: Unable to obtain the System Name for the Database (ID = %d). It is likely that a Database with this ID does not exist."
+2822 "DC: The ID specified (%d) does not match the Database specified (\"%s\")."
+2823 "DC: Unable to open the Database \"%s\" (ID = %d)."
+2824 "DC: Unable to get the Database File name for Database \"%s\" (ID = %d)."
+2825 "DC: Unable to determine the local file name for the Database File (host = %s, path = %s)."
+2826 "DC: Cannot copy the Database \"%s\" (ID = %d) because it contains external associations."
+2827 "DC: Unable to obtain required access to the Database \"%s\" (ID = %d), it is currently in use."
+2828 "DC: Unable to copy the Database File to \"%s:%s\"."
+
+$ 2830-2839  **** odcAttachDB.c ***    
+$ 2840-2849    "                
+2830 "DC: There is already a Database with the System Name \"%s\"."
+2831 "DC: Unable to open the System Namespace."
+2832 "DC: Unable to read the System Namespace."
+2833 "DC: Unable to select a Database ID. All Database ID's have been allocated."
+2834 "DC: Unable to obtain exclusive access to the Database (ID = %d), it is probably is use."
+2835 "DC: Unable to open the Database File specified (host = %s, path = %s)."
+2836 "DC: The Database File specified (host = %s, path = %s) is already being used by the Database \"%s\" (ID = %d)."
+2837 "DC: The Identifier specified (%d) is already being used by the Database \"%s\"."
+2838 "DC: There are too many Databases open to complete this operation."
+2839 "DC: Unable to close the System Namespace."
+2840 "DC: Unable to create a new Database Object in the Federated Database catalog."
+2841 "DC: Unable to create a new Database Object in the Federated Database catalog."
+
+$ 2850-2859  **** odcCopyFD.c ***     
+$ 2860-2869    "                
+2850 "DC: An error occurred attempting to copy the file \"%s:%s\" to \"%s:%s\": %s"
+2851 "DC: The file \"%s:%s\" does not exist. Cannot copy the file."
+2852 "DC: Unable to update the System Name Space."
+
+$ 2870-2879  **** odcError.c ***     
+2870 "DC: Internal Error: zero passed to odcInitErrs."
+2871 "DC: Internal Error: error array element %d is not in ascending order."
+2872 "DC: Internal Error: unknown error code %d."
+
+$ 2880-2889  **** odcGetFI.c ***     
+2880 "DC: Unable to open the System Namespace."
+2881 "DC: Unable to read the System Namespace."
+2882 "DC: Unable to close the System Namespace."
+2883 "DC: Unable to get Partition Information."
+
+$ 2890-2899  **** odcUtil.c *** 
+
+$ 2900-2904  odcCatMvDBs.c ***
+2900 "DC: Unable to update the catalog entry for Database \"%s\"."
+2901 "DC: The Database File \"%s:%s\" does not exist."
+2902 "DC: Can not close DBID %d."
+2903 "DC: Unable to update the catalog entry for AP \"%d\"."
+2904 "DC: Unable to get the catalog entry for AP \"%d\"."
+
+
+$ 2905-2909  **** odcChkIfFileInFD.c ***
+
+$ 2910-2919  **** odcMigrateDBID.c ***
+2910 "DC: Unable to open the Database File using the specified identifier (%d)."
+2911 "DC: A restriction on this software version requires that the new Database Identifier (ID = %d) exactly match that found in the Database File being attached (ID = %d)."
+
+$ 2920-2929  **** odcAppHelper.c ***
+2920 "%sUnable to initialize the application. Processing terminated."
+2921 "%sUnable to open the Federated Database \"%s\". Processing terminated."
+2922 "%sUnable to close the Federated Database. Processing terminated."
+2923 "%sUnable to run without a Lock Server. Processing terminated."
+2924 "%sUnable to start transaction. Processing terminated."
+2925 "%sUnable to commit transaction. Processing terminated."
+2926 "%sYou must terminate the Lock Server process on host \"%s\" before running this application without a Lock Server. Processing terminated."
+2927 "%sThis application requires a Federated Database name. Processing terminated."
+2928 "%sAn error has occurred. Processing terminated."
+2929 "%sUnrecognized error code. Processing terminated."
+
+$ 2930-2934  **** odcDeleteFD.c ***    
+2930 "DC: Unable to obtain exclusive lock on Federated Database \"%s\"."
+
+$ 2940-2949  **** odcONSerr.c ***
+$ 2950-2959   "                 
+2940 "NS: Missing required FD Name parameter."
+2941 "NS: Bad pointer (value=0) passed as argument."
+2942 "NS: Name Service Policy file problem."
+2943 "NS: Unable to determine default Name Service Policy."
+2944 "NS: Invalid Name Service Policy."
+2945 "NS: Unable to access the Name Service."
+2946 "NS: The named Federated Database already exists."
+2947 "NS: Object Manager error encountered."
+2948 "NS: Bad (invalid) value for FD information."
+2949 "NS: A Name Service Manager error occurred."
+2950 "NS: Unable to read from the Name Service. Check the access rights on file \"%s%s%s\"."
+2951 "NS: Unable to write to the Name Service. Check the access rights on file \"%s%s%s\"."
+2952 "NS: Invalid access mode for Boot File provided."
+
+$ 2960-2969  *** odcInstallFd.c ***
+2960 "DC: The Boot File is missing ooFDDBFileName."
+
+$ 2970-2974  odcCatMvDBs.c second set ***
+2970 "DC: The Partition File \"%s:%s\" does not exist."
+2971 "DC: The DB %s is replicated. Running ooinstallfd or oocopyfd on an FD with replicated DBs is not currently supported"
+2972 "DC: Unable to get id for AP \"%s\"."
+2973 "DC: Unable to add AP \"%s\" to purge list."
+2974 "DC: Unable to purge APs."
+
+$ SET 2 - MESSAGES
+$ Range      File              
+$ ----------  ----------------- 
+$ 2700-2709  **** odcCatMvDBs.c ****
+$ 2710-2719  **** odcChFDInt.c ****
+$ 2720-2729  "
+$ 2730-2739  **** odcChangeDB.c ****
+$ 2740-2749  **** odcCopyDB.c ****
+$ 2750-2759  **** odcCopyFD.c ****
+$ 2760-2769  **** odcDeleteDB.c ****
+$ 2770-2779  **** odcDumpCat.c ****
+$ 2780-2789  "
+$ 2790-2799  **** odcInstallFd.c ****
+$ 2800-2809  **** odcTidyDB.c ****
+$ 2810-2819  **** odcTidyFD.c ****
+$ 2820-2829 
+$ 2830-2839 
+$ 2840-2849  
+$ 2850-2859  
+$ 2860-2869  
+$ 2870-2879  
+$ 2880-2889  
+$ 2890-2899  
+$ 2900-2909  
+$ 2910-2919  
+$ 2920-2929  
+$ 2930-2939  
+$ 2940-2949  
+$ 2950-2959  
+$ 2960-2969  
+$ 2970-2979  * 
+$ 2980-2989  * 
+$ 2990-2999  * 
+
+$set 2
+$ 2700-2709  **** odcCatMvDBs.c ****
+2700 "WARNING: unable to locate Database File \"%s:%s\".\n"
+
+$ 2710-2719  **** odcChFDInt.c ****
+$ 2720-2729  "
+2710 "The current values are:\n\n"
+2711 "Lock Server Name = %s\n"
+2712 "Federated Database Name = %s\n"
+2713 "Jnl Dir Host = %s\n"
+2714 "Jnl Dir Path = %s\n"
+2715 "Federated Database ID = %d\n"
+2716 "The following values will be set:\n"
+2717 "Lock Server Name = %s\n"
+2718 "Federated Database Name = %s\n"
+2719 "Federated Database ID = %d\n"
+2720 "Federated Database Host = %s\n"
+2721 "Federated Database Path = %s\n"
+2722 "Journal Host =  %s\n"
+2723 "Journal Path = %s\n"
+2724 "Verifying that Lock Server Process is not running\n"
+2725 "Lock Server Process not detected. Proceeding.\n"
+2726 "Leaving oochange (FD)"
+2727 " (OK)\n"
+2728 " (Failed)\n"
+
+$ 2730-2739  **** odcChangeDB.c ****
+2730 "Changing mapping of Database ID = %d\n"
+2731 "  Old host name = %s\n"
+2732 "  New host name = %s\n"
+2833 "  Old file path = %s\n" 
+2734 "  New file path = %s\n" 
+
+$ 2740-2749  **** odcCopyDB.c ****
+2740 "Checking the Database for external associations...\n"
+2741 "The Database has external associations.\n"
+2742 "The Database does not have any external associations.\n"
+2743 "Issuing command \"%s\".\n"
+2744 "Now copying the Database File...\n"
+2745 "The Database File has been copied to \"%s\".\n"
+
+$ 2750-2759  **** odcCopyFD.c ****
+2750 "Copying the following Federated Database files to the destination directory:\n"
+2751 "\nCreating new Name Service values...\n"
+2752 "Now updating Database File Locations...\n"
+2753 "Now updating System Name Space (catalog) values...\n"
+2754 "\n\Federated Database Copy complete.\n"
+
+$ 2760-2769  **** odcDeleteDB.c ****
+2760 "Attempting to locate Database File (ID = %d)..." 
+2761 "the Database File exists.\n"
+2762 "the Database File does not exist.\n"
+2763 "Deleted the Database \"%s\" (ID = %d) from the Federated Database catalog.\n\n"
+2764 "Deleted the Database \"%s\" (ID = %d).\n\n"
+2765 "Unable to determine if the file exists, assuming it does not.\n"
+2766 "Internal Error checking file existence, assuming the file doesn't exist.\n"
+
+$ 2770-2779  **** odcDumpCat.c ****
+$ 2780-2789  
+2770 "\
+FD Name   = %s\n\
+FD ID     = %d\n"
+2771 "\
+FD Name   = %s\n\
+FD ID     = %d\n\
+FD File   = "
+2772 "\
+\n\
+    DB Name   = %s\n\
+    DB ID     = %d\n\
+    AP ID     = %d\n\
+    DB Image Weight = %d\n\
+    DB Image  = "
+2773 "\
+\n\
+DB Name   = %s\n\
+DB ID     = %d\n\
+DB Image  = "
+2774 "\
+AP ID     = %d\n"
+2775 "\
+Boot File = "
+2776 "\
+Lock Host = %s\n"
+2778 "\
+\n\
+AP Name   = %s\n\
+AP ID     = %d\n\
+AP File   = "
+2779 "\
+AP Weight = %d\n"
+2780 "\
+Jnl Dir  = "
+2781 "\
+<file name is unavailable: the controlling AP is inaccessible>\n"
+2782 "\nWarning: a quorum of partitions is not accessible, so the\n\tinformation shown here is not certain to be up-to-date.\n\n"
+2783 "FD GUID   = %08X-%08X-%08X-%08X\n"
+2784 "\
+FD Name   = %s\n\
+FD Number = %d\n\
+FD GUID   = %08X-%08X-%08X-%08X\n\
+FD File   = "
+
+$ 2790-2799  **** odcInstallFd.c ****
+2790 "Updating Name Service values...\n"
+2791 "Now updating System Name Space (catalog) values...\n"
+2972 "Now updating Database File locations...\n"
+2793 "\nFederated Database Installation complete.\n"
+2794 "WARNING: Boot File missing ooPageSize, assuming 8192\n"
+2795 "WARNING: Boot File missing ooFDNumber, assuming 1\n"
+2796 "WARNING: Boot File missing ooLockServerName, assuming %s\n"
+2797 "WARNING: Updating of Database File locations will be skipped...\n"
+
+
+$ 2800-2809  **** odcTidyDB.c ****
+2800 "\
+Database System Name = %s\n\
+Database ID          = %d\n\
+Database File Host   = %s\n\
+Database Read Only   = %s\n\
+Database File Path   = %s\n"
+2801 "*Tidied*\n\n"
+2802 "*Not Tidied*\n\n"
+
+$ 2810-2819  **** odcTidyFD.c ****
+2810 "\
+FD System Name = %s\n\
+FD ID          = %d\n\n"
+2811 "\
+FD File Host = %s\n\
+FD File Path = %s\n"
+2812 "*Tidied*\n\n"
+2813 "*Not Tidied*\n\n"
+2815 "\
+AP System Name = %s\n\
+AP ID          = %d\n\
+AP File Host   = %s\n\
+AP File Path   = %s\n"
+2816 "*Tidied*\n\n"
+2817 "*Not Tidied*\n\n"
+
+
+$set 3
+1 "ascii"
+2 "Version: "
+

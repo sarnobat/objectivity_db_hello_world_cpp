@@ -1,0 +1,2833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by Lenny Hoffman (private) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Leonard Hoffman (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="ObjyXml">
+		<xs:annotation>
+			<xs:documentation>The root element for Objectivity design and runtime data. --Implicit--</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="Fd" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>--Implicit-- --PT1-- --PT2-- --PT3-- --PT4--</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Schema" type="SchemaType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>--Implicit-- --PT1-- </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Catalog" type="CatalogType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>--Implicit-- --PT1-- --PT4-- --No Load If Using PD--</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Data" type="DataType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>--Implicit-- --T1-- --PT2-- --PT3-- --T4--</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="systemName" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>--Read Only--</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="number" type="xs:unsignedInt" use="optional">
+							<xs:annotation>
+								<xs:documentation>--Read Only--</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="pageSize" type="xs:unsignedInt" use="optional">
+							<xs:annotation>
+								<xs:documentation>--Read Only--</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PqlQuery" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>--Implicit--</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Object" type="BasicObjectType"/>
+						</xs:sequence>
+						<xs:attribute name="scope" type="OidType" use="required"/>
+						<xs:attribute name="predicate" type="xs:string" use="required"/>
+						<xs:attribute name="class" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PersistentDesign" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Root for all design information used in the Persistence Design Document (PDD)</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Schema">
+								<xs:annotation>
+									<xs:documentation>Root for all schema design information</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Namespace" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="NamespaceType"/>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="defaultPersistenceOption" type="PersistenceOptionType" use="required"/>
+									<xs:attribute name="committed" type="xs:boolean" use="optional"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="haschanges" type="xs:boolean" use="optional"/>
+						<xs:attribute name="outFile" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="objyVersion" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>--Read Only--</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fdName" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>--Read Only--</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="bootFileHost" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>--Read Only--</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="bootFile" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>--Read Only--</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="timeStamp" type="xs:unsignedInt" use="optional" default="0">
+				<xs:annotation>
+					<xs:documentation>--Read Only--</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SchemaType">
+		<xs:annotation>
+			<xs:documentation>Represents an existing FD's schema, or a schema design that can be loaded into an FD.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Module" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A named schema --P1--</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="NameSpace" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>--P1--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Class" type="ClassType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="name" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--ID-- --Required For Create--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="markedDeleted" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation>--Read Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="isDefault" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation>--Read Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="name" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>--ID-- --Required For Create--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="schemaNumber" type="xs:unsignedInt" use="optional" default="0">
+						<xs:annotation>
+							<xs:documentation>--Transient Set Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="isProposed" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="markedDeleted" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="isDefault" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CatalogType">
+		<xs:annotation>
+			<xs:documentation>An existing FD's catalog.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Aps">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --PT1-- --No Load If Using PD--</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Ap" maxOccurs="65536">
+							<xs:annotation>
+								<xs:documentation>--P1-- --No Load If Using PD--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="systemName" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Transient Set Only-- --ID-- --Required For Create--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="bootFileHost" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="bootFile" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="sysDbHost" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="sysDbFile" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="jnlDirHost" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="jnlDir" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="lockServerHost" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="isOnline" type="xs:boolean" use="optional"/>
+								<xs:attribute name="partitionWeight" type="xs:unsignedInt" use="optional" default="1"/>
+								<xs:attribute name="id" type="xs:unsignedInt" use="optional">
+									<xs:annotation>
+										<xs:documentation>--Read Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="haveMultipleAps" type="xs:boolean" use="required">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Dbs">
+				<xs:annotation>
+					<xs:documentation>Imaged organized by DB --Implicit-- --PT1-- --PT4-- --No Load If Using PD--</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Db" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --L1-- --L4-- --No Load If Using PD--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DbImage" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--P1-- --P4-- --No Load If Using PD--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:annotation>
+												<xs:documentation>Database image information (no data)</xs:documentation>
+											</xs:annotation>
+											<xs:attribute name="host" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="file" type="xs:string" use="required">
+												<xs:annotation>
+													<xs:documentation>--Required For Create-- --Transient Set Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="apSystemName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Transient Set Only-- --ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="weight" type="xs:unsignedInt" use="optional" default="1"/>
+											<xs:attribute name="oid" type="OidType" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="systemName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="systemName" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>--Transient Set Only-- --Required For Create--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="oid" type="OidType" use="optional">
+									<xs:annotation>
+										<xs:documentation>--Read Only-- --ID--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="isReadOnly" type="xs:boolean" use="optional" default="false"/>
+								<xs:attribute name="pageSize" type="xs:unsignedInt" use="optional">
+									<xs:annotation>
+										<xs:documentation>--Read Only--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="isExternalSearchAgent" type="xs:boolean" use="optional" default="false"/>
+								<xs:attribute name="externalSearchAgentName" type="xs:string" use="optional"/>
+								<xs:attribute name="externalSearchAgentParameters" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="fdNumber" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DataType">
+		<xs:annotation>
+			<xs:documentation>An existing FD's data.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamedObjects" type="NamedObjectsType"/>
+			<xs:element name="DbData" type="DbDataType" minOccurs="0" maxOccurs="65536">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --T1-- --L2-- --L3-- --T4--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClassType">
+		<xs:annotation>
+			<xs:documentation>Objectivity schema class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Shape" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P1--</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Bases">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --PT1--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="BaseShape" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation> --P1--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="id" type="xs:unsignedInt" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="baseShapeName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="visibility" type="VisibilityType" use="optional" default="public"/>
+											<xs:attribute name="position" type="xs:unsignedInt" use="optional">
+												<xs:annotation>
+													<xs:documentation>---ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="baseShapeNumber" type="xs:unsignedInt" use="required"/>
+											<xs:attribute name="isProposed" type="xs:boolean" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="persistentCapable" type="xs:boolean" use="optional"/>
+											<xs:attribute name="baseShapeIsInternal" type="xs:boolean" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="baseShapeNamespace" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Members">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --PT1--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:choice minOccurs="0" maxOccurs="unbounded">
+									<xs:element name="BasicMember" type="BasicMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="EmbeddedMember" type="EmbeddedMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="RefMember" type="RefMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="StringMember" type="StringMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Utf8StringMember" type="Utf8StringMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="OptimizedStringMember" type="OptimizedStringMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="VArrayOfBasicMember" type="VArrayOfBasicMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="VArrayOfEmbeddedMember" type="VArrayOfEmbeddedMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="VArrayOfRefMember" type="VArrayOfRefMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="JArrayMember" type="JArrayMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="RelationshipMember" type="RelationshipMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="DateMember" type="DateMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TimeMember" type="TimeMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="DateTimeMember" type="DateTimeMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="IntervalMember" type="IntervalMemberType">
+										<xs:annotation>
+											<xs:documentation>--P1--</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Derived" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --No Load--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DerivedShape" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--Implicit-- --No Load--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="derivedShapeNumber" type="xs:unsignedInt" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="derivedShapeName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="derivedShapeNamespace" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="UsedBy" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --No Load--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="UsedByMember" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--Implicit-- --No Load--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="memberId" type="xs:unsignedInt" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="memberName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only-- --ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="memberType" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="shapeName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only-- --ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="shapeNumber" type="xs:unsignedInt" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="shapeNamespace" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation>--Read Only--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="name" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>--ID--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="hasVirtualTable" type="xs:boolean" use="optional" default="false"/>
+					<xs:attribute name="id" type="xs:unsignedInt" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="shapeNumber" type="xs:unsignedInt" use="optional" default="0">
+						<xs:annotation>
+							<xs:documentation>--Read Only-- --Required For Reproduction-- --ID--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="isLatestShape" type="xs:boolean" use="optional" default="true">
+						<xs:annotation>
+							<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="dimension" type="xs:unsignedInt" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="persistentCapable" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="previousShape" type="xs:unsignedInt" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="nextShape" type="xs:unsignedInt" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="isProposed" type="xs:boolean" use="optional" default="false">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="isContainer" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation>--Read Only--</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>--ID-- --Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="typeNumber" type="xs:unsignedInt" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isInternal" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="versionNumber" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="markedDeleted" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="namespace" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="MemberType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Class member type</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation/>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="id" type="xs:unsignedInt" use="required">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="position" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--ID-- </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="visibility" type="VisibilityType" use="optional" default="private"/>
+		<xs:attribute name="arraySize" type="xs:unsignedInt" use="optional" default="1"/>
+		<xs:attribute name="isProposed" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isNew" type="xs:boolean" use="optional"/>
+		<xs:attribute name="isVariableArray" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="BasicMemberType">
+		<xs:annotation>
+			<xs:documentation>Basic class member type (numeric)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" type="NumericType" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="defaultFloatValue" type="xs:anySimpleType" use="optional">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="defaultIntValue" type="xs:long" use="optional"/>
+				<xs:attribute name="defaultUIntValue" type="xs:unsignedLong" use="optional"/>
+				<xs:attribute name="defaultValueDump" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="NumericType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of basic numeric types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="char"/>
+			<xs:enumeration value="char16"/>
+			<xs:enumeration value="char32"/>
+			<xs:enumeration value="int8"/>
+			<xs:enumeration value="int16"/>
+			<xs:enumeration value="int32"/>
+			<xs:enumeration value="int64"/>
+			<xs:enumeration value="uint8"/>
+			<xs:enumeration value="uint16"/>
+			<xs:enumeration value="uint32"/>
+			<xs:enumeration value="uint64"/>
+			<xs:enumeration value="ptr"/>
+			<xs:enumeration value="float32"/>
+			<xs:enumeration value="float64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VisibilityType">
+		<xs:annotation>
+			<xs:documentation>Visibility enumeration</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="private"/>
+			<xs:enumeration value="protected"/>
+			<xs:enumeration value="public"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OidType">
+		<xs:annotation>
+			<xs:documentation>String restricted to XX-XX-XX-XX</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d+-\d+-\d+-\d+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EmbeddedMemberType">
+		<xs:annotation>
+			<xs:documentation>Embedded class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="embeddedShapeName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="embeddedShapeNumber" type="xs:unsignedInt" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="embeddedIsInternal" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="embeddedShapeNamespace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RefMemberType">
+		<xs:annotation>
+			<xs:documentation>Reference class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="referencedShapeName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="referencedShapeNumber" type="xs:unsignedInt" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="referencedIsInternal" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="referencedShapeNamespace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StringMemberType">
+		<xs:annotation>
+			<xs:documentation>Reference class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" use="optional" default="vString">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="fixedArrayOfChar"/>
+							<xs:enumeration value="fixedArrayOfChar16"/>
+							<xs:enumeration value="fixedArrayOfChar32"/>
+							<xs:enumeration value="vString"/>
+							<xs:enumeration value="vStringOptimized"/>
+							<xs:enumeration value="utf8String"/>
+							<xs:enumeration value="utf8StringOptimized"/>
+							<xs:enumeration value="utf16String"/>
+							<xs:enumeration value="utf16StringOptimized"/>
+							<xs:enumeration value="utf32String"/>
+							<xs:enumeration value="utf32StringOptimized"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="fixedLength" type="xs:int" use="optional" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Utf8StringMemberType">
+		<xs:annotation>
+			<xs:documentation>For backwerds compatibility only -- new uses should use StringMember with a type of Utf8String</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OptimizedStringMemberType">
+		<xs:annotation>
+			<xs:documentation>For backwerds compatibility only -- new uses should use StringMember with a type of VStringOptimized and a fixedLength equal to the optimziedLength</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="optimizedLength" type="xs:unsignedInt" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="JArrayMemberType">
+		<xs:annotation>
+			<xs:documentation>Reference class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" type="ArrayType" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VArrayOfBasicMemberType">
+		<xs:annotation>
+			<xs:documentation>VArray of basic (number) member. For backward compatibiity only.  Use BasicMember with isVariableArray = true.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" type="NumericType" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VArrayOfEmbeddedMemberType">
+		<xs:annotation>
+			<xs:documentation>VArray of embedded class member. For backward compatibiity only.  Use EmbeddedMember with isVariableArray = true.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="embeddedShapeName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="embeddedShapeNumber" type="xs:unsignedInt" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="embeddedIsInternal" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="embeddedShapeNamespace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VArrayOfRefMemberType">
+		<xs:annotation>
+			<xs:documentation>VArray of ref (ooRef) class member. For backward compatibiity only.  Use RefMember with isVariableArray = true.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="referencedShapeName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="referencedShapeNumber" type="xs:unsignedInt" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="referencedIsInternal" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="referencedShapeNamespace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RelationshipMemberType">
+		<xs:annotation>
+			<xs:documentation>Relationship class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="referencedShapeName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isToMany" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="encodedRelationshipNumber" type="xs:int" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only-- --Required For Reproduction-- </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isInline" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="copyPolicy" type="CopyPolicyType" use="optional" default="drop"/>
+				<xs:attribute name="versionPolicy" type="VersionPolicyType" use="optional" default="drop"/>
+				<xs:attribute name="propagateLocks" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="propagateDelete" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="referencedShapeNumber" type="xs:unsignedInt" use="required">
+					<xs:annotation>
+						<xs:documentation/>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isBidirectional" type="xs:boolean" use="optional" default="false">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="inverseMemberName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="inverseIsToMany" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="inverseMemberId" type="xs:unsignedInt" use="optional"/>
+				<xs:attribute name="referencedIsInternal" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="referencedShapeNamespace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DateMemberType">
+		<xs:annotation>
+			<xs:documentation>Date class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" use="optional" default="standardDate">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="standardDate"/>
+							<xs:enumeration value="odmgDate"/>
+							<xs:enumeration value="sqlDate"/>
+							<xs:enumeration value="nullableSqlDate"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TimeMemberType">
+		<xs:annotation>
+			<xs:documentation>Time class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" use="optional" default="standardTime">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="standardTime"/>
+							<xs:enumeration value="odmgTime"/>
+							<xs:enumeration value="sqlTime"/>
+							<xs:enumeration value="nullableSqlTime"/>
+							<xs:enumeration value="javaTime"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeMemberType">
+		<xs:annotation>
+			<xs:documentation>DateTime class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" use="optional" default="standardDateTime">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="standardDateTime"/>
+							<xs:enumeration value="odmgTimestamp"/>
+							<xs:enumeration value="sqlTimestamp"/>
+							<xs:enumeration value="nullableSqlTimestamp"/>
+							<xs:enumeration value="javaDate"/>
+							<xs:enumeration value="javaTimestamp"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IntervalMemberType">
+		<xs:annotation>
+			<xs:documentation>Interval class member</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MemberType">
+				<xs:attribute name="type" use="optional" default="standardInterval">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="standardInterval"/>
+							<xs:enumeration value="odmgInterval"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DbDataType">
+		<xs:annotation>
+			<xs:documentation>Logical DB</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamedObjects" type="NamedObjectsType"/>
+			<xs:element name="ContainerData" type="ContainerDataType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--T1-- --P2-- --L3-- --T4--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="systemName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oid" type="OidType" use="required">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numberOfContainers" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="ContainerDataType">
+		<xs:annotation>
+			<xs:documentation>Logical Container</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ContainerObject" type="ContainerObjectType">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --P2-- --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="Object" type="BasicObjectType">
+					<xs:annotation>
+						<xs:documentation>--P2-- --L3--</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Map" type="MapType">
+					<xs:annotation>
+						<xs:documentation>--P2-- --L3--</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="KeyDesc" type="KeyDescType">
+					<xs:annotation>
+						<xs:documentation>--P2-- --L3--</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="systemName" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="class" type="xs:string" use="optional" default="ooContObj">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Create-- --Not Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="hashValue" type="xs:unsignedInt" use="optional" default="0">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="percentGrow" type="xs:unsignedInt" use="optional" default="10">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oid" type="OidType" use="required">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="typeNumber" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numberOfLogicalPages" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="numberOfPhysicalPages" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isUpdated" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ObjectType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Persistent object (class instance)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamedObjects" type="NamedObjectsType" minOccurs="0"/>
+			<xs:element name="NameScopes" type="NameScopesType" minOccurs="0"/>
+			<xs:group ref="ValueGroup" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Versioning" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>--P3--</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="NextVersions">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --L3--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="NextVersion" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--P3--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="oid" type="OidType" use="required">
+												<xs:annotation>
+													<xs:documentation>--ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="DerivedFroms">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --L3--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DerivedFrom" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--P3--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="oid" type="OidType" use="required">
+												<xs:annotation>
+													<xs:documentation>--ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Derivatives">
+							<xs:annotation>
+								<xs:documentation>--Implicit-- --L3--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Derivative" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>--P3--</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="oid" type="OidType" use="required">
+												<xs:annotation>
+													<xs:documentation>--ID--</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="geneologyObject" type="OidType" use="optional"/>
+					<xs:attribute name="checkoutInfoObject" type="OidType" use="optional"/>
+					<xs:attribute name="previousVersion" type="OidType" use="optional"/>
+					<xs:attribute name="isDefault" type="xs:boolean" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="class" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Create-- --Not Required For Reproduction--  --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="namespace" type="xs:string" use="optional"/>
+		<xs:attribute name="oid" type="OidType" use="required">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="typeNumber" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="outOfLineAssocSize" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MapType">
+		<xs:annotation>
+			<xs:documentation>ooMap specialization</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ObjectType">
+				<xs:sequence>
+					<xs:element name="MapElement" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--P2-- --SR3--</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attribute name="hexRepresentation" type="xs:string" use="optional" default="false">
+								<xs:annotation>
+									<xs:documentation>--Transient Set Only--</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="name" type="xs:string" use="required">
+								<xs:annotation>
+									<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="oid" type="OidType" use="required">
+								<xs:annotation>
+									<xs:documentation>--Required For Create--</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="class" type="xs:string" use="optional">
+								<xs:annotation>
+									<xs:documentation>--Read Only--</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="exists" type="xs:boolean" use="optional">
+								<xs:annotation>
+									<xs:documentation>--Read Only--</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="numberOfBins" type="xs:unsignedInt" use="optional" default="11">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="maxAverageDensity" type="xs:unsignedInt" use="optional" default="5">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="percentGrow" type="xs:unsignedInt" use="optional" default="100">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="refIntegrityIsEnabled" type="xs:boolean" use="optional"/>
+				<xs:attribute name="size" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="numberOfAdds" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="numberOfDeletes" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="numberOfLookups" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="numberOfRehashes" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KeyDescType">
+		<xs:annotation>
+			<xs:documentation>ooKeyDesc specialization</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ObjectType">
+				<xs:sequence>
+					<xs:element name="KeyField" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--P2--</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="ObjectType">
+									<xs:attribute name="member" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="isFixedLen" type="xs:boolean" use="optional" default="false">
+										<xs:annotation>
+											<xs:documentation>--Transient Set Only--</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="maxStrLen" type="xs:unsignedInt" use="optional" default="24">
+										<xs:annotation>
+											<xs:documentation>--Transient Set Only--</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="isConsistent" type="xs:boolean" use="optional">
+										<xs:annotation>
+											<xs:documentation>--Read Only--</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="FdIndex">
+							<xs:annotation>
+								<xs:documentation>--P3-- --No Load If Using PD--</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DbIndex">
+							<xs:annotation>
+								<xs:documentation>--P3-- --No Load If Using PD--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="dbOid" type="OidType" use="required">
+									<xs:annotation>
+										<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ContainerIndex">
+							<xs:annotation>
+								<xs:documentation>--P3-- --No Load If Using PD--</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="containerOid" type="OidType" use="required">
+									<xs:annotation>
+										<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute name="indexedClass" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only-- --Required For Create-- --Not Required For Reproduction--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isUnique" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only-- --Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="indexedTypeNumber" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only-- --Required For Reproduction--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isConsistent" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="ValueGroup">
+		<xs:annotation>
+			<xs:documentation>Collection of all object value elements.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Basic" type="BasicType">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --P2-- --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="String" type="StringType">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --P2-- --P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="DateType"/>
+			<xs:element name="Time" type="TimeType"/>
+			<xs:element name="DateTime" type="DateTimeType"/>
+			<xs:element name="Interval" type="IntervalType"/>
+			<xs:element name="Embedded" type="EmbeddedType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --L2-- --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ref" type="RefType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --L2-- --P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FixedArray" type="FixedArrayType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --L2--  --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VariableArray" type="VariableArrayType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --P2--  --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JArray" type="JArrayType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --L2--  --P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToOne" type="ToOneType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --L2-- --P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ToMany" type="ToManyType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --P2--  --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inherited" type="InheritedType">
+				<xs:annotation>
+					<xs:documentation>--Implicit--  --L2--  --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="ValueType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Base for all object value types.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="position" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="InheritedType">
+		<xs:annotation>
+			<xs:documentation>Inherited object values.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:group ref="ValueGroup" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BasicType">
+		<xs:annotation>
+			<xs:documentation>Numeric value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="type" type="NumericType" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="intValue" type="xs:long" use="optional"/>
+				<xs:attribute name="uintValue" type="xs:unsignedLong" use="optional"/>
+				<xs:attribute name="floatValue" type="xs:double" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="valueDump" type="xs:hexBinary" use="optional">
+					<xs:annotation>
+						<xs:documentation>Applys to float numeric types only.  The actual bytes used to represent the float value in the database.  Used by dump/load to exactly reproduce float values. --Required For Reproduction--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DateType">
+		<xs:annotation>
+			<xs:documentation>Date value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="isNull" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="value" type="xs:long" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TimeType">
+		<xs:annotation>
+			<xs:documentation>Time value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="isNull" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="value" type="xs:long" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="kind" type="TimeKind" use="optional" default="unspecified"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType">
+		<xs:annotation>
+			<xs:documentation>Date/Time value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="isNull" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="value" type="xs:long" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="kind" type="TimeKind" use="optional" default="unspecified"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IntervalType">
+		<xs:annotation>
+			<xs:documentation>Interval value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="isNull" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="value" type="xs:long" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StringType">
+		<xs:annotation>
+			<xs:documentation>String value</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only-- --ID--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="position" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="hexRepresentation" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="supportsHex" type="xs:boolean" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="EmbeddedType">
+		<xs:annotation>
+			<xs:documentation>Embedded values</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:group ref="ValueGroup" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:attribute name="class" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RefType">
+		<xs:annotation>
+			<xs:documentation>Ref Value</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="oid" type="OidType" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create-- --P3--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="exists" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="class" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClass" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FixedArrayType">
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:choice>
+					<xs:element name="BasicElement" type="BasicElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="StringElement" type="StringElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RefElement" type="RefElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P3--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EmbeddedElement" type="EmbeddedElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --L2-- --L3--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VariableArrayElement" type="VariableArrayElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2-- --L3--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DateElement" type="DateElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TimeElement" type="TimeElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DateTimeElement" type="DateTimeElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="IntervalElement" type="IntervalElementType" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--Implicit-- --P2--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+				<xs:attribute name="size" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:unsignedInt"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="type" type="ArrayType" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClass" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="JArrayElementType">
+		<xs:group ref="JArrayElementGroup"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="size" type="xs:unsignedInt" use="optional"/>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VariableArrayElementType">
+		<xs:group ref="VariableArrayElementGroup"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="size" type="xs:unsignedInt" use="optional"/>
+		<xs:attribute name="type" type="ArrayType" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="specifiedClass" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isShort" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VariableArrayType">
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:group ref="VariableArrayElementGroup"/>
+				<xs:attribute name="size" type="xs:unsignedInt" use="optional"/>
+				<xs:attribute name="type" type="ArrayType" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClass" type="xs:string" use="optional"/>
+				<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="JArrayElementGroup">
+		<xs:choice>
+			<xs:element name="BasicElement" type="BasicElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StringElement" type="StringElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RefElement" type="RefElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--Implicit-- --P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JArrayElement" type="JArrayElementType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="JArrayType">
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:group ref="JArrayElementGroup"/>
+				<xs:attribute name="size" use="optional">
+					<xs:simpleType>
+						<xs:restriction base="xs:unsignedInt"/>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="type" type="ArrayType" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="class" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="numberOfDimensions" type="xs:unsignedInt" use="optional" default="1"/>
+				<xs:attribute name="oid" type="OidType" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToOneType">
+		<xs:annotation>
+			<xs:documentation>To-one relationship value</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:attribute name="oid" type="OidType" use="required">
+					<xs:annotation>
+						<xs:documentation>--Required For Create-- --P3--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="class" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="exists" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClass" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToManyType">
+		<xs:annotation>
+			<xs:documentation>To-many relationship value</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ValueType">
+				<xs:sequence>
+					<xs:element name="RefElement" type="RefElementType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>--P3--</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="size" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClass" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="isShort" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BasicElementType">
+		<xs:annotation>
+			<xs:documentation>A numeric array element value</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="intValue" type="xs:long" use="optional"/>
+		<xs:attribute name="uintValue" type="xs:unsignedLong" use="optional"/>
+		<xs:attribute name="floatValue" type="xs:double" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Required For Create--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="valueDump" type="xs:hexBinary" use="optional">
+			<xs:annotation>
+				<xs:documentation>Applys to float numeric types only.  The actual bytes used to represent the float value in the database.  Used by dump/load to exactly reproduce float values.  --Required For Reproduction--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="NumericType" use="optional"/>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DateElementType">
+		<xs:annotation>
+			<xs:documentation>A date array element value</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="isNull" type="xs:boolean" use="optional"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TimeElementType">
+		<xs:annotation>
+			<xs:documentation>A time array element value</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="isNull" type="xs:boolean" use="optional"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DateTimeElementType">
+		<xs:annotation>
+			<xs:documentation>A date/time array element value</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="isNull" type="xs:boolean" use="optional"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="IntervalElementType">
+		<xs:annotation>
+			<xs:documentation>An interval array element value</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="isNull" type="xs:boolean" use="optional"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="EmbeddedElementType">
+		<xs:annotation>
+			<xs:documentation>A embedded array element value</xs:documentation>
+		</xs:annotation>
+		<xs:group ref="ValueGroup" minOccurs="0" maxOccurs="unbounded"/>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="RefElementType">
+		<xs:annotation>
+			<xs:documentation>A ref array element value</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="oid" type="OidType" use="required">
+			<xs:annotation>
+				<xs:documentation>read only if a child of ToMany --Required For Create-- --P3--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="class" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="exists" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isShort" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="specifiedClass" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="specifiedClassNameSpace" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="BasicObjectType">
+		<xs:complexContent>
+			<xs:extension base="ObjectType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="CopyPolicyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="copy"/>
+			<xs:enumeration value="drop"/>
+			<xs:enumeration value="move"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StringElementType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="hexRepresentation" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="index" type="xs:unsignedInt" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only-- --ID--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="supportsHex" type="xs:boolean" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="VersionPolicyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="copy"/>
+			<xs:enumeration value="drop"/>
+			<xs:enumeration value="move"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:group name="VariableArrayElementGroup">
+		<xs:choice>
+			<xs:element name="BasicElement" type="BasicElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmbeddedElement" type="EmbeddedElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--L2-- --L3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RefElement" type="RefElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateElement" type="DateElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeElement" type="TimeElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateTimeElement" type="DateTimeElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IntervalElement" type="IntervalElementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>--P2--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="NamedObjectType">
+		<xs:attribute name="hexRepresentation" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Create--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="oid" type="OidType" use="required">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NameScopeType" abstract="true">
+		<xs:attribute name="hexRepresentation" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>--Transient Set Only-- --Required For Create--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isReadOnly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>--Read Only--</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ContainerObjectType">
+		<xs:annotation>
+			<xs:documentation>The main object of a container</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ObjectType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="ArrayType">
+		<xs:annotation>
+			<xs:documentation>Different types of fixed and variable arrays.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="char"/>
+			<xs:enumeration value="char16"/>
+			<xs:enumeration value="char32"/>
+			<xs:enumeration value="int8"/>
+			<xs:enumeration value="int16"/>
+			<xs:enumeration value="int32"/>
+			<xs:enumeration value="int64"/>
+			<xs:enumeration value="uint8"/>
+			<xs:enumeration value="uint16"/>
+			<xs:enumeration value="uint32"/>
+			<xs:enumeration value="uint64"/>
+			<xs:enumeration value="ptr"/>
+			<xs:enumeration value="float32"/>
+			<xs:enumeration value="float64"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="embedded"/>
+			<xs:enumeration value="ref"/>
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="vArray"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="time"/>
+			<xs:enumeration value="dateTime"/>
+			<xs:enumeration value="interval"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="FdNameScopeType">
+		<xs:complexContent>
+			<xs:extension base="NameScopeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ApNameScopeType">
+		<xs:complexContent>
+			<xs:extension base="NameScopeType">
+				<xs:attribute name="apId" type="xs:unsignedInt" use="required">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only-- --Required For Create--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="apSystemName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>--Read Only-- --ID--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContainerNameScopeType">
+		<xs:complexContent>
+			<xs:extension base="NameScopeType">
+				<xs:attribute name="containerOid" type="OidType" use="required">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DbNameScopeType">
+		<xs:complexContent>
+			<xs:extension base="NameScopeType">
+				<xs:attribute name="dbOid" type="OidType" use="required">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ObjectNameScopeType">
+		<xs:complexContent>
+			<xs:extension base="NameScopeType">
+				<xs:attribute name="objectOid" type="OidType" use="required">
+					<xs:annotation>
+						<xs:documentation>--Transient Set Only-- --Required For Create-- --ID--</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NamedObjectsType">
+		<xs:choice>
+			<xs:element name="NamedObject" type="NamedObjectType">
+				<xs:annotation>
+					<xs:documentation>--P3-- --Implicit-- --No Load--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NamedContainer" type="NamedObjectType">
+				<xs:annotation>
+					<xs:documentation>--P3-- --No Load-- --Implicit--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="NameScopesType">
+		<xs:annotation>
+			<xs:documentation>Collection of all name scope elements.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="FdNameScope" type="FdNameScopeType">
+				<xs:annotation>
+					<xs:documentation>--P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ApNameScope" type="ApNameScopeType">
+				<xs:annotation>
+					<xs:documentation>--P3-- --No Load If Using PD--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DbNameScope" type="DbNameScopeType">
+				<xs:annotation>
+					<xs:documentation>--P3-- --No Load If Using PD--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerNameScope" type="ContainerNameScopeType">
+				<xs:annotation>
+					<xs:documentation>--P3-- --No Load If Using PD--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjectNameScope" type="ObjectNameScopeType">
+				<xs:annotation>
+					<xs:documentation>--P3--</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="DesignSchemaComponent">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="applicationName" type="xs:string" use="required"/>
+		<xs:attribute name="comment" type="xs:string" use="required"/>
+		<xs:attribute name="committed" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="DesignAttribute">
+		<xs:complexContent>
+			<xs:extension base="DesignSchemaComponent">
+				<xs:attribute name="visibility" type="DesignVisibility" use="required"/>
+				<xs:attribute name="isVariableArray" type="xs:boolean" use="required"/>
+				<xs:attribute name="fixedArraySize" type="xs:int" use="required"/>
+				<xs:attribute name="id" type="xs:int" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DesignAssociationEnd">
+		<xs:complexContent>
+			<xs:extension base="DesignAttribute">
+				<xs:sequence>
+					<xs:element name="ReferenceSpec" type="ClassSpecType"/>
+				</xs:sequence>
+				<xs:attribute name="isShort" type="xs:boolean" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DesignHashCollection">
+		<xs:complexContent>
+			<xs:extension base="DesignAssociationEnd">
+				<xs:sequence>
+					<xs:element name="ComparatorSpec" type="ClassSpecType"/>
+				</xs:sequence>
+				<xs:attribute name="pagesPerBucket" type="xs:int" use="required">
+					<xs:annotation>
+						<xs:documentation>Only meaningful if autoCreate or addCreateMethod are true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="autoCreate" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>When true the collection is created in the parent class's constructor.
+Ignored if isVariableArray is true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="addCreateMethod" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>When true a method is added to the parent class that creates an instance of the collection to be insertable into the variable array.
+Not used when isVariableArray is false.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DesignTreeCollection">
+		<xs:complexContent>
+			<xs:extension base="DesignAssociationEnd">
+				<xs:attribute name="numberOfElementsHint" type="xs:int" use="required">
+					<xs:annotation>
+						<xs:documentation>Only meaningful if autoCreate or addCreateMethod are true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="autoCreate" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>When true the collection is created in the parent class's constructor.
+Ignored if isVariableArray is true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="addCreateMethod" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>When true a method is added to the parent class that creates an instance of the collection to be insertable into the variable array.
+Not used when isVariableArray is false.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DesignMap">
+		<xs:annotation>
+			<xs:documentation>A String to object map (ooMap)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DesignAssociationEnd">
+				<xs:attribute name="numberOfBins" type="xs:int" use="required">
+					<xs:annotation>
+						<xs:documentation>Only meaningful if autoCreate or addCreateMethod are true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="maxAverageDensity" type="xs:int" use="required">
+					<xs:annotation>
+						<xs:documentation>Only meaningful if autoCreate or addCreateMethod are true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="percentGrowth" type="xs:int" use="required">
+					<xs:annotation>
+						<xs:documentation>Only meaningful if autoCreate or addCreateMethod are true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="maintainReferencialIntegrity" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>Only meaningful if autoCreate or addCreateMethod are true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="autoCreate" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>When true the collection is created in the parent class's constructor.
+Ignored if isVariableArray is true.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="addCreateMethod" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation>When true a method is added to the parent class that creates an instance of the collection to be insertable into the variable array.
+Not used when isVariableArray is false.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="DesignVisibility">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="internal"/>
+			<xs:enumeration value="internalProtected"/>
+			<xs:enumeration value="private"/>
+			<xs:enumeration value="protected"/>
+			<xs:enumeration value="public"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DesignNumericType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Char"/>
+			<xs:enumeration value="Char16"/>
+			<xs:enumeration value="Char32"/>
+			<xs:enumeration value="Int8"/>
+			<xs:enumeration value="Int16"/>
+			<xs:enumeration value="Int32"/>
+			<xs:enumeration value="Int64"/>
+			<xs:enumeration value="UInt8"/>
+			<xs:enumeration value="UInt16"/>
+			<xs:enumeration value="UInt32"/>
+			<xs:enumeration value="UInt64"/>
+			<xs:enumeration value="Float32"/>
+			<xs:enumeration value="Float64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DesignClass">
+		<xs:complexContent>
+			<xs:extension base="DesignSchemaComponent">
+				<xs:sequence>
+					<xs:element name="TypeParameters">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="TypeParameter" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="ClassSpecType">
+												<xs:attribute name="name" type="xs:string"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SuperClass" type="ClassSpecType"/>
+					<xs:element name="Attributes">
+						<xs:complexType>
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="Numeric">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="type" type="DesignNumericType" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Boolean" type="DesignAttribute"/>
+								<xs:element name="String">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="representation" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="char"/>
+															<xs:enumeration value="utf8"/>
+															<xs:enumeration value="utf16"/>
+															<xs:enumeration value="utf32"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="type" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="fixed"/>
+															<xs:enumeration value="variable"/>
+															<xs:enumeration value="optimized"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="fixedLength" type="xs:int" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Embedded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="embedded" type="xs:int" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Reference" type="DesignAssociationEnd"/>
+								<xs:element name="UnidirectionalRelationship" type="DesignRelationshipType"/>
+								<xs:element name="BidirectionalRelationship">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignRelationshipType">
+												<xs:attribute name="inverseMember" type="xs:int" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Date">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="dateRepresentation" type="DesignDateRepresentation" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="DateTime">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="dateTimeRepresentation" type="DesignDateTimeRepresentation" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Time">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="timeRepresentation" type="DesignTimeRepresentation" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Interval">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="intervalRepresentation" type="DesignIntervalRepresentation" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Map" type="DesignMap"/>
+								<xs:element name="HashSet" type="DesignHashCollection"/>
+								<xs:element name="HashMap">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignHashCollection">
+												<xs:sequence>
+													<xs:element name="KeyReferenceSpec" type="ClassSpecType"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="TreeList" type="DesignTreeCollection"/>
+								<xs:element name="TreeMap">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignTreeCollection">
+												<xs:sequence>
+													<xs:element name="KeyReferencedSpec" type="ClassSpecType"/>
+													<xs:element name="ComparatorSpec" type="ClassSpecType"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="TreeSet">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignTreeCollection">
+												<xs:sequence>
+													<xs:element name="ComparatorSpec" type="ClassSpecType"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Enumeration">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="DesignAttribute">
+												<xs:attribute name="baseType" type="DesignNumericType" use="required"/>
+												<xs:attribute name="enumName" type="xs:string" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="NestedClasses">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Class" type="DesignClass" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="type" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Referenceable"/>
+							<xs:enumeration value="Embeddable"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="visibility" type="DesignVisibility" use="required"/>
+				<xs:attribute name="typeNumber" type="xs:int" use="required"/>
+				<xs:attribute name="isDeleted" type="xs:boolean" use="required"/>
+				<xs:attribute name="persistenceOption" type="PersistenceOptionType" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DesignRelationshipType">
+		<xs:complexContent>
+			<xs:extension base="DesignAssociationEnd">
+				<xs:attribute name="cardinality" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="toOne"/>
+							<xs:enumeration value="toMany"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="isInline" type="xs:boolean" use="required"/>
+				<xs:attribute name="copyPolicy" type="CopyPolicyType" use="required"/>
+				<xs:attribute name="versionPolicy" type="VersionPolicyType" use="required"/>
+				<xs:attribute name="propagateLocks" type="xs:boolean" use="required"/>
+				<xs:attribute name="propagateDelete" type="xs:boolean" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NamespaceType">
+		<xs:sequence>
+			<xs:element name="Class" type="DesignClass" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Namespace" type="NamespaceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="applicationName" type="xs:string" use="required"/>
+		<xs:attribute name="isDeleted" type="xs:boolean" use="required"/>
+		<xs:attribute name="defaultPersistenceOption" type="PersistenceOptionType" use="required"/>
+		<xs:attribute name="committed" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="GenericParameterType">
+		<xs:annotation>
+			<xs:documentation>A type parameter binding</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GenericParameter" type="GenericParameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="referenced" type="xs:int" use="optional"/>
+		<xs:attribute name="typeParameter" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="PersistenceOptionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="byInheritance"/>
+			<xs:enumeration value="byInterface"/>
+			<xs:enumeration value="default"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DesignDateRepresentation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="standard"/>
+			<xs:enumeration value="sql"/>
+			<xs:enumeration value="sqlNullable"/>
+			<xs:enumeration value="odmg"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DesignTimeRepresentation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="standard"/>
+			<xs:enumeration value="sql"/>
+			<xs:enumeration value="sqlNullable"/>
+			<xs:enumeration value="java"/>
+			<xs:enumeration value="odmg"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DesignDateTimeRepresentation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="standard"/>
+			<xs:enumeration value="sql"/>
+			<xs:enumeration value="sqlNullable"/>
+			<xs:enumeration value="javaDate"/>
+			<xs:enumeration value="javaTimestamp"/>
+			<xs:enumeration value="odmg"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DesignIntervalRepresentation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="standard"/>
+			<xs:enumeration value="odmg"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ClassSpecType">
+		<xs:sequence>
+			<xs:element name="GenericParameter" type="GenericParameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="referenced" type="xs:int"/>
+		<xs:attribute name="typeParameter" type="xs:string"/>
+	</xs:complexType>
+	<xs:simpleType name="TimeKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="unspecified"/>
+			<xs:enumeration value="utc"/>
+			<xs:enumeration value="local"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

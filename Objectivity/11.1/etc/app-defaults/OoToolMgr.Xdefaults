@@ -1,0 +1,209 @@
+
+
+
+!*****************************************************************************
+!	    Copyright (c) 1990-2000 Objectivity, Inc.
+!			  All Rights Reserved  	
+!
+!  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Objectivity, Inc.
+!	
+!	The copyright notice above does not evidence any   	
+!	actual or intended publication of such source code.
+!
+!*****************************************************************************
+
+!=============================================================================
+!  These resource specifications allow you to override the default behavior
+!  of the Objectivity/DB Graphical Tools. The default behavior is specified by
+!  the app-defaults file (/usr/lib/X11/app-defaults/OoToolMgr).
+!
+!  Add any or all of these resources to your .Xdefaults file to override 
+!  the default value in the app-defaults file.
+!
+!  Note that comment lines within this file begin with an exclamation mark (!).
+!
+!  When setting values note that...
+!    o  The width and height values are those displayed by many window 
+!       managers when a window is resized.
+!    o  Toggle values are grouped together. Only one may have the value "true",
+!       all others in the group must be "false".
+!    o  Checkbox values may be either "true" or "false"
+!=============================================================================
+
+!-----------------------------------------------------------------------------
+! Global Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*scrollBarPlacement:					BOTTOM_RIGHT
+ootoolmgr*repeatRate:						100
+ootoolmgr*tabspace:						4
+
+!-----------------------------------------------------------------------------
+! STATISTICS PANEL Settings
+!-----------------------------------------------------------------------------
+
+!! Initial value for view mode, only one may be "true" and the other "false"
+!
+ootoolmgr*statisticsPanel*viewMenu*totalToggle.set:		true
+ootoolmgr*statisticsPanel*viewMenu*relativeToggle.set:		false
+
+
+!-----------------------------------------------------------------------------
+! TOOLMGR PANEL Settings
+!-----------------------------------------------------------------------------
+
+!! Open FDB Dialog Settings
+!
+ootoolmgr*openFDB*dirMask: 					*
+
+!! Load Dialog settings
+!! Initial values for the load dialog check boxes.
+!
+ootoolmgr*loadDialog*abortChangesCheckbox.set:			false
+ootoolmgr*loadDialog*replaceContainerCheckbox.set:		false
+ootoolmgr*loadDialog*replaceDatabasesCheckbox.set:		false
+ootoolmgr*loadDialog*verboseCheckbox.set:			false
+
+!! Dump dialog settings
+!! Initial values for the dump dialog toggles.  These are one-of-many
+!  toggles.  Exactly one should be set to true and the others to false.
+!
+ootoolmgr*dumpDialog*dumpDecimalToggle.set:			true
+ootoolmgr*dumpDialog*dumpOctalToggle.set:			false
+ootoolmgr*dumpDialog*dumpHexToggle.set:			false
+
+
+!-----------------------------------------------------------------------------
+! DATA BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*instancePanel*objectContentRegion*stringArea*repeatRate:	1
+ootoolmgr*instancePanel*objectContentRegion*assocArea*repeatRate:	100
+ootoolmgr*instancePanel*objectContentRegion*arrayArea*repeatRate:	100
+ootoolmgr*instancePanel*backtrackLevels:			100
+
+!!
+!  lookAheadPolicy, lookAheadSize, and lookAheadFill control how database,
+!  container, or basic objects beyond the last item are reflected in the
+!  scroll bar slider size.  Values for lookAheadPolicy are:
+!
+!	LOOKAHEAD_PERCENT_VISIBLE  look ahead percent of visible list height
+!				   -- lookAheadSize is percent: 100 means 100%
+!	LOOKAHEAD_ITEMS		   look ahead a fixed number of items
+!				   -- lookAheadSize is number of items
+!	LOOKAHEAD_ALL		   look ahead through all items 
+!				   -- lookAheadSize is ignored with this policy
+!				   WARNING: may causes long delay
+!	LOOKAHEAD_NONE		   do not look ahead
+!				   -- lookAheadSize is ignored with this policy
+!
+ootoolmgr*instancePanel*databaseArea*lookAheadPolicy: 		LOOKAHEAD_PERCENT_VISIBLE
+ootoolmgr*instancePanel*databaseArea*lookAheadSize:   		100
+ootoolmgr*instancePanel*databaseArea*lookAheadFill:   		true
+ootoolmgr*instancePanel*containerArea*lookAheadPolicy: 		LOOKAHEAD_PERCENT_VISIBLE
+ootoolmgr*instancePanel*containerArea*lookAheadSize:  		100
+ootoolmgr*instancePanel*containerArea*lookAheadFill:  		true
+ootoolmgr*instancePanel*objectArea*lookAheadPolicy: 		LOOKAHEAD_PERCENT_VISIBLE
+ootoolmgr*instancePanel*objectArea*lookAheadSize:   		100
+ootoolmgr*instancePanel*objectArea*lookAheadFill:		true
+
+
+!! Initial values for the view menu checkboxes and toggles.  The
+!  namesToggle and idsToggle are one-of-many toggles.  Exactly 
+!  one of them should be set to true, and the other to false.
+!
+ootoolmgr*instancePanel*viewMenu*typesCheckbox.set:		true
+ootoolmgr*instancePanel*viewMenu*systemCheckbox.set:		true
+ootoolmgr*instancePanel*viewMenu*userCheckbox.set:		true
+ootoolmgr*instancePanel*viewMenu*inheritedCheckbox.set:	true
+ootoolmgr*instancePanel*viewMenu*emptyCheckbox.set:		false
+
+!! However, these two are at-least-one of many toggles
+!  -- both cannot be false.
+ootoolmgr*instancePanel*viewMenu*namesToggle.set:		true
+ootoolmgr*instancePanel*viewMenu*idsToggle.set:		false
+
+!! Query Dialog settings
+!
+ootoolmgr*queryDialog*useScopeToggle.set:			false
+
+!!
+!  lookAheadPolicy, lookAheadSize, and lookAheadFill control how query result
+!  objects beyond the last item are generated and reflected in the scroll bar
+!  slider size.  Values for lookAheadPolicy are:
+!
+!	LOOKAHEAD_PERCENT_VISIBLE  look ahead percent of visible list height
+!				   -- lookAheadSize is percent: 100 means 100%
+!	LOOKAHEAD_ITEMS		   look ahead a fixed number of items
+!				   -- lookAheadSize is number of items
+!	LOOKAHEAD_ALL		   look ahead through all items 
+!				   -- lookAheadSize is ignored with this policy
+!				   WARNING: may causes long delay
+!	LOOKAHEAD_NONE		   do not look ahead
+!				   -- lookAheadSize is ignored with this policy
+!
+!  Default LOOKAHEAD_NONE avoids unnecessary delays in displaying query results
+!
+ootoolmgr*queryDialog*queryList*lookAheadPolicy: 		LOOKAHEAD_NONE
+ootoolmgr*queryDialog*queryList*lookAheadFill:			true
+ootoolmgr*queryAssocDialog*queryList*lookAheadPolicy: 		LOOKAHEAD_NONE
+ootoolmgr*queryAssocDialog*queryList*lookAheadFill:		true
+
+!-----------------------------------------------------------------------------
+! TYPE BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*typePanel*backtrackLevels:				100
+
+!! Initial values for the view menu checkboxes and toggles.  
+!
+ootoolmgr*typePanel*viewMenu*systemCheckbox*set:		true
+ootoolmgr*typePanel*viewMenu*userCheckbox.set:			true
+ootoolmgr*typePanel*viewMenu*inheritedCheckbox.set:		true
+ootoolmgr*typePanel*viewMenu*persistentToggle.set:		true
+ootoolmgr*typePanel*viewMenu*nonpersistentToggle.set:		false
+
+
+!!
+!  lookAheadPolicy, lookAheadSize, and lookAheadFill control how types
+!  beyond the last item are reflected in the scroll bar slider size.
+!  Values for lookAheadPolicy are:
+!
+!	LOOKAHEAD_PERCENT_VISIBLE  look ahead percent of visible list height
+!				   -- lookAheadSize is percent: 100 means 100%
+!	LOOKAHEAD_ITEMS		   look ahead a fixed number of items
+!				   -- lookAheadSize is number of items
+!	LOOKAHEAD_ALL		   look ahead through all items 
+!				   -- lookAheadSize is ignored with this policy
+!				   WARNING: may causes long delay
+!	LOOKAHEAD_NONE		   do not look ahead
+!				   -- lookAheadSize is ignored with this policy
+!
+ootoolmgr*typePanel*typesArea*lookAheadPolicy: 			LOOKAHEAD_PERCENT_VISIBLE
+ootoolmgr*typePanel*typesArea*lookAheadSize:   		100
+ootoolmgr*typePanel*typesArea*lookAheadFill:  			true
+ootoolmgr*typePanel*derivedTypesArea*lookAheadPolicy: 		LOOKAHEAD_PERCENT_VISIBLE
+ootoolmgr*typePanel*derivedTypesArea*lookAheadSize:  		100
+ootoolmgr*typePanel*derivedTypesArea*lookAheadFill:  		true
+
+
+!-----------------------------------------------------------------------------
+! HELP BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*helpPanel*helpTopicRegion*backtrackLevels:		100
+
+!!
+!  lookAheadPolicy, lookAheadSize, and lookAheadFill control how topics
+!  beyond the last item are reflected in the scroll bar slider size.
+!  Values for lookAheadPolicy are:
+!
+!	LOOKAHEAD_PERCENT_VISIBLE  look ahead percent of visible list height
+!				   -- lookAheadSize is percent: 100 means 100%
+!	LOOKAHEAD_ITEMS		   look ahead a fixed number of items
+!				   -- lookAheadSize is number of items
+!	LOOKAHEAD_ALL		   look ahead through all items 
+!				   -- lookAheadSize is ignored with this policy
+!				   WARNING: may causes long delay
+!	LOOKAHEAD_NONE		   do not look ahead
+!				   -- lookAheadSize is ignored with this policy
+!
+ootoolmgr*helpPanel*helpIndex*lookAheadPolicy: 		LOOKAHEAD_PERCENT_VISIBLE
+ootoolmgr*helpPanel*helpIndex*lookAheadSize:   		100
+ootoolmgr*helpPanel*helpIndex*lookAheadFill: 			true

@@ -1,0 +1,29 @@
+<!--
+/*
+ * @(#)objectivity-cmp-jar.dtd
+ *
+ * Copyright (c) 2002 Objectivity, Inc. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Objectivity, Inc. ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Objectivity.
+ *
+ * OBJECTIVITY MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY
+ * OF THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE, OR NON-INFRINGEMENT. OBJECTIVITY SHALL NOT BE LIABLE FOR ANY
+ * DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR
+ * DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
+ *
+ */
+-->
+<!ELEMENT objectivity-cmp-jar (objectivity-cmp-bean+)>
+<!ELEMENT objectivity-cmp-bean (ejb-name, cluster-strategy?)>
+<!ELEMENT ejb-name (#PCDATA)>
+<!ELEMENT cluster-strategy EMPTY>
+<!ATTLIST cluster-strategy priority-bits CDATA "7">
+<!ATTLIST cluster-strategy gc-container (true|false) "true">
+<!ATTLIST cluster-strategy database-name CDATA "OoFDRoots">
+<!ATTLIST cluster-strategy container-name CDATA "_ooDefaultContObj">

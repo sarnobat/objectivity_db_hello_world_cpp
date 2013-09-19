@@ -1,0 +1,19 @@
+$quote "
+$set 1
+6250 "\
+libdu: Error occurred in service %s. Processing terminated."
+6251 "\
+libdu: Invalid integer format specified. Processing terminated."
+6252 "\
+libdu: Unexpected null object handle detected. Processing terminated."
+6253 "\
+libdu: NIL output file pointer specified. Processing terminated."
+6254 "\
+libdu: Error number %d occurred. Processing terminated."
+
+$set 2
+
+
+$set 3
+1 "ascii"
+2 "Version: "

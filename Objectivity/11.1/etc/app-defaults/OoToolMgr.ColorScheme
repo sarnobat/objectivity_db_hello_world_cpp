@@ -1,0 +1,74 @@
+
+
+
+!**************************************************************************
+!	    Copyright (c) 1990-2000 Objectivity, Inc.
+!			  All Rights Reserved  	
+!
+!  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Objectivity, Inc.
+!	
+!	The copyright notice above does not evidence any   	
+!	actual or intended publication of such source code.
+!
+!*****************************************************************************
+
+!=============================================================================
+!  The following resource specifications allow you to customize the colors
+!  used by the Objectivity/DB Graphical Tools. Your system must have a color
+!  screen to use these resources.
+!
+!  Add any or all of these resources to your .Xdefaults file to override 
+!  the default color scheme in the app-defaults file.
+!
+!  Note that comment lines within this file begin with an exclamation mark (!).
+!=============================================================================
+
+!! Overall background and foreground colors
+ootoolmgr*background:		gray85
+ootoolmgr*foreground:		black
+
+!! Command bar colors
+ootoolmgr*commandbar*XmPushButton.background: gray90
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*commandbar*XmPushButton.background: gray90
+
+!! Menu bar colors
+ootoolmgr*menubar*background: CornFlowerBlue
+ootoolmgr*menubar*foreground: white
+
+!! Pull down menu colors
+ootoolmgr*menubar*XmRowColumn*background: CornFlowerBlue
+ootoolmgr*menubar*XmRowColumn*foreground: white
+
+!! Dialog box foreground color
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*foreground: black
+ootoolmgr*XmDialogShell*foreground: black
+
+!! Dialog box background color
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*background: gray85
+ootoolmgr*XmDialogShell*background: gray85
+
+!! Dialog box edit widget foreground color
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*XmText.foreground: black
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*XmList.foreground: black
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*XmTextField.foreground: black
+
+!! Dialog box edit widget background color
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*XmText.background: lightblue
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*XmList.background: lightblue
+ootoolmgr*menubar.XmCascadeButton*XmDialogShell*XmTextField.background: lightblue
+
+!! Tool Panel (ooedit, oodumpcatalog, ootidy, oolockmon) colors
+ootoolmgr*XmScrolledWindow.XmText.background: lightblue
+ootoolmgr*XmScrolledWindow.XmText.foreground: black
+
+!! Data, Type, and Help Panel foreground and background list colors
+ootoolmgr*XmList*background: lightblue
+ootoolmgr*XmList*foreground: black
+
+!! Data, Type, and Help Panel content area foreground and background colors.
+ootoolmgr*XmScrolledWindow.ScrolledWindowClipWindow*background: lightblue
+ootoolmgr*XmScrolledWindow*XmScrollBar.background:              lightblue
+ootoolmgr*XmScrolledWindow.ScrolledWindowClipWindow*foreground: black
+ootoolmgr*XmScrolledWindow*XmScrollBar.foreground:              black
+
+

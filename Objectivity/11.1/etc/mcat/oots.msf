@@ -1,0 +1,287 @@
+$quote "
+
+$ -------------------------------------
+$ Message catalog for TS component
+$ 
+$ TS Errors    11500-11899
+$ TO Errors    11900-11999
+$ 
+$ TS Messages  11600-11699
+$ TS Flags     11700-11999
+$ -------------------------------------
+
+$set 1
+$ Numbers correspond to the tsError enum type values.
+
+11501 "\
+%s: Internal Error, maxmimum size of tsArgParser exceeded."
+11502 "\
+%s: The flag \"%s%s\" is ambiguous, matching the following allowed flags: \
+%s. Please be more specfic."
+11503 "\
+%s: The required flag \"%s%s"\ was not specified."
+11504 "\
+%s: The flag \"%s%s"\ requires that a value be specified."
+11505 "\
+%s: Missing required command line parameter \"%s\"."
+11506 "\
+%s: The flag \"%s%s\" is not recognized by this application."
+11507 "\
+%s: The value \"%s\" is not a valid value for the flag \"%s%s\"."
+11508 "\
+%s: Internal Error, tsArgParser::Parse() invoked twice."
+11509 "\
+%s: The value \"%s\" for flag \"%s%s\" is ambiguous, matching the following\
+allowed values: %s. Please be more specific."
+11510 "\
+%s: The value \"%s\" is not a valid value for the flag \"%s%s\". Allowed\
+values for this flag are: %s."
+11511 "\
+%s: The value \"%s\" is not a valid value for the flag \"%s%s\". Allowed \
+range for this flag is %s."
+11512 "\
+%s: Internal Warning, attempted to register a NIL flag value, ignored."
+11513 "\
+%s: The value \"%s\" is not a valid value for the flag \"%s%s\". The \
+database id cannot be more than \"65534\". You must use the syntax \
+#D-P-C-S or D-P-C-S to specify an object identifier."
+11514 "\
+%s: Missing Federated Database name. No Federated Database name specified, \
+and no default (%s) available. Processing terminated."
+11515 "\
+%s: The Federated Database \"%s\" could not be located, or is not a \
+recognizable Federated Database. Processing terminated."
+11516 "\
+%s: Internal Warning, attempted to register a NIL pointer for a required \
+value field. Please check your code"
+11517 "\
+%s: The \"%s%s\" flag requires that you also use the \"%s\" flag. \
+Processing terminated."
+11518 "\
+%s: The \"%s%s\" and \"%s%s\" flags are mutually exclusive, you \
+cannot specify both. Processing terminated."
+11519 "\
+%s: Internal Warning, attempted to use the non-registered flag \"%s%s\" for \
+AddRequiredGroup() or AddExclusiveGroup()."
+11520 "\
+Internal Warning: The option string \"%s\" has no mnemonic character."
+11521 "\
+Internal Warning: The option string \"%s\" has too many mnemonic characters."
+11522 "\
+Internal Warning: Registering an enum with fewer than two options."
+11523 "\
+The option mnemonic \"%c\" for option \"%s\" clashes with another mnemonic."
+11524 "\
+%s: A required flag was not specified. You must provide one of the following \
+flags: %s."
+11525 "\
+%s: The flag \"%s%s\" requires that you provide one or more of the following \
+flags: %s."
+11526 "\
+%s: The value for the \"%s%s\" flag must be a filename, not a directory. \
+Processing terminated."
+11527 "\
+%s: Unable to create or access the file \"%s\". The directory may not \
+exist. Processing terminated."
+11528 "\
+%s: The file \"%s\" does not exist. Processing terminated."
+11529 "\
+%s: The values provided with the \"%s%s\" and \"%s%s\" flags must specify a \
+filename, not a directory. Processing terminated."
+11530 "\
+%s: Unable to create or access the file \"%s:%s\" \
+The directory may not exist. Processing terminated."
+11531 "\
+%s: The file \"%s:%s\" does not exist. Processing terminated."
+11532 "\
+VerifyHostLocal(): Internal Error: The \"host\" parameter requires the \
+\"localPath\" parameter."
+11534 "\
+%s: The output file \"%s\" currently exists. Processing terminated."
+11535 "\
+%s: The output file \"%s:%s\" currently exists. Processing terminated."
+
+11900 "\
+%s : Unable to initialize Objectivity/DB. Processing terminated."
+11901 "
+%s : Unable to run without Lock Server. Processing terminated."
+11902 "\
+%s : Unable to open the Federated Database \"%s\". Processing terminated."
+11903 "\
+%s : Unable to close the Federated Database \"%s\". Processing terminated."
+11904 "\
+%s : Unable to start transaction. Processing terminated."
+11905 "\
+%s : Unable to commit transaction. Processing terminated."
+11906 "\
+%s : Internal Error, bad parameter value passed to function \"%s\". \
+Processing terminated."
+11907 "\
+%s : An error has occurred. Processing terminated."
+11908 "\
+Internal Error : otsTooObj::otsToolObj() requires a program name. Processing terminated."
+11909 "\
+%s : You must terminate the Lock Server process on host \"%s\" before running this application without a Lock Server."
+11910 "\
+%s: Unable to locate Partition \"%s\". Processing terminated."
+11911 "\
+%s: Unable to open Parititon \"%s\". Processing terminated."
+11912 "\
+%s: Unable to locate Database \"%s\". Processing terminated."
+11913 "\
+%s: Unable to open Database \"%s\". Processing terminated."
+11914 "\
+%s: Unable to locate an object matching the Object Identifier specified. \
+Processing terminated."
+11915 "\
+%s: The object specified is not a Partition. Processing terminated."
+11916 "\
+%s: The object specified is not a Database. Processing terminated."
+11917 "\
+%s: Unable to determine the class of object specified. Processing terminated."
+11918 "\
+%s: Unable to open Container \"%s\". Processing terminated."
+11919 "\
+%s: The object specified is not a Container. Processing terminated."
+
+
+$set 2
+
+11600 "\
+%s (TM) %s, "
+11601 "\
+Version %s\n"
+11602 "\
+Copyright (c) %s %s. All rights reserved.\n\n"
+11603 "Cancel"
+11604 "Quit"
+11605 "Exit"
+11606 "Please select one of the following%s:\n"
+11607 "Error: The value \"%s\" is not valid. Valid values are: 1-%d,%s\n\n"
+11608 "Error: The value \"%s\" is not valid. Valid values are: %d-%d%s\n\n"
+11609 "Please enter the %s:\n"
+11610 "The output file \"%s\" currently exists."
+11611 "Delete the existing file"
+11612 "%d <= value <= %d"
+11613 "%lu <= value <= %lu"
+11614 "Usage:\n"
+11615 "The output file \"%s:%s\" currently exists."
+11616 "The Database file \"%s\" currently exists."
+11617 "The Database file \"%s:%s\" currently exists."
+11618 "Overwrite the existing Database file"
+11619 "Error: The value \"%s\" is not valid. Valid values are: %c,%c%s\n\n"
+
+$ Don't internationalize any of these. These are command line flags
+11700 "help"
+11701 "nolock"
+11702 "oonobuf"
+11703 "quiet"
+11704 "ignore"
+11705 "id"
+11706 "infile"
+11707 "outfile"
+11708 "file"
+11709 "debug"
+11710 "verbose"
+11711 "abort"
+11712 "db"
+11713 "cont"
+11714 "exists"
+11715 "ask"
+11716 "delete"
+11717 "abort"
+11718 "empty"
+11719 "resize"
+11720 "line"
+11721 "hash"
+11722 "grow"
+11723 "noheader"
+11724 "yacc"
+11725 "compress"
+11726 "uncompress"
+11727 "range"
+11728 "one"
+11729 "up"
+11730 "down"
+11731 "full"
+11732 "format"
+11733 "dec"
+11734 "oct"
+11735 "hex"
+11736 "fdSysName"
+11737 "external"
+11738 "standalone"
+
+11739 "notitle"
+11740 "device"
+11741 "restart"
+11742 "cancel"
+11743 "backup"
+11744 "volume"
+11745 "capacity"
+11746 "level"
+11747 "set"
+11748 "fullpath"
+11749 "hostlocal"
+11750 "backuplist"
+11751 "numbers"
+11752 "table"
+11753 "encode"
+11754 "decode"
+11755 "default"
+11756 "lockserverhost"
+11757 "fd"
+11758 "fdnumber"
+11759 "fullpath"
+11760 "host"
+11761 "localpath"
+11762 "listactive"
+11763 "transaction"
+11764 "deadowner"
+11765 "resetlock"
+11766 "user"
+11767 "detail"
+11768 "nobusy"
+11769 "messages"
+11770 "writer"
+11771 "fdlocalpath"
+11772 "nameservice"
+11773 "bootfile"
+11774 "vmsdns"
+11775 "fdhost"
+11776 "pagesize"
+11777 "lockTableSize"
+11778 "standard"
+11779 "local"
+11780 "menu"
+11781 "nolabel"
+11782 "native"
+11783 "nofile"
+11784 "hostName"
+11785 "fileName"
+11786 "jnlhost"
+11787 "jnllocalpath"
+11788 "nowait"
+11789 "nobackup"
+11790 "tmphost"
+11791 "tmplocalpath"
+11792 "motif"
+11793 "openlook"
+11794 "oonomega"
+11795 "ap"
+11796 "sysdirhost"
+11797 "sysdirpath"
+11798 "bootfilehost"
+11799 "bootfilepath"
+11800 "jnldirhost"
+11801 "jnldirpath"
+11802 "force"
+11803 "return"
+11804 "catalogonly"
+11805 "filepath"
+11806 "dirpath"
+11807 "leaveboot"
+
+$set 3
+1 "ascii"
+2 "Version: "

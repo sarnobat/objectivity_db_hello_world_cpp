@@ -1,0 +1,428 @@
+version 1 unencrypted
+
+schema *
+0
+1000000 1000000
+{
+  class ooVStringHolder
+  basic
+  5105 5105
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Embedded
+    public ooVString mString
+    5005
+    2 1 0 0
+  }
+
+  class ooUtf8String
+  UNKNOWN
+  5013 5013
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooChar_ooVArray
+    5006
+    1 0 0 0
+  }
+
+  class ooUtf8StringHolder
+  basic
+  5113 5113
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Embedded
+    public ooUtf8String mString
+    5013
+    2 1 0 0
+  }
+
+  class ooChar16_ooVArray
+  UNKNOWN
+  5020 5020
+  1 0 1 0 1 0 0
+  {
+    VArrayBasic
+    private ooVArray(ooChar16) _vs
+    1 0 0
+  }
+
+  class ooUtf16String
+  UNKNOWN
+  5015 5015
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooChar16_ooVArray
+    5020
+    1 0 0 0
+  }
+
+  class ooUtf16StringHolder
+  basic
+  5115 5115
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Embedded
+    public ooUtf16String mString
+    5015
+    2 1 0 0
+  }
+
+  class ooChar32_ooVArray
+  UNKNOWN
+  5021 5021
+  1 0 1 0 1 0 0
+  {
+    VArrayBasic
+    private ooVArray(ooChar32) _vs
+    1 0 0
+  }
+
+  class ooUtf32String
+  UNKNOWN
+  5016 5016
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooChar32_ooVArray
+    5021
+    1 0 0 0
+  }
+
+  class ooUtf32StringHolder
+  basic
+  5116 5116
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Embedded
+    public ooUtf32String mString
+    5016
+    2 1 0 0
+  }
+
+  class ooUtf8String
+  UNKNOWN
+  5013 5013
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooChar_ooVArray
+    5006
+    1 0 0 0
+  }
+
+  class ooCompareShortRef
+  basic
+  91070 91070
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooCompare
+    4013
+    1 0 0 0
+  }
+
+  class ooHashEntryPage
+  basic
+  4037 4037
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    VArrayBasic
+    public ooVArray(uint32) entryArray
+    2 1 0
+  }
+
+  class ooHashBucketX
+  basic
+  4032 4032
+  1 0 4 0 4 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    VArrayBasic
+    public ooVArray(uint16) pageNumberArray
+    2 1 0
+
+    Basic
+    public uint16 depth
+    3 2 0 0
+
+    Basic
+    public uint16 entrySize
+    4 3 0 0
+  }
+
+  class ooHashBasedCollection
+  basic
+  4044 4044
+  1 0 7 0 7 0 0
+  {
+    Embedded
+    : public ooCollection
+    4023
+    1 0 0 0
+
+    Basic
+    protected uint32 _bucketCapacity
+    2 1 0 0
+
+    Basic
+    protected uint16 pagesPerBucket
+    3 2 0 0
+
+    Basic
+    protected uint16 bucketPageCapacity
+    4 3 0 0
+
+    Basic
+    protected uint16 otherPageCapacity
+    5 4 0 0
+
+    Basic
+    protected uint16 depth
+    6 5 0 0
+
+    Basic
+    protected uint8 entryType
+    7 6 0 0
+  }
+
+  class ooHashSetX
+  basic
+  4033 4033
+  1 0 3 0 3 0 0
+  {
+    Embedded
+    : public ooHashBasedCollection
+    4044
+    1 0 0 0
+
+    VArrayOid
+    protected ooVArray(ooRef(ooHashBucketX)) bucketArray
+    4032
+    2 1 0
+
+    Oid
+    protected ooRef(ooCompare) _compare
+    4013
+    3 2 0
+  }
+
+  class ooHashSetShortRef
+  basic
+  4045 4045
+  1 0 4 0 4 0 0
+  {
+    Embedded
+    : public ooHashBasedCollection
+    4044
+    1 0 0 0
+
+    VArrayOid
+    protected ooVArray(ooShortRef(ooHashBucketX)) bucketArray
+    4032
+    2 1 0
+
+    Oid
+    protected ooShortRef(ooCompare) _compare
+    4013
+    3 2 0
+
+    Basic
+    protected uint16 _lastObjectPage
+    4 3 0 0
+  }
+
+  class ooHashMapX
+  basic
+  4034 4034
+  1 0 3 0 3 0 0
+  {
+    Embedded
+    : public ooHashBasedCollection
+    4044
+    1 0 0 0
+
+    VArrayOid
+    protected ooVArray(ooRef(ooHashBucketX)) bucketArray
+    4032
+    2 1 0
+
+    Oid
+    protected ooRef(ooCompare) _compare
+    4013
+    3 2 0
+  }
+
+  class ooTreeBasedCollection
+  basic
+  4039 4039
+  1 0 3 0 3 0 0
+  {
+    Embedded
+    : public ooCollection
+    4023
+    1 0 0 0
+
+    VArrayBasic
+    protected ooVArray(uint32) refsAndData
+    2 1 0
+
+    Basic
+    protected uint16 entriesInUseSize
+    3 2 0 0
+  }
+
+  class ooTreeInternalNode
+  basic
+  4046 4046
+  1 0 4 0 4 0 0
+  {
+    Embedded
+    : public ooTreeBasedCollection
+    4039
+    1 0 0 0
+
+    Oid
+    protected ooRef(ooTreeBasedCollection) theParent
+    4039
+    2 1 0
+
+    Oid
+    protected ooRef(ooTreeInternalNode) left
+    4046
+    3 2 0
+
+    Oid
+    protected ooRef(ooTreeInternalNode) right
+    4046
+    4 3 0
+  }
+
+  class ooTreeLeafNode
+  basic
+  4043 4043
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooTreeInternalNode
+    4046
+    1 0 0 0
+  }
+
+  class ooTreeLeafNodeMap
+  basic
+  4048 4048
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooTreeLeafNode
+    4043
+    1 0 0 0
+
+    VArrayBasic
+    protected ooVArray(uint32) mapRefs
+    2 1 0
+  }
+
+  class ooTreeSetX
+  basic
+  4040 4040
+  1 0 5 0 5 0 0
+  {
+    Embedded
+    : public ooTreeBasedCollection
+    4039
+    1 0 0 0
+
+    Oid
+    protected ooRef(ooCompare) theComparator
+    4013
+    2 1 0
+
+    Basic
+    protected int16 maxEntriesNode
+    3 2 0 0
+
+    Basic
+    protected uint8 numberOfUint32PerEntry
+    4 3 0 0
+
+    Basic
+    protected uint8 rootFlags
+    5 4 0 0
+  }
+
+  class ooTreeListX
+  basic
+  4047 4047
+  1 0 5 0 5 0 0
+  {
+    Embedded
+    : public ooTreeBasedCollection
+    4039
+    1 0 0 0
+
+    Oid
+    protected ooRef(ooTreeBasedCollection) lastNode
+    4039
+    2 1 0
+
+    Basic
+    protected int16 maxEntriesNode
+    3 2 0 0
+
+    Basic
+    protected uint8 numberOfUint32PerEntry
+    4 3 0 0
+
+    Basic
+    protected uint8 rootFlags
+    5 4 0 0
+  }
+
+  class ooTreeMapX
+  basic
+  4042 4042
+  1 0 2 0 2 0 0
+  {
+    Embedded
+    : public ooTreeSetX
+    4040
+    1 0 0 0
+
+    VArrayBasic
+    protected ooVArray(uint32) mapRefs
+    2 1 0
+  }
+
+}

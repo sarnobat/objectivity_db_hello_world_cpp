@@ -1,0 +1,242 @@
+$quote "
+$set 1
+$ The following oodump errors have a different VMS form
+6001 "\
+%s: The -cont flag requires that you also specify a Database name \
+using the -db flag. Processing terminated."
+
+6002 "\
+%s: The -id and -db flags are mutually exclusive, you cannot specify both. \
+Processing terminated."
+
+6003 "\
+%s: The -id and -cont flags are mutually exclusive, you cannot specify both. \
+Processing terminated."
+
+6005 "\
+%s: Error, could not find an object matching the Object Identifier \
+specified with the -id flag. Processing terminated."
+
+
+$ The following oodump are non-OS specific messages
+
+6011 "\
+%s: Error occurred in service %s. Processing Terminated."
+
+6012 "\
+%s: Cannot open the Federated Database \"%s\". Processing terminated."
+
+6013 "\
+%s: Cannot open Database \"%s\". Processing terminated."
+
+6014 "\
+%s: The Federated Database \"%s\" does not exist. Processing terminated."
+
+6015 "\
+%s: The Database \"%s\" does not exist. Processing terminated."
+
+6016 "\
+%s: Cannot find Container \"%s\" in scope of Database. Processing terminated."
+
+6017 "\
+%s: Error number %d has occurred. Processing terminated."
+
+6018 "\
+%s: Cannot find compression utility \"%s\". Processing terminated."
+
+6019 "\
+%s: Cannot open the Container with System Name \"%s\". Processing terminated."
+
+
+
+$set 2
+6125 "Dump Utility"
+6126 "\
+ODB DUMP\n\
+    [[/ID=oid] | [/CNT=contSysName  /DB=dbSysName] | [/DB=dbSysName]]\n\
+    [/RANGE=FULL|ONE|DOWN|UP]\n\
+    [/FORMAT=DEC|OCT|HEX]\n\
+    [/OUTFILE=filename]\n\
+    [/EXISTS=ASK|DELETE|QUIT]\n\
+    [/LINE=length]\n\
+    [/EMPTY]\n\
+    [/IGNORE]\n\
+    [/STANDALONE]\n\
+    [/NOHEADER]\n\
+    [/NOTITLE]\n\
+    [/HELP]\n\
+    [bootFilePath]\n\n"
+6127 "\
+Create a text dump of a %s database.\n"
+6128 "\
+/ID=oid            Object ID of the object to dump (format D-C-P-S).\n\
+/CNT=contSysName   System Name of the Container to dump. Requires the\n\
+                   /DB flag.\n\
+/DB=dbSysName      System Name of the Database to dump.\n\
+/RANGE=value       Range of objects to print. Value may be:\n\
+                     ONE    Only a single object.\n\
+                     DOWN   Object and all the objects it contains.\n\
+                     UP     Object and all the objects that contain it.\n\
+                     FULL   Object, all it is contained by, and all it\n\
+                              contains. This is the default.\n\
+/FORMAT=value      Format for printing integers. Value may be:\n\
+                     DEC   Decimal format. This is the default.\n\
+                     OCT   Octal format.\n\
+                     HEX   Hexadecimal format.\n\
+/OUTFILE=filename  Write output to filename. If filename exists, it is \n\
+                   overwritten. By default the output is sent to stdout.\n\
+/EXISTS=value      Action to take if the file specified with /OUTFILE\n\
+                   exists. Value may be:\n\
+                     ASK    Ask whether or not to overwrite an existing\n\
+                            file. If the answer is No, the program\n\
+                            terminates. This is the default.\n\
+                     DELETE Delete any existing file.\n\
+                     QUIT   Quit if the file already exists.\n\
+/LINE=length       Set the line length for string fields.\n\
+/EMPTY             Print empty associations. The default it that these\n\
+                   are not printed.\n\
+/IGNORE            If possible, ignore errors and continue to dump.\n\
+                   WARNING - use of this flag may result in unloadable\n\
+                   OTF files.\n"
+6129 "\
+/STANDALONE        Run in non-concurrent mode, no Lock Server is required.\n\
+                   WARNING - corruption may occur if concurrent access\n\
+                   to the database is attempted while any process is\n\
+                   using this mode.\n\
+/NOHEADER          Don't include an OTF header. By default an OTF header\n\
+                   is included in the output.\n\
+/NOTITLE           Don't print the title banner message.\n\
+/HELP              Print out a help message and exit.\n\
+bootFilePath       Path to a Boot File for the FD. If not specified, the\n\
+                   value of the environment variable ODB$FD_BOOT is used.\n\n"
+
+6130 "\
+%s\n\
+    [[-id oid] | [-cont contSysName  -db dbSysName] | [-db dbSysName]]\n\
+    [-range full | one | down | up]\n\
+    [-format dec | oct | hex]\n\
+    [-outfile filename]\n\
+    [-exists ask | delete | quit]\n\
+    [-line length]\n\
+    [-compress [tool]]\n\
+    [-empty]\n\
+    [-ignore]\n\
+    [-standalone]\n\
+    [-noheader]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+6131 "\
+Create a text dump of a %s database.\n"
+6132 "\
+-id oid            Object ID of the object to dump (format D-C-P-S).\n\
+-cont contSysName  System Name of the Container to dump. Requires the\n\
+                   -db flag.\n\
+-db dbSysName      System Name of the Database to dump.\n\
+-range value       Range of objects to print. value may be:\n\
+                     one    Only a single object.\n\
+                     down   Object and all the objects it contains.\n\
+                     up     Object and all the objects that contain it.\n\
+                     full   Object, all it is contained by, and all it\n\
+                              contains. This is the default.\n\
+-format value      Format for printing integers. value may be:\n\
+                     dec   Decimal format. This is the default.\n\
+                     oct   Octal format.\n\
+                     hex   Hexadecimal format.\n\
+-outfile filename  Write output to filename. If filename exists, it is \n\
+                   overwritten. By default the output is sent to stdout.\n\
+-exists value      Action to take if the file specified with -outfile\n\
+                   exists. Value may be:\n\
+                     ask    Ask whether or not to overwrite an existing\n\
+                            file. If the answer is No, the program\n\
+                            terminates. This is the default.\n\
+                     delete Delete any existing file.\n\
+                     quit   Quit if the file already exists.\n\
+-line length       Set the line length for string fields.\n\
+-compress [tool]   Output is piped to the compression program specified.\n\
+                   If no tool is specified it is sent to the Unix\n\
+                   compress program.\n\
+-empty             Print empty associations. The default it that these\n\
+                   are not printed.\n\
+-ignore            If possible, ignore errors and continue to dump.\n\
+                   WARNING - use of this flag may result in unloadable\n\
+                   OTF files.\n"
+6133 "\
+-standalone        Run in non-concurrent mode, no Lock Server is required.\n\
+                   WARNING - corruption may occur if concurrent access\n\
+                   to the database is attempted while any process is\n\
+                   using this mode.\n\
+-noheader          Don't include an OTF header. By default an OTF header\n\
+                   is included in the output.\n\
+-notitle           Don't print the program title banner.\n\
+-help              Print out a help message and exit.\n\
+bootFilePath       Path to a Boot File for the FD. If not specified, the\n\
+                   value of the environment variable OO_FD_BOOT is used.\n\n"
+
+$ This message is for the VMS ODB verb
+6134 "\n\
+The ODB command is used to invoke the following DEC Object/DB database\n\
+utilities:\n\
+\n\
+ ODB ATTACH                -- attach a Database to a Federated Database\n\
+ ODB BACKUP                -- back up a Federated Database\n\
+ ODB CDDL                  -- compile a database schema for C applications\n\
+ ODB CHANGE /CONTAINER     -- view/edit Container parameters\n\
+ ODB CHANGE /DATABASE      -- view/edit Database parameters\n\
+ ODB CHANGE /FEDERATED_DB  -- view/edit Federated Database parameters\n\
+ ODB CHANGE /PARTITION     -- view/edit Partition parameters\n\
+ ODB CLEANUP               -- recover transactions\n\
+ ODB CLEAR /PARTITION      -- clear a Partition of data\n\
+ ODB COPY /DATABASE        -- copy a Database\n\
+ ODB COPY /FEDERATED_DB    -- copy a Federated Database\n\
+ ODB CREATE /BACKUP_SET    -- create a Backup Set\n\
+ ODB CREATE /DATABASE      -- create a Database\n\
+ ODB CREATE /FEDERATED_DB  -- create a Federated Database bootstrap file\n\
+ ODB CREATE /PARTITION     -- create a Partition\n\
+ ODB DDL                   -- compile a database schema for C++ applications\n\
+ ODB DEBUG                 -- view/edit a Federated Database\n\
+ ODB DELETE /BACKUP_SET    -- delete a Backup Set\n\
+ ODB DELETE /DATABASE      -- delete a Database\n\
+ ODB DELETE /FEDERATED_DB  -- delete a Federated Database\n\
+ ODB DELETE /PARTITION     -- delete a Partition\n\
+ ODB DUMP                  -- dump DEC Object/DB objects to a text file\n\
+ ODB FILE                  -- check a DEC Object/DB file\n\
+ ODB INSTALL               -- install a Federated Database at a remote site\n\
+ ODB LIST /FILES           -- list the files of a Federated Database\n\
+ ODB LIST /LOCKS           -- display the lock table of a Lock Server\n\
+ ODB LIST /WAIT            -- display information on waiting transactions\n\
+ ODB LOAD                  -- load DEC Object/DB objects from a text file\n\
+ ODB LOCK /FEDERATED_DB    -- obtain exclusive access to a Federated\n\
+                              Database\n\
+ ODB MOVE /DATABASE        -- move a Database\n\
+ ODB RESTORE               -- restore a backed up Federated Database\n\
+ ODB START /LOCKSERVER     -- start the Lock Server\n\
+ ODB STOP /LOCKSERVER      -- stop the Lock Server\n\
+ ODB TIDY                  -- consolidate Federated Database or Database\n\
+                              files\n\
+ ODB TOOL_MANAGER          -- start the graphical database and schema\n\
+                              browser\n\
+ ODB UNLOCK /FEDERATED_DB  -- release exclusive access to a Federated\n\
+                              Database\n\
+\n\
+ For more information about the DEC Object/DB database utilities, type\n\
+\n\
+    $ HELP ODB\n\
+\n\
+ You may also use the /HELP qualifier when invoking a utility. For example,\n\
+ the command \n\
+\n\
+   $ ODB ATTACH /HELP\n\
+\n\
+ will display a brief description of the ODB ATTACH utility, its parameters\n\
+ and qualifiers.\n\
+\n"
+
+
+
+$ Do not internationalize the following messages. They are command line flags
+
+
+$set 3
+1 "ascii"
+2 "Version: "

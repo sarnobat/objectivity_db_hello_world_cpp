@@ -1,0 +1,123 @@
+
+
+
+!*****************************************************************************
+!	    Copyright (c) 1990-2000 Objectivity, Inc.
+!			  All Rights Reserved  	
+!
+!  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Objectivity, Inc.
+!	
+!	The copyright notice above does not evidence any   	
+!	actual or intended publication of such source code.
+!
+!*****************************************************************************
+
+!=============================================================================
+!  The following resource specifications allow you to customize the sizes
+!  and fonts used by the Objectivity/DB Graphical Tools.
+!
+!  Add any or all of these resources to your .Xdefaults file to override 
+!  the default sizes and fonts in the Objectivity/DB resource file.
+!
+!  Note that comment lines within this file begin with an exclamation mark (!).
+!=============================================================================
+
+!-----------------------------------------------------------------------------
+! FONTS
+!
+! Note that if you modify the font values specified in this file, it may be 
+! necessary to adjust some heights and widths as well.
+!-----------------------------------------------------------------------------
+ootoolmgr*menubar*fontList:    -*-helvetica-bold-r-normal--14-*
+ootoolmgr*titleArea*fontList:  -*-helvetica-bold-o-normal--12-*
+ootoolmgr*fontList:            -*-times-medium-r-normal--14-*
+
+!! Objectivity Logo Settings
+!
+ootoolmgr*mainPanel*vendorName:		OBJECTIVITY
+ootoolmgr*mainPanel*vendorLogo*width:		180
+ootoolmgr*mainPanel*vendorLogo*height:		70
+ootoolmgr*mainPanel*vendorLogo*font:		-*-helvetica-bold-r-normal--24-*
+ootoolmgr*mainPanel*vendorLogo*backgroundColor: slate gray
+ootoolmgr*mainPanel*vendorLogo*triangleColor:	 steel blue
+
+!! Style and Cursors
+!
+ootoolmgr*style:					Motif
+ootoolmgr*busyPixmap:	                                hourglass16.h
+ootoolmgr*busyMaskPixmap:	                        hourglass16mask.h
+
+!-----------------------------------------------------------------------------
+! STATISTICS PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*statisticsPanel*modeLabel*fontList:	-*-helvetica-bold-r-normal--14-*
+ootoolmgr*statisticsPanel*statisticsArea.height:		300
+ootoolmgr*statisticsPanel*statisticsArea.width:		350
+
+!-----------------------------------------------------------------------------
+! TOOLMGR PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*mainPanel*mainArea.height:				300
+ootoolmgr*mainPanel*mainArea.width:				350
+ootoolmgr*mainPanel*fdbLabel*fontList:   -*-helvetica-bold-r-normal--14-*
+
+!-----------------------------------------------------------------------------
+! DATA BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*instancePanel*objectHierarchyRegion.height:		250
+ootoolmgr*instancePanel*objectHierarchyRegion.width:		550
+ootoolmgr*instancePanel*objectContentRegion.height:		400
+ootoolmgr*instancePanel*objectContentRegion*arrayArea.height:	150
+ootoolmgr*instancePanel*objectContentRegion*arrayArea.width:	400
+ootoolmgr*instancePanel*objectContentRegion*arrayArea*navigationArea.width:  60
+ootoolmgr*instancePanel*objectContentRegion*arrayArea*navigationArea.height: 70
+ootoolmgr*instancePanel*objectContentRegion*assocArea.height:	150
+ootoolmgr*instancePanel*objectContentRegion*assocArea.width:	400
+ootoolmgr*instancePanel*objectContentRegion*assocArea*navigationArea.width:  60
+ootoolmgr*instancePanel*objectContentRegion*assocArea*navigationArea.height: 30
+ootoolmgr*instancePanel*objectContentRegion*stringArea.height:	30
+ootoolmgr*instancePanel*objectContentRegion*stringArea.width:	400
+ootoolmgr*instancePanel*objectContentRegion*stringArea*navigationArea.width: 60
+ootoolmgr*instancePanel*objectContentRegion*stringArea*navigationArea.height:30
+ootoolmgr*instancePanel*objectContentRegion*objectPresenterLabel*fontList:                 -*-helvetica-bold-r-normal--14-*
+ootoolmgr*instancePanel*objectContentRegion*fontList:                 -*-times-medium-r-normal--14-*=name-font,                 -*-helvetica-medium-r-normal--14-*=normal-font,                 -*-times-bold-r-normal--14-*=type-font,	         -*-times-medium-i-normal--14-*=value-font
+
+!-----------------------------------------------------------------------------
+! QUERY OBJECTS BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*queryDialog*queryResults.height:			200
+
+!-----------------------------------------------------------------------------
+! QUERY ASSOCIATION BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*queryAssocDialog*queryResults.height:		200
+
+!-----------------------------------------------------------------------------
+! TYPE BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*typePanel*typeHierarchyRegion.height:		250
+ootoolmgr*typePanel*typeHierarchyRegion.width:			550
+ootoolmgr*typePanel*typeContentRegion.height:			400
+ootoolmgr*typePanel*typeContentRegion*typePresenterLabel*fontList:                 -*-helvetica-bold-r-normal--14-*
+ootoolmgr*typePanel*typeContentRegion*fontList:                 -*-times-bold-r-normal--14-*=type-font,                 -*-times-medium-r-normal--14-*=name-font,                 -*-helvetica-medium-r-normal--14-*=normal-font,	         -*-times-medium-i-normal--14-*=value-font
+
+!-----------------------------------------------------------------------------
+! HELP BROWSER PANEL Settings
+!-----------------------------------------------------------------------------
+ootoolmgr*helpPanel*helpIndexRegion.height:			250
+ootoolmgr*helpPanel*helpIndexRegion.width:			500
+ootoolmgr*helpPanel*helpTopicRegion.height:			400
+ootoolmgr*helpPanel*helpTopicRegion*topicPresenterLabel*fontList:                 -*-helvetica-bold-r-normal--14-*
+ootoolmgr*helpPanel*helpTopicRegion*fontList:                 -*-times-medium-r-normal--12-*=times-normal,                 -*-times-bold-r-normal--12-*=times-bold,	         -*-times-medium-i-normal--12-*=times-italic,	         -*-times-medium-r-normal--8-*=times-small,                 -*-helvetica-bold-r-normal--14-*=helv-large,                 -*-courier-medium-r-normal--12-*=courier-normal
+ootoolmgr*helpPanel*helpTopicRegion*wordwrap:			True
+ootoolmgr*helpPanel*helpTopicRegion*leftMargin:		25
+ootoolmgr*helpPanel*helpTopicRegion*rightMargin:		50
+ootoolmgr*helpPanel*helpTopicRegion*topMargin:			25
+ootoolmgr*helpPanel*helpTopicRegion*bottomMargin:		25
+
+!-----------------------------------------------------------------------------
+! TOOL PANEL Settings (oodebug, oolockmon, oodumpcatalog, ootidy)
+!-----------------------------------------------------------------------------
+ootoolmgr*toolframe.height:					400
+ootoolmgr*toolframe.width:					500
+ootoolmgr*toolframe*fontList:					fixed

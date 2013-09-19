@@ -1,0 +1,311 @@
+
+$quote "
+$set 1
+
+$ MODULE NAME:		Backup/Restore Manager Error Messages
+$ AUTHOR:		Larry Suarez
+$ DATE:			June 06, 1992
+$
+$ COPYRIGHT:
+$   Copyright 1992 Objectivity, Inc.  All rights reserved.
+$
+$ Valid range 7500-7999
+$ 7500-7599 libbr
+$ 7600-7699 oobackup
+$ 7700-7799 oorestore
+$ 7800-7899 oocreateset
+$ 7900-7999 oodeleteset
+$
+
+$ 7500=> **** libbr.a ****
+7500 "Welcome to the Backup/Restore Facility."
+7501 "Backup/Restore: Exiting from the Backup/Restore Facility."
+7502 "Backup/Restore: Unable to write to the backup device \"%s\": %s."
+7503 "Backup/Restore: Unable to open the backup device \"%s\": %s."
+7504 "Backup/Restore: Unable to read the boot file '%s'."
+7505 "Backup/Restore: Unexpected volume name '%s'. Volume name not required."
+7506 "Backup/Restore: Volume name required for backup device."
+7507 "Backup/Restore: Unable to allocate internal buffers for backup/restore."
+7508 "Backup/Restore: Unable to restore the Federated Database '%s'."
+7509 "Backup/Restore: Unable to locate the backup volume '%s' for restore."
+7510 "Backup/Restore: Backup version (%d) too old for this version of the Backup/Restore Facility (%d)."
+7511 "Backup/Restore: Unable to create/write the boot file for restore."
+7512 "Backup/Restore: Unable to read from the backup device \"%s\": %s."
+7513 "Backup/Restore: Federated Database Name required."
+7514 "Backup/Restore: Invalid volume capacity value:  %d."
+7515 "Backup/Restore: Invalid level value: %d."
+7516 "Backup/Restore: An incremental restore requires at least some previous level 0 backup."
+7517 "Backup/Restore: Unable to restore the boot file '%s'."
+7518 "Backup/Restore: Unable to create the Journal database '%s'."
+7519 "Backup/Restore: Unable to create the Journal container '%s'."
+7520 "Backup/Restore: Unable to initialize Objectivity/DB."
+7521 "Backup/Restore: Unable to set the noLock option."
+7522 "Backup/Restore: Unable to start a transaction.  The Backup/Restore Manager cannot be called while in transaction state."
+7523 "Backup/Restore: Unable to open the Federated Database '%s'."
+7524 "Backup/Restore: Help text goes here."
+7525 "Backup/Restore: Duplicate set name. Unable to create the set '%s'."
+7526 "Backup/Restore: Set does not exist. Unable to locate the set '%s'."
+7527 "Backup/Restore: Duplicate backup name. Unable to create the backup '%s'."
+7528 "Backup/Restore: The restore request does not match the backup volumes. Unable to restore the Federated Database."
+7529 "Backup/Restore: Cannot execute an incremental backup without first executing a full backup."
+7530 "Backup/Restore: Cannot create the volume because file '%s' already exists."
+7531 "Backup/Restore: Unable to abort the backup/restore transaction."
+7532 "Backup/Restore: The capacity size '%d' must at least equal to  the container page size + volume header size = '%d'."
+7533 "Backup/Restore: Unable to determine the permission mode of the database file '%s', caused by '%s'."
+7534 "Backup/Restore: Cannot access directory to create the volume file \"%s\": %s."
+7535 "Backup/Restore: Cannot create the volume file \"%s\": %s."
+
+$ 7600=> **** oobackup ****
+$ 7700=> **** oorestore ****
+$ 7800=> **** oocreateset ****
+$ 7900=> **** oodeleteset ****
+
+$set 2
+$ 7500=> **** libbr.a ****
+$ 7600=> **** oobackup ****
+7600 "Backup Federated Database Utility"
+7601 "\
+%s\n\
+    [\n\
+     [\n\
+      [ [-full] | [-incremental] | [-subincremental] ] \n\
+      [-destination destDirSpec] \n\
+     ] | \n\
+     [\n\
+      -set setName\n\
+      -backup backupName\n\
+      -volume volumeName\n\
+      -device deviceSpecifier\n\
+      [-level backupLevel]\n\
+     ] \n\
+    ] \n\
+    [-capacity size]\n\
+    [-purgeAps]\n\
+    [-quiet | -timestamp]\n\
+    [-procfiles progName]\n\
+    [-standalone | -lockwait n]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+7602 "\
+Archive a %s Federated Database to a backup media. The utility writes \
+output \"Volumes\", disk files containing the backup. If the size of \
+a Backup exceeds the specified maximum Volume size, additional Volumes \
+are written as necessary.\n"
+7603 "\
+-full               Full backup of the FD. This is the default \n\
+-incremental        Backup only the data that changed since the last\n\
+                    full backup.\n\
+-subincremental     Backup only the data that changed since the last\n\
+                    incremental backup.\n\
+-destination        The directory where the backed up data should go.\n\
+ destDirSpec        If not specified, current directory is assumed.\n\
+-set setName        Name of the Backup Set in which to place this Backup.\n\
+-backup backupName  Name of the Backup. backupName must be unique within the\n\
+                    scope of the set specified with the -set flag.\n\
+-volume volumeName  The prefix to use for all Volumes generated. Each Volume\n\
+                    is named volumeNameX, where X is a sequential number\n\
+                    indicating the Volume number.\n\
+-device             Full path of the disk directory where the backup Volumes\n\
+ deviceSpecifier    will be generated. Multiple Volumes will be generated\n\
+                    if the backup size exceed the size specified with the\n\
+                    -capacity flag.\n\
+-capacity size      Capacity of each backup Volume in kbytes. The default\n\
+                    value is 1000 (1 megabyte).\n\
+-purgeAps           Don't backup AP files other than the boot partition.\n\
+-level backupLevel  Incremental backup level, may be any value from 0 to 9\n\
+                    inclusive. The default value is 0 (full backup).\n\
+-procfiles progName Run progName on each file produced by oobackup.\n\
+-quiet              Suppress all normal status messages.\n\
+-timestamp          Show current time on each progress message.\n\
+-standalone         Run in non-concurrent mode, no Lock Server is required.\n\
+                    WARNING - corruption may occur if concurrent access\n\
+                    to the database is attempted while any process is\n\
+                    using this mode.\n\
+-lockwait n         Number of seconds to wait for locks.\n\
+-notitle            Don't print the program title banner.\n\
+-help               Print out a help message and exit.\n\
+bootFilePath        Path to a Boot File for the FD. If not specified, the\n\
+                    value of the environment variable OO_FD_BOOT is used.\n\n"
+
+$ 7700=> **** oorestore ****
+7700 "Restore Federated Database Utility"
+7701 "\
+%s\n\
+    [\n\
+     [ [-time yyyymmddhhmm] [-source sourceDirectory] ] | \n\
+     [\n\
+     -set setName\n\
+     -backup backupName\n\
+     -volume volumeName\n\
+     -device deviceSpecifier\n\
+     ] \n\
+    ]\n\
+    [-quiet]\n\
+    [-exists ask | delete | quit ]\n\
+    [-procfilesbef progName]\n\
+    [-procfilesaft progName]\n\
+    [[-newhost hostName] [-newdirectory directoryName] [-failonly] |\n\
+     [-dbmap mapFile]]\n\
+    [-purgeAps]\n\
+    [-dumpcatalog]\n\
+    [-standalone]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+7702 "\
+Restore a previously archived %s Federated Database. The Backup (archived \
+Federated Database) must be previously generated by the oobackup utility.\n"
+7703 "\
+-time               Time as of when restore is to be done.\n\
+                    Default is NOW.\n\
+-source             Location of the backup. If not specified,\n\
+  sourceDirectory   current directory is assumed.\n\
+-set setName        Name of the Backup Set in which the Backup to restore\n\
+                    is located.\n\
+-backup backupName  Name of the Backup to restore.\n\
+-volume volumeName  The prefix used for all Volumes of the Backup which is\n\
+                    to be restore. Each Volume is named volumeNameX,\n\
+                    where X is a sequential number indicating the Volume\n\
+                    number.\n\
+-device             Full path of the disk directory where the backup Volumes\n\
+ deviceSpecifier    are located.\n\
+-quiet              Suppress all normal status messages.\n\
+-exists value       Action to take if a Database in the archive file already\n\
+                    exists. Value may be:\n\
+                      ask     Ask whether or not to overwrite an existing\n\
+                              Database. If the answer is No, the program\n\
+                              terminates; otherwise, the program\n\
+                              overwrites the existing Database. The\n\
+                              default setting is No.\n\
+                      delete  Delete any existing Database.\n\
+                      quit    Quit if the Database already exists.\n\
+-procfilesbef\n\
+ progName           Run progName before each file read by oorestore.\n\
+-procfilesaft\n\
+ progName           Run progName after each file read by oorestore.\n\
+-newhost            Host to which files should be restored.\n\
+-newdirectory       Directory to which files should be restored.\n\
+-failonly           Restore only files which cannot be restored to their\n\
+                    original locations to the specified host and directory.\n\
+-purgeAps           Restore as a single-partition federation.\n\
+-dumpcatalog        Restore only the catalogs and dump their contents.\n\
+-dbmap              File containing new file location map.\n\
+-standalone         Run in non-concurrent mode, no Lock Server is required.\n\
+                    WARNING - corruption may occur if concurrent access\n\
+                    to the database is attempted while any process is\n\
+                    using this mode.\n\
+-notitle            Don't print the program title banner.\n\
+-help               Print out a help message and exit.\n\
+bootFilePath        Path to a Boot File for the FD. If not specified, the\n\
+                    value of the environment variable OO_FD_BOOT is used.\n\n"
+
+$ 7800=> **** oocreateset ****
+7800 "Create Backup Set Utility"
+
+7801 "\
+%s\n\
+    -set setName\n\
+    [-quiet]\n\
+    [-standalone]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+7802 "\
+Create a Backup Set for a %s Federated Database. A Backup Set is a way to \
+logically organize Backups. Every Backup is associated with one Backup \
+Set. You must define at least one Backup Set.\n"
+7803 "\
+-set setName        Name of the Backup Set to create.\n\
+-quiet              Suppress all normal status messages.\n\
+-standalone         Run in non-concurrent mode, no Lock Server is required.\n\
+                    WARNING - corruption may occur if concurrent access\n\
+                    to the database is attempted while any process is\n\
+                    using this mode.\n\
+-notitle            Don't print the program title banner.\n\
+-help               Print out a help message and exit.\n\
+bootFilePath        Path to a Boot File for the FD. If not specified, the\n\
+                    value of the environment variable OO_FD_BOOT is used.\n\n"
+7804 "\
+ODB CREATE/BACKUP_SET\n\
+    /SET=setName\n\
+    [/QUIET]\n\
+    [/STANDALONE]\n\
+    [/NOTITLE]\n\
+    [/HELP]\n\
+    [bootFilePath]\n\n"
+7805 "\
+Create a Backup Set for a %s Federated Database. A Backup Set is a way to \
+logically organize Backups. Every Backup is associated with one Backup \
+Set. You must define at least one Backup Set.\n"
+7806 "\
+/SET=setName        Name of the Backup Set to create.\n\
+/QUIET              Suppress all normal status messages.\n\
+/STANDALONE         Run in non-concurrent mode, no Lock Server is required.\n\
+                    WARNING - corruption may occur if concurrent access\n\
+                    to the database is attempted while any process is\n\
+                    using this mode.\n\
+/NOTITLE            Don't print the program title banner.\n\
+/HELP               Print out a help message and exit.\n\
+bootFilePath        Path to a Boot File for the FD. If not specified, the\n\
+                    value of the environment variable ODB$FD_BOOT is used.\n\n"
+
+$ 7900=> **** oodeleteset ****
+7900 "Delete Backup Set Utility"
+
+7901 "\
+%s\n\
+    -set setName\n\
+    [-quiet]\n\
+    [-standalone]\n\
+    [-notitle]\n\
+    [-help]\n\
+    [bootFilePath]\n\n"
+
+7902 "\
+Remove a %s Backup Set. This utility will delete all information concerning \
+the Backups associated with a Backup Set.\n"
+
+7903 "\
+-set setName        Name of the Backup Set to delete.\n\
+-quiet              Suppress all normal status messages.\n\
+-standalone         Run in non-concurrent mode, no Lock Server is required.\n\
+                    WARNING - corruption may occur if concurrent access\n\
+                    to the database is attempted while any process is\n\
+                    using this mode.\n\
+-notitle            Don't print the program title banner.\n\
+-help               Print out a help message and exit.\n\
+bootFilePath        Path to a Boot File for the FD. If not specified, the\n\
+                    value of the environment variable OO_FD_BOOT is used.\n\n"
+
+7904 "\
+ODB DELETE/BACKUP_SET\n\
+    /SET=setName\n\
+    [/QUIET]\n\
+    [/STANDALONE]\n\
+    [/NOTITLE]\n\
+    [/HELP]\n\
+    [bootFilePath]\n\n"
+
+7905 "\
+Remove a %s Backup Set. This utility will delete all information concerning \
+the Backups associated with a Backup Set.\n"
+
+7906 "\
+/SET=setName        Name of the Backup Set to delete.\n\
+/QUIET              Suppress all normal status messages.\n\
+/STANDALONE         Run in non-concurrent mode, no Lock Server is required.\n\
+                      WARNING - corruption may occur if concurrent access\n\
+                      to the database is attempted while any process is\n\
+                      using this mode.\n\
+/NOTITLE            Don't print the program title banner.\n\
+/HELP               Print out a help message and exit.\n\
+bootFilePath        Path to a Boot File for the FD. If not specified, the\n\
+                    value of the environment variable ODB$FD_BOOT is used.\n\n"
+
+
+
+$set 3
+1 "ascii"
+2 "Version: "
+

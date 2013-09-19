@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<PMD pmdSchemaVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/Applications/Objectivity/11.1/etc/PMD.xsd">
+  <IndexTypesSnapshot>
+    <IndexType
+      name="Traditional"
+      description="Traditional Objectivity built-in index."
+      isOrdered="true"
+      duplicatesAreAllowed="true"
+      supportsRangeAccess="true">
+      <KeyCharacteristics
+        allAttributesAreRequired="false"
+        attributesAreOrdered="true"
+        minimumNumberOfAttributes="1" maximumNumberOfAttributes="0">
+        <SupportedAttributeTypes>
+          <Numeric/>
+          <String/>
+        </SupportedAttributeTypes>
+      </KeyCharacteristics>
+    </IndexType>
+  </IndexTypesSnapshot>
+  <SchemaSnapshot>
+    <Class name="HelloObject" objectSize="24">
+      <StringAttribute name="mHelloMsg" isFixedLength="false"/>
+    </Class>
+  </SchemaSnapshot>
+  <MainStorageGroup>
+    <StorageGroupConfiguration selection="Any"/>
+    <StorageAcquisitionPolicy waitSeconds="25" storageUnavailablePolicy="UseDefault"/>
+  </MainStorageGroup>
+  <PlacementModel
+    name="Application"
+    version="1" status="Current" id="27021602059452417">
+    <ChangeLog>
+      <ChangeLogItem user="ssarnobat" timestamp="2013-09-18T15:39:15" logMessage="Created"/>
+    </ChangeLog>
+    <KeySpecifications/>
+    <IndexSpecifications/>
+    <DatabasePlacers/>
+    <ContainerPlacers>
+      <ContainerPlacer
+        name="Default"
+        description="Default placer used for placing containers when no specific container placer is specified"
+        placeInto="OwnScope">
+        <Scope id="1125904202006530">
+          <SingleDatabaseGroup/>
+          <DatabaseGroupConfiguration selection="Any">
+            <DatabaseConfiguration
+              databasePageSize="0"/>
+          </DatabaseGroupConfiguration>
+        </Scope>
+      </ContainerPlacer>
+    </ContainerPlacers>
+    <ObjectPlacers>
+      <ObjectPlacer
+        name="Default"
+        description="Default placer used for placing objects when no specific object placer is specified"
+        placeInto="OwnScope"
+        placeOnNewPage="false"
+        containerPlacer="Default">
+        <Scope id="3377704015691778">
+          <SingleContainerGroup/>
+          <ContainerGroupConfiguration selection="Any">
+            <ContainerConfiguration
+              growByPolicy="PercentageOfCurrentSize" growBy="100"
+              initialNumberOfPages="0" pageLimit="50000"
+              placeInOwnFile="false"
+              maintainObjectCounts="true"/>
+          </ContainerGroupConfiguration>
+        </Scope>
+      </ObjectPlacer>
+    </ObjectPlacers>
+    <Rules/>
+  </PlacementModel>
+</PMD>

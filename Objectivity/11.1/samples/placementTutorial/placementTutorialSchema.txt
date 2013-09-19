@@ -1,0 +1,529 @@
+version 1 unencrypted
+
+schema *
+0
+1000014 1000009
+{
+  class ooDotNetDateTime
+  non-persistent
+  5035 5035
+  1 0 1 0 1 0 0
+  {
+    Basic
+    protected uint64 ticks_and_kind
+    1 0 0 0
+  }
+
+  class ooDateTime
+  non-persistent
+  5036 5036
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public ooDotNetDateTime
+    5035
+    1 0 0 0
+  }
+
+  class FleetData:RentalEvent
+  basic
+  1000000 1000000
+  1 0 3 0 3 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Embedded
+    public ooDateTime timestamp
+    5036
+    2 1 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:RentalContract) rental <-> events[]
+    2484027968
+    1000000 1000001
+    4 0
+    0 0 1 3 1
+    3 2 0
+  }
+
+  class FleetData:RentalContract
+  basic
+  1000001 1000001
+  1 0 4 1 4 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:Customer) customer <-> rentals[]
+    403653185
+    1000001 1000007
+    8 1
+    0 0 1 3 1
+    2 1 0
+
+    BiAssoc
+    public ooHandle(FleetData:Vehicle) vehicle <-> pastRentals[]
+    403653189
+    1000005 1000010
+    6 1
+    0 0 1 3 1
+    3 2 0
+
+    BiAssoc
+    public ooHandle(FleetData:RentalEvent) events[] <-> rental
+    1745830464
+    1000000 1000000
+    3 1
+    4 0 1 3 1
+    4 3 0
+  }
+
+  class FleetData:Reservation
+  basic
+  1000002 1000002
+  1 0 6 0 6 0 0
+  {
+    Embedded
+    : public RentalEvent
+    1000000
+    1 0 0 0
+
+    Embedded
+    public ooDateTime pickup
+    5036
+    2 1 0 0
+
+    Embedded
+    public ooDateTime dropoff
+    5036
+    3 2 0 0
+
+    Oid
+    public ooRef(VehicleCategory) reservedCategory
+    1000003
+    4 3 0
+
+    Oid
+    public ooRef(Location) pickupLocation
+    1000004
+    5 4 0
+
+    Oid
+    public ooRef(Location) returnLocation
+    1000004
+    6 5 0
+  }
+
+  class FleetData:VehicleCategory
+  basic
+  1000003 1000003
+  1 0 5 0 5 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Basic
+    public float32 rate
+    2 1 0 0
+
+    Basic
+    public ooBoolean retired
+    3 2 0 0
+
+    Embedded
+    public ooUtf8String name
+    5013
+    4 3 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:VehicleModel) models[] <-> categories[]
+    68108872
+    1000008 1000012
+    13 0
+    0 0 1 3 1
+    5 4 0
+  }
+
+  class FleetData:Location
+  basic
+  1000004 1000004
+  1 0 8 0 8 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Basic
+    public float32 rateFactor
+    2 1 0 0
+
+    Embedded
+    public ooUtf8String name
+    5013
+    3 2 0 0
+
+    Embedded
+    public ooUtf8String airportCode
+    5013
+    4 3 0 0
+
+    Embedded
+    public Address address
+    1000005
+    5 4 0 0
+
+    Oid
+    public ooRef(ooHashSetX) pendingPickups
+    4033
+    6 5 0
+
+    Oid
+    public ooRef(ooHashSetX) pendingReturns
+    4033
+    7 6 0
+
+    BiAssoc
+    public ooHandle(FleetData:Stall) stalls[] <-> location
+    1678721602
+    1000002 1000009
+    3 0
+    4 0 1 3 1
+    8 7 0
+  }
+
+  class FleetData:Address
+  non-persistent
+  1000005 1000005
+  1 0 4 0 4 0 0
+  {
+    Basic
+    public char state[2]
+    1 0 0 0
+
+    Embedded
+    public ooUtf8String street
+    5013
+    2 1 0 0
+
+    Embedded
+    public ooUtf8String city
+    5013
+    3 2 0 0
+
+    Embedded
+    public ooUtf8String postalCode
+    5013
+    4 3 0 0
+  }
+
+  class ooInlineVArray
+  non-persistent
+  1000006 1000006
+  1 0 1 0 1 0 0
+  {
+    Basic
+    public * _data
+    1 0 0 0
+  }
+
+  class FleetData:Customer
+  basic
+  1000007 1000007
+  1 0 8 0 8 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Basic
+    public uint32 rewardPoints
+    2 1 0 0
+
+    Embedded
+    public ooUtf8String firstName
+    5013
+    3 2 0 0
+
+    Embedded
+    public ooUtf8String lastName
+    5013
+    4 3 0 0
+
+    Embedded
+    public ooUtf8String userId
+    5013
+    5 4 0 0
+
+    Embedded
+    public ooUtf8String pw
+    5013
+    6 5 0 0
+
+    Embedded
+    public Address address
+    1000005
+    7 6 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:RentalContract) rentals[] <-> customer
+    604979777
+    1000001 1000001
+    2 0
+    0 0 1 3 1
+    8 7 0
+  }
+
+  class FleetData:Return
+  basic
+  1000008 1000008
+  1 0 1 0 1 0 0
+  {
+    Embedded
+    : public RentalEvent
+    1000000
+    1 0 0 0
+  }
+
+  class FleetData:Stall
+  basic
+  1000009 1000009
+  1 0 5 1 5 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Basic
+    public int16 number
+    2 1 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:Location) location <-> stalls[]
+    2551136834
+    1000002 1000004
+    8 1
+    0 0 1 3 1
+    3 2 0
+
+    BiAssoc
+    public ooHandle(FleetData:Vehicle) occupiedBy <-> atStall
+    873415235
+    1000003 1000010
+    8 0
+    0 0 1 3 1
+    4 3 0
+
+    BiAssoc
+    public ooHandle(FleetData:PickUp) assignedTo <-> atStall
+    873415236
+    1000004 1000011
+    3 0
+    0 0 1 3 1
+    5 4 0
+  }
+
+  class FleetData:Vehicle
+  basic
+  1000010 1000010
+  1 0 8 1 8 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Basic
+    public ooBoolean available
+    2 1 0 0
+
+    Basic
+    public ooBoolean retired
+    3 2 0 0
+
+    Embedded
+    public ooUtf8String license
+    5013
+    4 3 0 0
+
+    Oid
+    public ooRef(RentalContract) currentRental
+    1000001
+    5 4 0
+
+    BiAssoc
+    public ooHandle(FleetData:RentalContract) pastRentals[] <-> vehicle
+    604979781
+    1000005 1000001
+    3 0
+    0 0 1 3 1
+    6 5 0
+
+    BiAssoc
+    public ooHandle(FleetData:VehicleModel) model <-> vehicles[]
+    336544326
+    1000006 1000012
+    12 0
+    0 0 1 3 1
+    7 6 0
+
+    BiAssoc
+    public ooHandle(FleetData:Stall) atStall <-> occupiedBy
+    940524099
+    1000003 1000009
+    4 1
+    0 0 1 3 1
+    8 7 0
+  }
+
+  class FleetData:PickUp
+  basic
+  1000011 1000011
+  1 0 3 1 3 0 0
+  {
+    Embedded
+    : public RentalEvent
+    1000000
+    1 0 0 0
+
+    Basic
+    public ooBoolean completed
+    2 1 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:Stall) atStall <-> assignedTo
+    940524100
+    1000004 1000009
+    5 1
+    0 0 1 3 1
+    3 2 0
+  }
+
+  class FleetData:VehicleModel
+  basic
+  1000012 1000012
+  1 0 13 1 13 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Basic
+    public int32 doors
+    2 1 0 0
+
+    Basic
+    public uint8 seatingCapacity
+    3 2 0 0
+
+    Basic
+    public ooBoolean powerWindows
+    4 3 0 0
+
+    Basic
+    public ooBoolean automatic
+    5 4 0 0
+
+    Basic
+    public ooBoolean airConditioning
+    6 5 0 0
+
+    Basic
+    public ooBoolean cdPlayer
+    7 6 0 0
+
+    Basic
+    public ooBoolean cruiseControl
+    8 7 0 0
+
+    Basic
+    public ooBoolean retired
+    9 8 0 0
+
+    Embedded
+    public ooUtf8String modelName
+    5013
+    10 9 0 0
+
+    Embedded
+    public ooUtf8String brand
+    5013
+    11 10 0 0
+
+    BiAssoc
+    public ooHandle(FleetData:Vehicle) vehicles[] <-> model
+    672088646
+    1000006 1000010
+    7 1
+    0 0 1 3 1
+    12 11 0
+
+    BiAssoc
+    public ooHandle(FleetData:VehicleCategory) categories[] <-> models[]
+    135217736
+    1000008 1000003
+    5 1
+    0 0 1 3 1
+    13 12 0
+  }
+
+  class FleetData:RentalCompany
+  basic
+  1000013 1000013
+  1 0 8 0 8 0 0
+  {
+    Embedded
+    : public ooObj
+    1001
+    1 0 0 0
+
+    Embedded
+    public ooUtf8String name
+    5013
+    2 1 0 0
+
+    Embedded
+    public Address corporateAddress
+    1000005
+    3 2 0 0
+
+    UniAssoc
+    public ooHandle(FleetData:Location) locations[] --> 
+    1276068423
+    1000007 1000004
+    4 0 1 3 1
+    4 3 0
+
+    Oid
+    public ooRef(ooTreeListX) categories
+    4047
+    5 4 0
+
+    Oid
+    public ooRef(ooTreeSetX) models
+    4040
+    6 5 0
+
+    Oid
+    public ooRef(ooTreeSetX) vehicles
+    4040
+    7 6 0
+
+    Oid
+    public ooRef(ooHashSetX) customers
+    4033
+    8 7 0
+  }
+
+}

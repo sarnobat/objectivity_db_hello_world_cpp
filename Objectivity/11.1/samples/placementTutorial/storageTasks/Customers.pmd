@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<PMD pmdSchemaVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/Applications/Objectivity/11.1/etc/PMD.xsd">
+  <IndexTypesSnapshot>
+    <IndexType
+      name="Traditional"
+      description="Traditional Objectivity built-in index."
+      isOrdered="true"
+      duplicatesAreAllowed="true"
+      supportsRangeAccess="true">
+      <KeyCharacteristics
+        allAttributesAreRequired="false"
+        attributesAreOrdered="true"
+        minimumNumberOfAttributes="1" maximumNumberOfAttributes="0">
+        <SupportedAttributeTypes>
+          <Numeric/>
+          <String/>
+        </SupportedAttributeTypes>
+      </KeyCharacteristics>
+    </IndexType>
+  </IndexTypesSnapshot>
+  <SchemaSnapshot>
+    <Class name="FleetData.VehicleModel" objectSize="36">
+      <NumericAttribute name="doors" type="Int32"/>
+      <NumericAttribute name="seatingCapacity" type="UInt8"/>
+      <StringAttribute name="modelName" isFixedLength="false"/>
+      <StringAttribute name="brand" isFixedLength="false"/>
+      <AssociationEnd name="vehicles" cardinality="ToMany"/>
+      <AssociationEnd name="categories" cardinality="ToMany"/>
+    </Class>
+    <Class name="FleetData.Vehicle" objectSize="44">
+      <StringAttribute name="license" isFixedLength="false"/>
+      <AssociationEnd name="currentRental" cardinality="ToOne"/>
+      <AssociationEnd name="pastRentals" cardinality="ToMany"/>
+      <AssociationEnd name="model" cardinality="ToOne"/>
+      <AssociationEnd name="atStall" cardinality="ToOne"/>
+    </Class>
+    <Class name="FleetData.VehicleCategory" objectSize="24">
+      <NumericAttribute name="rate" type="Float32"/>
+      <StringAttribute name="name" isFixedLength="false"/>
+      <AssociationEnd name="models" cardinality="ToMany"/>
+    </Class>
+    <Class name="FleetData.RentalContract" objectSize="28">
+      <AssociationEnd name="customer" cardinality="ToOne"/>
+      <AssociationEnd name="vehicle" cardinality="ToOne"/>
+      <AssociationEnd name="events" cardinality="ToMany"/>
+    </Class>
+    <Class name="FleetData.Stall" objectSize="36">
+      <NumericAttribute name="number" type="Int16"/>
+      <AssociationEnd name="location" cardinality="ToOne"/>
+      <AssociationEnd name="occupiedBy" cardinality="ToOne"/>
+      <AssociationEnd name="assignedTo" cardinality="ToOne"/>
+    </Class>
+    <Class name="FleetData.Location" objectSize="56">
+      <NumericAttribute name="rateFactor" type="Float32"/>
+      <StringAttribute name="name" isFixedLength="false"/>
+      <StringAttribute name="airportCode" isFixedLength="false"/>
+      <StringAttribute name="address.state" isFixedLength="true" fixedLength="2"/>
+      <StringAttribute name="address.street" isFixedLength="false"/>
+      <StringAttribute name="address.city" isFixedLength="false"/>
+      <StringAttribute name="address.postalCode" isFixedLength="false"/>
+      <AssociationEnd name="pendingPickups" cardinality="ToOne"/>
+      <AssociationEnd name="pendingReturns" cardinality="ToOne"/>
+      <AssociationEnd name="stalls" cardinality="ToMany"/>
+    </Class>
+    <Class name="FleetData.RentalEvent" objectSize="24">
+      <DateTimeAttribute name="timestamp"/>
+      <AssociationEnd name="rental" cardinality="ToOne"/>
+      <Subclasses>
+        <Class name="FleetData.PickUp" objectSize="40">
+          <AssociationEnd name="atStall" cardinality="ToOne"/>
+        </Class>
+        <Class name="FleetData.Return" objectSize="24"/>
+        <Class name="FleetData.Reservation" objectSize="64">
+          <DateTimeAttribute name="pickup"/>
+          <DateTimeAttribute name="dropoff"/>
+          <AssociationEnd name="reservedCategory" cardinality="ToOne"/>
+          <AssociationEnd name="pickupLocation" cardinality="ToOne"/>
+          <AssociationEnd name="returnLocation" cardinality="ToOne"/>
+        </Class>
+      </Subclasses>
+    </Class>
+    <Class name="FleetData.Customer" objectSize="48">
+      <NumericAttribute name="rewardPoints" type="UInt32"/>
+      <StringAttribute name="firstName" isFixedLength="false"/>
+      <StringAttribute name="lastName" isFixedLength="false"/>
+      <StringAttribute name="userId" isFixedLength="false"/>
+      <StringAttribute name="pw" isFixedLength="false"/>
+      <StringAttribute name="address.state" isFixedLength="true" fixedLength="2"/>
+      <StringAttribute name="address.street" isFixedLength="false"/>
+      <StringAttribute name="address.city" isFixedLength="false"/>
+      <StringAttribute name="address.postalCode" isFixedLength="false"/>
+      <AssociationEnd name="rentals" cardinality="ToMany"/>
+    </Class>
+    <Class name="FleetData.RentalCompany" objectSize="64">
+      <StringAttribute name="name" isFixedLength="false"/>
+      <StringAttribute name="corporateAddress.state" isFixedLength="true" fixedLength="2"/>
+      <StringAttribute name="corporateAddress.street" isFixedLength="false"/>
+      <StringAttribute name="corporateAddress.city" isFixedLength="false"/>
+      <StringAttribute name="corporateAddress.postalCode" isFixedLength="false"/>
+      <AssociationEnd name="locations" cardinality="ToMany"/>
+      <AssociationEnd name="categories" cardinality="ToOne"/>
+      <AssociationEnd name="models" cardinality="ToOne"/>
+      <AssociationEnd name="vehicles" cardinality="ToOne"/>
+      <AssociationEnd name="customers" cardinality="ToOne"/>
+    </Class>
+  </SchemaSnapshot>
+  
+  <MainStorageGroup>
+    <StorageGroupConfiguration selection="Any"/>
+    <StorageAcquisitionPolicy waitSeconds="25" storageUnavailablePolicy="UseDefault"/>
+  </MainStorageGroup>
+  
+  <PlacementModel
+    name="Application"
+    version="1" status="Current" id="27021602059452417">
+    
+    <KeySpecifications/>
+    
+    <IndexSpecifications/>
+
+    <DatabasePlacers>
+      <DatabasePlacer 
+        name="Customers" 
+        description="Selects storage for databases of Customer objects." 
+        placeInto="OwnScope">
+        <Scope>
+          <SingleStorageGroup/>
+          <StorageGroupConfiguration selection="Any" />
+          <StorageAcquisitionPolicy storageUnavailablePolicy="UseDefault" />
+        </Scope>
+      </DatabasePlacer>
+    </DatabasePlacers>
+    
+    <ContainerPlacers>
+            
+      <ContainerPlacer 
+        name="Customers"  
+        description="Selects or creates databases for containers of Customer objects." 
+        placeInto="OwnScope" 
+        databasePlacer="Customers">  <!-- Delegates to database placer named "Customers" -->
+        <Scope>
+          <SingleDatabaseGroup/>
+        </Scope>
+      </ContainerPlacer>
+      
+      <ContainerPlacer
+        name="Default"
+        description="Default placer used for placing containers when no specific container placer is specified."
+        placeInto="OwnScope">
+        <Scope >
+          <SingleDatabaseGroup/>
+          <DatabaseGroupConfiguration selection="Any">
+            <DatabaseConfiguration
+              databasePageSize="8192"/>
+          </DatabaseGroupConfiguration>
+        </Scope>
+      </ContainerPlacer>
+      
+    </ContainerPlacers>
+    
+    <ObjectPlacers>
+      
+      <ObjectPlacer 
+        name="Customers" 
+        description="Selects or creates containers for Customer objects." 
+        placeInto="OwnScope" 
+        containerPlacer="Customers">
+        <Scope>
+          <SingleContainerGroup/>
+        </Scope>
+      </ObjectPlacer>
+      
+      <ObjectPlacer
+        name="Default"
+        description="Default placer used for placing objects when no specific object placer is specified."
+        placeInto="OwnScope"
+        placeOnNewPage="false"
+        containerPlacer="Default">
+        <Scope >
+          <SingleContainerGroup/>
+          <ContainerGroupConfiguration selection="Any">
+            <ContainerConfiguration
+              growByPolicy="PercentageOfCurrentSize" growBy="100"
+              initialNumberOfPages="0" pageLimit="50000"
+              placeInOwnFile="false"
+              maintainObjectCounts="true"/>
+          </ContainerGroupConfiguration>
+        </Scope>
+      </ObjectPlacer>
+    </ObjectPlacers>
+    
+    <Rules>
+      <Rule objectClass="FleetData.Customer" objectPlacer="Customers"/>
+    </Rules>
+    
+  </PlacementModel>
+</PMD>

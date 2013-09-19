@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Thank You for Installing Objectivity/DB (UNIX)</title>
+<style type="text/css">
+<!--
+body {
+	font: 80% Verdana, Arial, Helvetica, sans-serif;
+	background: #E6E6E6;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+pre {
+	font:100% "Courier New", Courier, monospace;
+	background: #E6E6E6;
+	margin: 20px;
+	padding: 0;
+	color: #000;
+}
+
+
+
+/* ~~ Element/tag selectors ~~ */
+ul, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	/*padding: 0; */
+	margin: 0;
+	list-style-type: circle;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+	color: #333;
+}
+a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border: none;
+}
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #6E6C64;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+	text-decoration: none;
+}
+
+/* ~~ this fixed width container surrounds the other divs ~~ */
+.container {
+	width: 790px;
+	background: #FFF;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+}
+
+/* ~~ the header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo ~~ */
+.header {
+	background:#FFFFFF;
+}
+
+/* ~~ This is the layout information. ~~ 
+
+1) Padding is only placed on the top and/or bottom of the div. The elements within this div have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
+
+*/
+
+.content {
+
+	padding: 10px 0;
+	margin-right: 20px;
+}
+
+/* ~~ The footer ~~ */
+.footer {
+	padding: 10px 0;
+	background: #FFFFFF;
+}
+
+/* ~~ miscellaneous float/clear classes ~~ */
+.fltrt {  /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the #container) if the #footer is removed or taken out of the #container */
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+-->
+</style></head>
+
+<body>
+
+<div class="container">
+ <div class="container">
+  <div class="header"><a href="http://support.objectivity.com" target="_blank"><img src="objylogo.gif" align="right" alt="Objectivity" name="Insert_logo" id="Insert_logo" style="background: #FFFFFF; display:block; margin-right: 30px; margin-top: 10px;" /></a> 
+    <!-- end .header --></div>
+  <div class="content">
+  <br />
+    <h2>Thank You for Choosing Objectivity/DB</h2>
+<h4>Installation Results</h4>
+<p>Check the installation log for detailed information:</p>
+<pre><em>installDir</em>/Objectivity-<em>x.x</em>-installLog.log  
+</pre>
+<p>For a typical installation with root privileges, the Objectivity/DB lock server is installed as a service and started.</p>
+<h4>Configuring Your Installation</h4>
+<ol>
+  <li>Set up your license file.</li>
+  <br/>
+  <ul>
+  <li>If necessary, <a href="http://support.objy.com/docs/objectivity/11_0_0/mac/configuration/general#installLicense" target="_blank">manually install the license file and upgrade any existing federated databases</a>.</li>
+  </ul>
+  <br/>
+  <li>Set  environment variables for developers.</li>
+  <br/>
+  <ul>
+  <li>Refer to <code style="font-size:12px"><i>installDir</i>/setup</code> script, then <a href="http://support.objy.com/docs/objectivity/11_0_0/mac/configuration/objyDB#enVars" target="_blank">modify the appropriate environment file</a> for your platform.</li>
+	</ul>
+	<br/>
+	<li>Set up servers.</li>
+	<br/>
+    <ul>
+	<li>If not set by the installer, <a href="http://support.objy.com/docs/objectivity/11_0_0/mac/configuration/objyDB#lockServerLogDir" target="_blank">create a log directory for the lockserver</a>.</li>
+	<li>Verify that the lock server is running   using <code style="font-size:12px">oocheckls</code> from a terminal, starting it  if necessary using <code style="font-size:12px">oolockserver</code>.</li>
+        <li>Optionally   start the advanced multithreaded server (AMS) or the  query server. </li>
+        <li>Optionally  configure servers to start automatically at boot time.</li>
+      <li>For security purposes, consider creating special-purpose group accounts (with minimal required permissions) under which to run servers.</li>
+  	</ul>
+  	<br/>
+	<li>Validate your install.</li>
+	<br/>
+	<ul>
+	<li>Run the Java or C++ <code style="font-size:12px">helloWorld</code> sample in your <code style="font-size:12px"><i>installDir</i>/samples</code> directory.</li>
+	</ul>
+	</ol>
+<p><b>Note:</b>  For additional configuration information, review the appropriate <a href="http://support.objy.com/docs/objectivity/11_0_0/mac/configuration" target="_blank">configuration documentation</a> for your product selection.</p>
+<h4>Next Steps</h4>
+<ol>
+  <li>Review the <a href="doc/ReleaseNotes.pdf">Release Notes</a> to learn about new features.</li>
+  <li>Get familiar with Objectivity/Assist. From the <b>Applications</b> folder, double click on <b>Objectivity Assist</b>. Learn more about Objectivity/DB by running a tutorial from the Welcome screen.</li>
+  <li>Download code samples from  the <a href="http://support.objectivity.com" target="_blank">Objectivity Developer Network</a>.<br />
+    <br />
+  </li>
+</ol>
+<h4>For More Information</h4>
+<p>Access Objectivity documentation from <code style="font-size:12px"><a href="doc/objyBooks.pdf"><i>installDir</i>/doc/ObjyBooks.pdf</a></code> or the <a href="http://support.objectivity.com/docs" target="_blank">Objectivity Developer Network</a>.</p>
+<h4>Getting Help</h4>
+<p>For any technical questions or consultation, use the contact form at <a href="http://support.objectivity.com/contact" target="_blank">Objectivity Customer Support</a> or email <a href="mailto:support@objectivity.com">support@objectivity.com</a>.</p>
+  </div>
+  <div class="footer"><hr />
+    <p>For general information about Objectivity/DB, please visit <a href="http://www.objectivity.com/" target="_blank">www.objectivity.com</a>.</p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+</html>

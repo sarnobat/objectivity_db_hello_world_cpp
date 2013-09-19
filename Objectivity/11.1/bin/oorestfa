@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#
+# shell script to delete a file
+# Copyright (C) Objectivity, Inc. 1994-2000.  All rights reserved.
+#
+
+file="$1"
+
+rm -f $file
+exit $?

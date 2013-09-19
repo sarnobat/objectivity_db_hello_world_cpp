@@ -1,0 +1,91 @@
+#!/bin/sh
+
+#
+# shell script to ready a tape for backup
+# Copyright (C) Objectivity, Inc. 1994-2000.  All rights reserved.
+#
+
+#
+# CONFIGURATION
+#
+
+#
+# name of non-rewind-on-close tape device
+#
+#dev=/dev/nrst0
+
+#
+# SunOS, Solaris configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+# mt forward command
+#fwdcmd=fsf
+# mt forward-to-end-of-medium command
+#eomcmd=eom
+# number of records to forward after running tar
+#fwdcnt=1
+
+#
+# HP-UX configuration
+#
+# mt device flag
+#devflag=-t
+# mt rewind command
+#rewcmd=rew
+# mt forward command
+#fwdcmd=fsf
+# mt forward-to-end-of-medium command
+#eomcmd=eod
+# number of records to forward after running tar
+#fwdcnt=1
+
+#
+# AIX configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+# mt forward command
+#fwdcmd=fsf
+# mt forward-to-end-of-medium command
+#eomcmd=OO_NO_EOM
+# number of records to forward after running tar
+#fwdcnt=0
+
+#
+# ULTRIX, OSF/1 configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+# mt forward command
+#fwdcmd=fsf
+# mt forward-to-end-of-medium command
+#eomcmd=OO_NO_EOM
+# number of records to forward after running tar
+#fwdcnt=1
+
+#
+# END CONFIGURATION
+#
+
+mt $devflag $dev $rewcmd
+
+if [ $eomcmd != OO_NO_EOM ]; then
+    mt $devflag $dev $eomcmd
+else
+    while [ 1 ]; do
+	tar tf $dev
+	if [ $? != 0 ]; then
+	    exit 0
+	fi
+	mt $devflag $dev $fwdcmd $fwdcnt
+    done
+fi
+
+exit $?

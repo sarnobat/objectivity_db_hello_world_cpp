@@ -1,0 +1,97 @@
+#!/bin/sh
+
+#
+# shell script to ready a tape for restore
+# Copyright (C) Objectivity, Inc. 1994-2000.  All rights reserved.
+#
+
+#
+# CONFIGURATION
+#
+
+#
+# name of non-rewind-on-close tape device
+#
+#dev=/dev/nrst0
+
+#
+# SunOS, Solaris configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+# mt forward command
+#fwdcmd=fsf
+# number of records to forward after running tar
+#fwdcnt=1
+
+#
+# HP-UX configuration
+#
+# mt device flag
+#devflag=-t
+# mt rewind command
+#rewcmd=rew
+# mt forward command
+#fwdcmd=fsf
+# number of records to forward after running tar
+#fwdcnt=1
+
+#
+# AIX configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+# mt forward command
+#fwdcmd=fsf
+# number of records to forward after running tar
+#fwdcnt=0
+
+#
+# ULTRIX, OSF/1 configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+# mt forward command
+#fwdcmd=fsf
+# number of records to forward after running tar
+#fwdcnt=1
+
+#
+#temporary file
+#
+tmpfile=/tmp/oo`whoami`.arch
+
+#
+# END CONFIGURATION
+#
+
+rm -f $tmpfile
+touch $tmpfile
+if [ $? != 0 ]; then
+    exit $?
+fi
+numarch=0
+done=0
+
+mt $devflag $dev $rewcmd
+
+while [ $done = 0 ]; do
+    archname=`tar -tf $dev`
+    if [ $? != 0 ]; then
+	done=1
+    else
+	echo "$archname $numarch" >> $tmpfile
+	numarch=`expr $numarch + 1`
+	mt $devflag $dev $fwdcmd $fwdcnt
+    fi
+done
+
+mt $devflag $dev $rewcmd
+
+exit 0

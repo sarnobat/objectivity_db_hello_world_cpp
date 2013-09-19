@@ -1,0 +1,63 @@
+#!/bin/sh
+
+#
+# shell script to clean up a tape after restore
+# Copyright (C) Objectivity, Inc. 1994-2000.  All rights reserved.
+#
+
+#
+# CONFIGURATION
+#
+
+#
+# name of non-rewind-on-close tape device
+#
+#dev=/dev/nrst0
+
+#
+# SunOS, Solaris configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+
+#
+#
+# HP-UX configuration
+#
+# mt device flag
+#devflag=-t
+# mt rewind command
+#rewcmd=rew
+
+#
+# AIX configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+
+#
+# ULTRIX, OSF/1 configuration
+#
+# mt device flag
+#devflag=-f
+# mt rewind command
+#rewcmd=rewind
+
+#
+#temporary file
+#
+tmpfile=/tmp/oo`whoami`.arch
+
+#
+# END CONFIGURATION
+#
+
+if [ -s $tmpfile ]; then
+    rm -f $tmpfile
+fi
+mt $devflag $dev $rewcmd
+exit $?

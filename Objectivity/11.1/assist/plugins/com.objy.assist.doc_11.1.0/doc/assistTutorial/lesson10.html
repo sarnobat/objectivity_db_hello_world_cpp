@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Lesson 10: Persistent Objects</title>
+    <link rel="StyleSheet" href="css/lesson10.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson9.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="Tutorial.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson11.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum"><a name="1173221">Lesson 10: Persistent Objects </a></div>
+      <div class="Body"><a name="1173223">Persistent objects are the fundamental logical units of data storage in an </a>Objectivity/DB federated database. </div>
+      <div class="Body"><a name="1163902">If you have not already done so, display the editor for the </a><span class="Bold">pmV2-Fleet_P1_1</span> container in the <span class="Bold">pmV2-Region_G1_1</span> database.</div>
+      <div class="Body"><a name="1173724">F</a>or example, in the FD Project Explorer, click to expand <span class="Bold">Database: (</span><span class="Bold">3</span><span class="Bold">-0-0-0)</span> <span class="Bold">(</span><span class="Bold">pmV2-Region_G1_1</span><span class="Bold">)</span> under <span class="Bold">Data</span>. Then double-click on the <span class="Bold">pmV2-Fleet_P1_1</span> container.</div>
+      <div class="Body"><a name="1163905">The Objects box </a>shows the persistent objects in the container.</div>
+      <div class="Anchor"><a name="1165047"><img class="Default" src="images/scrnObjects_1.jpg" width="536" height="453" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1163907">Persistent objects are created by applications. Each persistent object has an object </a>identifier (OID) and is an instance of a class. The class may be defined in an object-oriented programming language (for example, an application-defined class such as <span class="Code">Car</span>), or it may be a class defined by Objectivity/DB (for example, <span class="Code">ooObj</span>). In either case, the class is described in the federated database’s schema, which we’ll see later.</div>
+      <div class="Head1"><a name="1163911">Persistence</a></div>
+      <div class="Body"><a name="1163912">A persistent object continues to exist and retain its data beyond the duration of </a>the process that creates it. In contrast, a <span class="Term">transient object</span> exists only within the memory of the process that creates it; when that process terminates, the transient object ceases to exist. </div>
+      <div class="Body"><a name="1163914">In general, persistent objects are instances of </a><span class="Term">persistence-capable classes</span>, which are classes that define persistence behavior. Depending on the Objectivity programming interface, such classes may obtain their persistence behavior by inheriting it from the Objectivity/DB class <span class="Code">ooObj</span>, or by implementing a persistence interface.</div>
+      <div class="Body"><a name="1163924">Once persistence-capable classes are defined, you can create persistent objects </a>from them. The exact details for doing so are specific to each Objectivity programming interface. For example:</div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1163931">In an </a>Objectivity/C++ application, you use an overloaded <span class="Code">new</span> operator to specify whether a new instance is a persistent object or a transient object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1163935">In an </a>Objectivity for Java application, you create all new instances as transient objects, and then make individual objects persistent—for example, by assigning an object to a container.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Head1"><a name="1163936">Attributes</a></div>
+      <div class="StepOnly_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="StepOnly_inner" style="width: 18pt; white-space: nowrap;">►</div>
+            </td>
+            <td width="100%">
+              <div class="StepOnly_inner"><a name="1167592">In the Objects box for the </a><span class="Bold">pmV2-</span><span class="Bold">Fleet_P1_1</span> container, double-click on the persistent object whose OID is <span class="Bold">3-</span><span class="Bold">4-</span><span class="Bold">1-</span><span class="Bold">4</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1"><a name="1167594">The editor area shows the persistent object’s OID, its class (Car), and its </a><span class="Emphasis">attributes</span>. </div>
+      <div class="Anchor"><a name="1167598"><img class="Default" src="images/scrnObjects_2.jpg" width="443" height="455" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1163940">The attributes of a persistent object constitute its component data. Such data </a>typically represents the features or state that distinguishes this particular instance of the class from other instances. Attributes correspond to Java <span class="Emphasis">fields</span>, C++ <span class="Emphasis">data members</span>, or .NET/C# <span class="Term">member variables</span>.</div>
+      <div class="Body"><a name="1163941">Each attribute has a name, a type, and a value. The name and type are defined in </a>the schema by the object’s class (Car). The value is set by an application. For example, the object we are looking at has an attribute whose name is <span class="Bold">pa</span><span class="Bold">ssengers</span>, whose type is <span class="Bold">int16</span> (a 16-bit signed integer), and whose value is <span class="Bold">2</span>.</div>
+      <div class="Body"><a name="1164983">For readability, </a>Assist shows language-independent type names like <span class="Bold">int16</span> and <span class="Bold">String</span>. The actual type names are specific to each Objectivity programming interface. </div>
+      <div class="Body"><a name="1170226">You can change the way </a>Assist displays type names by setting preferences: </div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner"><a name="1170229">Click </a><span class="Bold">Window &gt; Preferences</span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner"><a name="1170230">In the Preferences dialog, select </a><span class="Bold">O</span><span class="Bold">bjectivity/Assist</span>, if necessary. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1"><a name="1170237">You can then select C++ or Java to cause </a>Assist to use C++ names or Java names. </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner"><a name="1170241">For this tutorial, click </a><span class="Bold">Cancel</span> to continue using the language-independent setting Neutral. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="1163949">Because th</a>is database is a read-write database, attribute values are displayed in curly braces to indicate that you can use Assist to change them.</div>
+      <div class="Head1"><a name="1163953">Reference Attributes</a></div>
+      <div class="Body"><a name="1163954">Programming languages commonly use </a><span class="Term">references</span> as a way of pointing to objects. For example, in C++, a reference is typically a <span class="Term">pointer</span> (a variable containing an address). In Java, programmers do not use pointers explicitly, although references to objects are implemented as managed pointers.</div>
+      <div class="Body"><a name="1163958">O</a>bjectivity/DB introduces its own <span class="Term">object references</span> as a way for persistent objects to point to each other. An object reference contains the identifier (OID) of a persistent object. Object references can be stored as attributes of persistent objects. </div>
+      <div class="Body"><a name="1163959">M</a>ake sure you are looking at the attributes of the Car object <span class="Bold">3-</span><span class="Bold">4-</span><span class="Bold">1-</span><span class="Bold">4</span> in the <span class="Bold">pmV2-Fleet_P1_1</span> container of the <span class="Bold">pmV2-Region_G1_1</span> database. </div>
+      <div class="BodyKeep"><a name="1169981">N</a>otice the <span class="Bold">currentRental</span> attribute whose type is <span class="Bold">ref(</span><span class="Bold">FleetData.</span><span class="Bold">RentalContract</span><span class="Bold">)</span>. This is a <span class="Term">reference attribute</span>—an attribute whose value is an object reference to a particular instance of class <span class="Bold">RentalContract</span> defined in namespace <span class="Bold">FleetData</span>. In this case, the reference attribute forms a link from the persistent object 3-4-1-4 to the persistent object whose OID is shown in the Value column of <span class="Bold">currentRental</span><span class="Bold">,</span><span class="Bold"> </span><span class="Bold">which is </span><span class="Bold">3-5-5-37</span>. Because of this link, any application that accesses the Car object 3-4-1-4 can directly access the referenced <span class="Bold">currentRental</span> object, even though this object resides in a different container (the first 5 in the RentalContract object’s OID indicates it is in container 3-5-1-1). </div>
+      <div class="Anchor"><a name="1169985"><img class="Default" src="images/scrnObjects_2b.jpg" width="445" height="453" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner"><a name="1172031">Double-click on the entry for </a><span class="Bold">currentRental</span> to see the referenced RentalContract object:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><a name="1172035"><img class="Default" src="images/scrnObjects_2c.jpg" width="444" height="453" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner"><a name="1170245">Return to the </a>Car object by clicking on the &#x22;Back to&#x22; button (left arrow) in the main Assist toolbar.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><a name="1165060"><img class="Default" src="images/scrnObjects_backarrow.jpg" width="754" height="202" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Indented1"><a name="1170584">Alternatively, click the tab for Object 3-</a>4-1-4 in the toolbar above the editor area.</div>
+      <div class="Body"><a name="1170582">Object references are managed differently by each </a>Objectivity programming interface. For example, in Objectivity/C++, they are instances of template classes, and you create and use them explicitly. In Objectivity for Java, an object reference is implicitly stored in each field whose value is a Java reference to an instance of a persistence-capable class.</div>
+      <div class="Head1"><a name="1163976">Relationships (Associations)</a></div>
+      <div class="Body"><span class="Term"><a name="1163977">Relationships</a></span> are an alternative to using reference attributes to link objects together. Relationships are available in all of the Objectivity programming interfaces. In Objectivity/C++, relationships are also known as <span class="Term">associations</span>.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner"><a name="1163984">Click the tab for the </a>RentalContract object <span class="Bold">3-</span><span class="Bold">5-5-37</span> and look at the attributes.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><a name="1165065"><img class="Default" src="images/scrnObjects_3.jpg" width="444" height="274" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Indented1"><a name="1163986">Notice the </a><span class="Bold">customer</span> attribute, whose type is <span class="Bold">To-One(</span><span class="Bold">Customer</span><span class="Bold">)</span>. This entry corresponds to a relationship between two persistent objects—namely, the persistent object 3-5-5-37 and the persistent object 3-5-1-16 (the OID shown in the Value column of <span class="Bold">customer</span>). This is a <span class="Term">to-one</span> relationship between an instance of class RentalContract and exactly one instance of class Customer.</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner"><a name="1163987">D</a>ouble-click on the entry for <span class="Bold">customer</span> to display the related <span class="Bold">Customer</span> object. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1"><a name="1170262">The editor area shows the attributes of object </a>3-5-1-16.</div>
+      <div class="Indented1"><a name="1163988">Notice the </a><span class="Bold">rentals</span> attribute has <span class="Bold">To-Many(</span><span class="Bold">RentalContract</span><span class="Bold">)</span> as its type and 2 as its value. This is a <span class="Term">to-many</span> relationship between this instance of class Customer and 2 objects of class RentalContract. </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner"><a name="1172713">Expand</a> <span class="Bold">rentals</span> to see the OIDs of the related objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><a name="1165070"><img class="Default" src="images/scrnObjects_4.jpg" width="440" height="292" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1163991">Relationships are an important data-modeling mechanism for capturing </a>significant links between classes of objects—for example, every RentalContract has exactly one Customer, and every Customer may have many RentalContracts. Relationships are defined in the schema, although the actual links between particular objects are set by an application. You can use relationships to create a <span class="Term">composite object</span> consisting of many linked component objects.</div>
+      <div class="Body"><a name="1163995">O</a>bjectivity/DB supports relationships in many ways. When objects are linked together through relationships, you can lock or delete these objects as a group. For each relationship you define, the Objectivity programming interfaces provide methods for setting and finding linked objects. </div>
+      <div class="Body"><a name="1163999">When a relationship is </a><span class="Term">bidirectional</span> (such as the relationship in the example), Objectivity/DB preserves referential integrity. In this case, deleting the object at one end of the link automatically removes the reference to that object from the other end of the relationship. For example, deleting a RentalContract automatically deletes the Customer’s reference to it.</div>
+      <div class="Body"><a name="1164003">You can, of course, model a relationship by simply defining a reference attribute </a>from one class to another. However, your application is then responsible for all aspects of managing the link.</div>
+      <div class="Body" style="color: #000000; font-size: 10.0pt; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline;"><a name="1164010"> </a></div>
+    </div>
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson9.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="Tutorial.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson11.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom">
+          <a href="./Copyright.html" target="external_window">Copyright © 2012, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

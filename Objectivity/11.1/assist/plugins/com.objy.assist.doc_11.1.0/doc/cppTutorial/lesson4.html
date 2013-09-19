@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Lesson 4: User-Defined Classes</title>
+    <link rel="StyleSheet" href="css/tutorial.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <script type="text/javascript" src="js/helper.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson3.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson5.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum">Lesson 4: User-Defined Classes</div>
+      <div class="Head1">Introduction</div>
+      <div class="Body">In this lesson you will learn how to define your own persistent-capable classes.</div>
+      <div class="Head1">About schema development</div>
+      <div class="Body">The first step in developing an object-oriented application is to define the classes that capture the structure and behavior of the fundamental entities in the application. Such definitions usually arise naturally out of the logical modeling phase of application development.</div>
+      <div class="Body">In the logical model for a database application, you identify the classes whose instances are to be <span class="Term">persistent</span>—that is, must continue to exist even after the applications that define or manipulate them have finished. With classes whose instances will be persistent, two additional activities must be added to the class definition process:</div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner">Each class definition must be made persistence-capable so that instances of the class can be persistent.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner">Persistence-capable class definitions must then be added to a federated database schema so that instances of those classes can be stored in the database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body">The process of defining persistence-capable classes and adding them to a schema is called <span class="Term">schema development</span>.</div>
+      <div class="Head1">Persistence-capable classes</div>
+      <div class="Body">In a standard C++ program, instances of all classes are transient—they exist only for the life of the application that defines them.</div>
+      <div class="Body">In Objectivity/C++, you add persistence behavior to an application-defined class by deriving it directly or indirectly from the Objectivity/C++ class <span class="Code">ooObj</span>. Such classes are said to be persistence-capable. When a class is persistence-capable, an application can create both persistent and transient instances of it.</div>
+      <div class="Body">Classes that do not inherit persistence behavior are non-persistence-capable classes. All instances of such classes are transient. However, instances of non-persistence-capable classes are stored in the federated database when you incorporate them in a persistent object—for example, when you use a non-persistence-capable class as an attribute type or base class of a persistence-capable class. A non-persistence-capable class must obey certain restrictions to be incorporated in a persistence-capable class.</div>
+      <div class="Body">Instances of persistence-capable classes are true persistent objects, in that each can be referenced by an address in the database; this address serves as the object identifier (OID) for the object. In contrast, instances of non-persistence-capable classes are not independently addressable, although they may be accessed indirectly through the persistent objects that embed them.</div>
+      <div class="Head1">Federated database schemas</div>
+      <div class="Body">Each Objectivity/DB federated database contains a schema that describes the types of data that it can store persistently. A schema contains a type number for each persistence-capable class, along with shape information, which describes how persistent instances of the class are to be laid out in storage.</div>
+      <div class="Body">Note that a schema also contains type information for any non-persistence-capable class that is directly or indirectly incorporated in a persistence-capable class. However, a schema does not contain information about member functions or static data members; such information is maintained in the compiled applications that access the database.</div>
+      <div class="Head1">Objectivity/DDL</div>
+      <div class="Body">In Objectivity/C++, persistent-capable classes are defined in Data Definition Language (DDL) and saved in files. DDL is like C++ but enhanced for persistent-capable features. The DDL files can be automatically generated using Objectivity/Assist or created using an editor. Once created they can be processed by the Objectivity/DDL processor from within the Visual C++ IDE project. The DDL processor creates or updates the schema in the federated database and generates C++ source code and header files for your application.</div>
+      <div class="Body">Objectivity/Assist streamlines the creation of DDL through a graphical user interface, which is used to create the class descriptions, create the schema directly in the federated database, and optionally generate the corresponding DDL files.</div>
+      <div class="Head1">Using Objectivity/Assist to create a schema</div>
+      <div class="Head2">Example 4.1</div>
+      <div class="Body">Class diagram for RentalCompany</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_1.jpg" width="626" height="276" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head2">Exercise 4.1A</div>
+      <div class="Body">Use Objectivity/Assist to create and add a new class <span class="Code">RentalCompany</span> to the default schema.</div>
+      <div class="Head2">Adding a class</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">In the FD Project Explorer, click to expand <span class="Button">Federated Database (RentalCompany)</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Double-click <span class="Button">Schema</span> to open the schema overview in the editor area.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Click <span class="Button">Add</span> in the <span class="Button">Default Namespace/Packages Classes</span> section of the schema editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_2.jpg" width="722" height="489" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Enter <span class="Code">RentalCompany</span> in the <span class="Button">Class Name</span> field of the <span class="Button">Add Class</span> dialog.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">5.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Leave the following fields checked: <span class="Button">Open editor for class when complete</span> and <span class="Button">Make persistence capable</span>. Click <span class="Button">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_3.jpg" width="511" height="397" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">The editor area displays the schema description of the <span class="Code">RentalCompany</span> class. In the <span class="Button">Base Classes</span> section, you can see that the <span class="Code">RentalCompany</span> class inherits from <span class="Code">ooObj</span>, which is persistence-capable. This means that instances of the <span class="Code">RentalCompany</span> class will be stored in the database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_4.jpg" width="617" height="427" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head2">Adding members to a class</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">From the schema description of the <span class="Code">RentalCompany</span> class, click <span class="Button">Add</span> in the <span class="Button">Members</span> section.</div></td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">From the <span class="Button">Add Member</span> dialog, use the <span class="Button">Available Member Types</span> list to select <span class="Button">ooVString</span> under <span class="Button">Strings</span>. Click <span class="Button">Add</span>.</div>            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_5.jpg" width="675" height="670" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Click <span class="Code">newMember0</span> and replace the value with <span class="Code">name</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">6.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Click <span class="Button">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  <div class="Indented1">The <span class="Code">RentalCompany</span> class descrption is updated to reflect the new members.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_6.jpg" width="724" height="442" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head2">Committing schema changes</div>
+      <div class="Body">At this point you have requested the addition of a new member, but this member is not part of the persistent schema until you commit your changes.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">In the FD Project Explorer, right click <span class="Button">Schema</span> under the FD Project and select <span class="Button">Commit Schema </span><span class="Button">Changes</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_7.jpg" width="475" height="670" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+	  <div class="Indented1">This lists the changes you have requested.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_8.jpg" width="512" height="397" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Click <span class="Button">Finish</span> to commit the changes to the  schema in the federated database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_9.jpg" width="724" height="586" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head2">Generating the DDL files</div>
+      <div class="Body">Now you can generate the DDL file for the <span class="Code">RentalCompany</span> class.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">In the FD Project Explorer, right click <span class="Button">Schema</span> and select <span class="Button">Generate Code</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_10.jpg" width="665" height="470" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">For <span class="Button">Output Directory</span>, click <span class="Button">Browse</span> to navigate to <span class="CodeVar">installDir</span><span class="Code">\samples\cxx\tutorial\RentalCompany</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Select <span class="Button">Yes</span> to overwrite existing files and <span class="Button">C++</span> for the language.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_11.jpg" width="512" height="397" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Click <span class="Button">Finish</span> to generate the files.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">5.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Inspect the generated files:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	<div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner"><span class="Code">RentalCompany\ddlFiles\RentalCompany.ddl</span></div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+	<div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner"><span class="Code">RentalCompany\src\RentalCompany.cpp</span></div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">6.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Repeat the same process to create the <span class="Code">Vehicle</span> and <span class="Code">Customer</span> classes.  Reference the class diagram at the beginning of this lesson for member details.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_12.jpg" width="712" height="477" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head2">Exercise 4.1B</div>
+      <div class="Head2">Adding a derived class</div>
+      <div class="Body">Use Objectivity/Assist to create the <span class="Code">Truck</span> class that inherits from <span class="Code">Vehicle</span> in the default namespace.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">In the FD Project Explorer, expand <span class="Button">Schema</span>, right click on <span class="Button">Namespace (Default)</span>, and select <span class="Button">Add </span><span class="Button">Class</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Enter <span class="Code">Truck</span> in the <span class="Button">Class Name</span> field.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Clear the <span class="Button">Make persistence capable</span> box.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_13.jpg" width="511" height="397" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Click <span class="Button">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_4_img_14.jpg" width="570" height="438" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">5.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">In the <span class="Button">Base Classes</span> section of the schema description for the <span class="Code">Truck</span> class, click <span class="Button">Add</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1">The <span class="Button">Add Base Class</span> dialog displays a list of all available classes from which to derive.</div>
+	  <div class="Anchor"><img class="Default" src="images/lesson_4_img_15.jpg" width="511" height="691" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+	  <div class="Code">&nbsp;</div>
+	  <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">6.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Select the <span class="Code">Vehicle</span> class from the list, and click <span class="Button">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1"><span class="Button">Note:</span> The <span class="Button">Persistence Capable</span> field has changed from <span class="Button">no</span> to <span class="Button">yes</span> now that <span class="Code">Truck</span> is inheriting from a persistence capable class.</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">7.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Add class members to the <span class="Code">Truck</span> class using the class diagram as a reference.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	<div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">8.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Commit the schema changes and repeat the process from the <span class="Button">Generating the DDL files</span> section to generate new DDL files.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	<div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">9.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+             <div class="NumNext_inner">Add <span class="Code">ooddlx</span> calls to your script or pre-build event to generate the required <span class="Code">.h</span> and <span class="Code">.cpp</span> files:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">cd "$(ProjectDir)ddlFiles"</div>
+      <div class="CodeIndented1">if exist "$(ProjectDir)ddlFiles\RentalCompany.ddl" ooddlx "$(ProjectDir)ddlFiles\RentalCompany.ddl" "$(ProjectDir)data\RentalCompany.boot"</div>
+      <div class="CodeIndented1">if exist "$(ProjectDir)ddlFiles\Vehicle.ddl" ooddlx "$(ProjectDir)ddlFiles\Vehicle.ddl" "$(ProjectDir)data\RentalCompany.boot"</div>
+      <div class="CodeIndented1">if exist "$(ProjectDir)ddlFiles\Truck.ddl" ooddlx "$(ProjectDir)ddlFiles\Truck.ddl" "$(ProjectDir)data\RentalCompany.boot"</div>
+      <div class="CodeIndented1">if exist "$(ProjectDir)ddlFiles\Customer.ddl" ooddlx "$(ProjectDir)ddlFiles\Customer.ddl" "$(ProjectDir)data\RentalCompany.boot"</div>
+      <div class="Indented1"><span class="Button">Note:</span> The <span class="Code">ooddlx</span> commands are in preparation for the next lesson where you will complete your class definitions by adding associations. No application code is executed in this lesson.</div>      
+      <div class="Body"></div>
+    </div>
+    <!-- Start View Solution Block -->
+    <div class="Body">
+    <br />
+    <form name="form" id="form" onsubmit="return false">
+    <input name="button" type="button" onclick="return toggleMe('solution')" value="View Solution" /><br />
+    </form>
+    <div id="solution" style="display:none">
+    Pre-Build Event - Updated to generate code using DDL processor  
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/4.1/commands.txt" border="0" > </object>
+	</pre>
+    RentalCompany.ddl
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/4.1/RentalCompany.ddl" border="0" > </object>
+	</pre>
+	Customer.ddl
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/4.1/Customer.ddl" border="0" > </object>
+	</pre>
+	Vehicle.ddl
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/4.1/Vehicle.ddl" border="0" > </object>
+	</pre>
+	Truck.ddl
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/4.1/Truck.ddl" border="0" > </object>
+	</pre>
+    </div><br />
+    </div>
+    <!-- End View Solution Block -->
+    <!-- Start Bottom Navigation Block -->
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson3.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson5.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- End Bottom Navigation Block -->
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom" colspan="1" rowspan="1">
+        <a href="./Copyright.html" shape="rect">Copyright © 2013, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

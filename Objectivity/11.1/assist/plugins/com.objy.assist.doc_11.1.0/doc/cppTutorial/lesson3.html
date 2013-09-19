@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <title>Lesson 3: Creating Persistent Objects</title>
+    <link rel="StyleSheet" href="css/tutorial.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <script type="text/javascript" src="js/helper.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson2.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson4.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum">Lesson 3: Creating Persistent Objects</div>
+      <div class="Head1">Introduction</div>
+      <div class="Body">In this lesson you will learn how to create persistent objects.</div>
+      <div class="Head1">Objectivity/DB Objects</div>
+      <div class="Body">In Objectivity/C++ you access persistent objects in the federated database using handles (or smart pointers). The Objectivity/DB storage hierarchy is represented as objects in the federated database. The federated database is represented as an instance of the class ooFDObj, each database is represented as an instance of the class ooDBObj, and each container is represented as an instance of ooContObj or its subclasses (ooDefaultContObj is a special subclass). These classes are visible in Objectivity/Assist but applications do not use these classes directly.</div>
+      <div class="Body">Each basic object is represented as an instance of <span class="Code">ooObj</span> or its subclasses. As an application developer you will derive your persistant objects from <span class="Code">ooObj</span>.</div>
+      <div class="Head1">The federated database</div>
+      <div class="Body">You can access the connected federated database to get information such as its name or find its contained databases.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Declare a handle for the federated database object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">ooHandle(ooFDObj) fd;</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Call the <span class="Code">fd()</span> method on the session object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">fd = session-&gt;fd();</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Get the name of federated database from the handle using the <span class="Code">name()</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">fd.name();</div>
+      <div class="Head1">Creating an object</div>
+      <div class="Body">Objects are created in containers. You use handles to create and access objects.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Declare a handle.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">ooHandle(ooObj) obj;</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Use the <span class="Code">new</span> operator to create a new instance of <span class="Code">ooObj</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">obj = new ooObj;</div>
+      <div class="Head1">Finding Objects</div>
+      <div class="Body">An <em>object iterator</em> is an transient object that provides a mechanism for iterating through a group of persistent objects. For example, you use an object iterator to scan the federated database to find all persistent objects of a particular class.</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Declare an instance of the iterator class, <span class="Code">ooItr</span>, for the type of object you want to iterate over. For example, to iterate over the basic object, you need an iterator of type <span class="Code">ooObj</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">ooItr(ooObj) objItr;</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">You find the persistent objects of a particular class in the federated database by performing a scan operation. A scan operation consults the federated database’s placement model to determine in which portions of the storage hierarchy to search for objects of interest.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">objItr.scan(session->fd());</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Step through the iterator by calling the <span class="Code">next()</span> method on the iterator, visiting each object in turn.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">while (objItr.next()) {</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;...</div>
+      <div class="CodeIndented1">}</div>
+      <div class="Head1">Exercise 3.1</div>
+      <div class="Body">Perform the following steps to modify the code in <span class="Code">main.cpp</span> to create and find objects:</div>
+      <div class="Body">In the update transaction:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Add an update transaction above your read transaction.  You will use an update transaction to create your objects and a read transaction to iterate over the objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1"><span class="Button">Note:</span> Make sure you commit your transactions using <span class="Code">session-> commit()</span>.</div>
+       <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Use the session object to set a reference to the federated database object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Copy the code loop that creates objects in <span class="Code">main.cpp</span> of example 1.2:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">for (int i = 0; i &lt; 1000; i++)</div>
+      <div class="CodeIndented1">{</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oRef = new ooObj();</div>
+      <div class="CodeIndented1">}</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">In <span class="Code">main.cpp</span> of your application, paste the code loop inside your update transaction and commit the transaction.</div>
+            </td>
+          </tr>
+        </table>
+      </div>        
+      <div class="Indented1"><span class="Button">Hint:</span> Remember to use a handle as the reference to the class <span class="Code">ooObj</span> for the <span class="Code">new</span> operator.</div>
+	  <div class="Body">In the read transaction:</div>
+	  <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Declare an iterator of type <span class="Code">ooObj</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Iterator over all the objects in the federation, and print out a message with the total number of objects found.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Indented1"><span class="Button">Hint:</span> Use the <span class="Code">scan()</span> method on the referenced federation.</div>
+	  <div class="Body">Finish up:</div>
+      <div class="Body"><span class="Button">Before you build:</span> For each lesson you will need to recreate your federated database. The provided Visual Studio project files include pre-build events that recreate your <span class="Code">RentalCompany</span> federation. If you would like to create a script or run the tools from the command line, you can copy them from the solution at the end of the lesson.</div>
+	   <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Rebuild the project</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  
+	  <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Run the program.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Use Objectivity/Assist to examine the federated database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">a.</span></div>
+
+            </td>
+            <td width="100%">
+            	  <div class="Bullet2_inner">Create a FD Project named <span class="Code">RentalCompany</span> for the existing federated database, <span class="Code">RentalCompany\data\RentalCompany.boot</span>.</div>
+			</td>
+          </tr>
+        </tbody></table>
+      </div>
+        <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">b.</span></div>
+            </td>
+            <td width="100%">
+            	  <div class="Bullet2_inner">In the FD Project Explorer, click to expand <span class="Button">Federated Database (RentalCompany)</span> &gt; <span class="Button">Data</span>, and then click to expand the <span class="Button">Database</span> entry <span class="Button">pmV1-Default_1</span>. You will see a <span class="Button">Container</span> entry for the container named <span class="Button">pmV1-Default_1</span>.</div>
+			</td>
+          </tr>
+        </tbody></table>
+      </div>      
+        <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">c.</span></div>
+
+            </td>
+            <td width="100%">
+            	  <div class="Bullet2_inner">Expand the entry for the container to view the objects you created, and double-click on any <span class="Button">Object</span> entry to view it in the editor area.</div>
+			</td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Indented1"><span class="Button">Hint:</span> The database and container objects are automatically created for you. You will be introduced to the managed placement of new persistent objects in <a href="lesson7.html">Lesson 7</a>.</div> 
+      <div class="Anchor"><img class="Default" src="images/lesson_3_view_1.jpg" width="708" height="672" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Body"></div>
+      <div class="Body"></div>
+    </div>
+    <!-- Start View Solution Block -->
+    <div class="Body">
+    <br />
+    <form name="form" id="form" onsubmit="return false">
+    <input name="button" type="button" onclick="return toggleMe('solution')" value="View Solution" /><br />
+    </form>
+    <div id="solution" style="display:none">
+    Pre-Build Event - Recreates the federated database
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/3.1/commands.txt" border="0" > </object>
+	</pre>
+    main.cpp
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/3.1/main.cpp" border="0" > </object>
+	</pre>
+    </div><br />
+    </div>
+    <!-- End View Solution Block -->
+    <!-- Start Bottom Navigation Block -->
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson2.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson4.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- End Bottom Navigation Block -->
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom" colspan="1" rowspan="1">
+        <a href="./Copyright.html" shape="rect">Copyright © 2013, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

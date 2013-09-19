@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="com.objy.assist.core"
+   name="Objectivity/Assist Core"
+   version="11.1.0"
+   provider-name="Objectivity"
+   class="com.objy.assist.core.CorePlugin">
+
+   <runtime>
+      <library name="core.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+   <requires>
+      <import plugin="org.eclipse.core.runtime.compatibility"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="com.objy.assist.api"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.jface.text"/>
+   </requires>
+
+
+   <extension-point id="modelComponentPresentation" name="Model Component Presentation" schema="schema/modelComponentPresentation.exsd"/>
+   <extension-point id="modelComponentChildProvider" name="Model Component Child Provider" schema="schema/modelComponentChildProvider.exsd"/>
+   <extension-point id="domComponentCompare" name="DOM Component  Compare" schema="schema/domComponentCompare.exsd"/>
+   <extension-point id="domComponentProvider" name="DOM Component Provider" schema="schema/domComponentProvider.exsd"/>
+   <extension-point id="modelTreeRefresher" name="Model Tree Refresher" schema="schema/modelTreeRefresher.exsd"/>
+   <extension-point id="modelComponentFilter" name="Model Component Filter" schema="schema/modelComponentFilter.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%Catagory"
+            id="com.objy.assist.core">
+      </category>
+      <view
+            name="%FdExporerName"
+            icon="icons/fdExplorer.gif"
+            category="com.objy.assist.core"
+            class="com.objy.assist.core.views.FdExplorer"
+            id="com.objy.assist.core.views.FdExplorer">
+      </view>
+      <view
+            name="Session Log"
+            icon="icons/log.gif"
+            category="com.objy.assist.core"
+            class="com.objy.assist.core.views.LogViewer"
+            id="com.objy.assist.core.views.logViewer">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="%PerspectiveName"
+            icon="icons/perspective.gif"
+            class="com.objy.assist.core.PerspectiveFactory"
+            id="com.objy.assist.core.perspective">
+      </perspective>
+   </extension>
+   <extension
+         id="objectivityNature"
+         name="%NatureName"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="com.objy.assist.core.ObjyNature">
+         </run>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%Catagory"
+            id="com.objy.assist.core.objectivity">
+      </category>
+      <wizard
+            name="%FdWizardName"
+            category="com.objy.assist.core.objectivity"
+            class="com.objy.assist.core.wizards.FdProjectWizard"
+            project="true"
+            id="com.objy.assist.core.wizards.fdWizard">
+         <description>
+            %FdWizardDesc
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="com.objy.assist.core.modelComponentPresentation">
+      <domComponentPresentation
+            componentTypeName="Fd"
+            fixedTypeName="Federated Database"
+            labelAttribute1="systemName"
+            isSortable="false"
+            image="icons/Fd.gif">
+      </domComponentPresentation>
+      <customPresentation
+            componentTypeName="FdProject"
+            presentationClass="com.objy.assist.core.model.project.FdProjectPresentation">
+      </customPresentation>
+      <customPresentation
+            componentTypeName="NextMarker"
+            presentationClass="com.objy.assist.core.model.NextMarkerPresentation"
+            image="icons/NextMarker.gif">
+      </customPresentation>
+      <customPresentation
+            componentTypeName="PrevMarker"
+            presentationClass="com.objy.assist.core.model.PrevMarkerPresentation"
+            image="icons/PrevMarker.gif">
+      </customPresentation>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="com.objy.assist.core.model.IModelComponent"
+            nameFilter="FdProject"
+            id="com.objy.assist.core.objectContribution1">
+         <action
+               label="Refresh"
+               icon="icons/refresh.gif"
+               class="com.objy.assist.core.actions.RefreshActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.refresh">
+         </action>
+         <action
+               label="Delete"
+               icon="icons/remove.gif"
+               class="com.objy.assist.core.actions.DeleteFdProjectActionDelegate"
+               enablesFor="+"
+               id="com.objy.assist.core.deleteFdProject">
+         </action>
+         <action
+               class="com.objy.assist.core.actions.DisconnectActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.action1"
+               label="Disconnect"
+               tooltip="Disconnect from the FD">
+            <enablement>
+               <objectState
+                     name="isConnected"
+                     value="true">
+               </objectState>
+            </enablement>
+         </action>
+      </objectContribution>
+      <objectContribution
+            objectClass="com.objy.assist.core.model.IModelComponent"
+            nameFilter="PrevMarker"
+            id="com.objy.assist.core.objectContribution2">
+         <action
+               label="Previous 20 (default)"
+               class="com.objy.assist.core.actions.Prev20ActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.prev20">
+         </action>
+         <action
+               label="Previous 100"
+               class="com.objy.assist.core.actions.Prev100ActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.prev100">
+         </action>
+         <action
+               label="Previous 200"
+               class="com.objy.assist.core.actions.Prev200ActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.prev200">
+         </action>
+      </objectContribution>
+      <objectContribution
+            objectClass="com.objy.assist.core.model.IModelComponent"
+            nameFilter="NextMarker"
+            id="com.objy.assist.core.objectContribution3">
+         <action
+               label="Next 20 (default)"
+               class="com.objy.assist.core.actions.Next20ActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.next20">
+         </action>
+         <action
+               label="Next 100"
+               class="com.objy.assist.core.actions.Next100ActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.next100">
+         </action>
+         <action
+               label="Next 200"
+               class="com.objy.assist.core.actions.Next200ActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.core.next200">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Objectivity/Assist"
+            class="com.objy.assist.core.CorePreferencePage"
+            id="com.objy.assist">
+      </page>
+   </extension>
+   <extension
+         point="com.objy.assist.core.modelTreeRefresher">
+      <refresher
+            refresherClass="com.objy.assist.core.PreferenceChangeModelTreeRefresher">
+      </refresher>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="FD Project"
+            icon="icons/Fd.gif"
+            filenames="FdProject"
+            contributorClass="com.objy.assist.core.editors.ModelComponentEditorContributor"
+            class="com.objy.assist.core.editors.FdProjectEditor"
+            id="com.objy.assist.core.fdProject">
+      </editor>
+   </extension>
+   <extension
+         point="com.objy.assist.core.modelComponentFilter">
+      <filter
+            filter="com.objy.assist.core.views.NamedObjectsFilter"
+            componentTypeName="NamedObjects"/>
+   </extension>
+
+</plugin>

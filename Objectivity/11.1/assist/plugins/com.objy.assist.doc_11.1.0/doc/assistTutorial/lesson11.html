@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Lesson 11: Storage Hierarchy and Placement</title>
+    <link rel="StyleSheet" href="css/lesson11.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson10.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="Tutorial.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson12.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum"><a name="1163896">Lesson 11: Storage Hierarch</a>y and Placement</div>
+      <div class="Body"><a name="1163904">T</a>he following diagram summarizes the various objects in the Objectivity/DB <span class="Term">storage hierarchy</span>:</div>
+      <div class="Anchor"><a name="1163943"><img class="Default" src="images/lesson11v.jpg" width="576" height="216" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1163944">In this diagram, we see:</a></div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1163945">A federated database contains one or more databases.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1163946">Each database contains one or more containers.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1164225">Each container contains one or more persistent objects. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1164226">Persistent objects</a> can be linked together using to-one or to-many relationships (associations).</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><a name="1163950">Federated databases, databases, and containers are collectively called &#x22;storage </a>objects,&#x22; because they determine how persistent objects are stored on disk. Storage objects are used primarily by database administrators to determine the location of data on the network or to optimize aspects of performance related to concurrency and efficient I/O.</div>
+      <div class="Body"><a name="1164877">In contrast, persistent objects and their relationships represent the persistent data </a>that is created and accessed by the application. Note that links between persistent objects can cross storage-object boundaries. That is, a persistent object in one container can be related to persistent objects in another container (or even in another database).</div>
+      <div class="Head1"><a name="1164539">Placement of Objects in the Storage Hierarchy</a></div>
+      <div class="Body"><a name="1164968">Every new persistent object created by an application must be </a><span class="Term">placed</span> within the federated database’s storage hierarchy. Applications automatically <span class="Term">manage</span> the placement of new persistent objects by consulting the federated database’s <span class="Term">placement model</span>. A placement model describes which persistent objects are to be placed together in a container, which containers are to be placed together in a database, and which databases are to be placed together in a storage location on the network.</div>
+      <div class="Body"><a name="1164907">For this tutorial, the application that populated the RentalCompany federated </a>database used a placement model that:</div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1164958">Placed each RentalCompany object in its own container with the </a>system-name prefix &#x22;pmV2-Company_&#x22;.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1164946">Placed all Customers and RentalContracts for a region together in a container </a>with the system-name prefix &#x22;pmV2-CustomerData_&#x22;.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1164951">Placed all Cars and Trucks for a region together in a container with the </a>system-name prefix &#x22;pmV2-Fleet_&#x22;.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><a name="1165046">Placed the containers for a region together in a database with the </a>system-name prefix &#x22;pmV2-Region_&#x22;.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body"><span class="Bold"><a name="1165589">Note:</a></span> The &#x22;pmV2-&#x22; portion of each prefix indicates that placement was performed using version 2 of the federated database’s placement model.</div>
+      <div class="Body"><a name="1165428">A placement model enables applications to create storage objects automatically, </a>as needed to accommodate persistent objects. The placement model specifies the prefix used in the system names for databases and containers. The placement model also controls various other properties of databases and containers, such as page sizes, maximum file sizes, and so on.</div>
+      <div class="Body"><a name="1165448">When objects are placed according to a placement model, Objectivity/DB </a>maintains an internal map of where objects of each type reside, and uses this map to optimize an application’s query for objects of a particular type.</div>
+      <div class="Body"><a name="1164911">A placement model is expressed as an XML document called a </a><span class="Term">placement model </span><span class="Term">document</span>, which you edit and install in the federated database. All applications that access the federated database use the same placement model.</div>
+      <div class="Body"><a name="1165476">If you want to learn more about placement, you can use an administrative tool to </a>export the placement model for the RentalCompany federated database:</div>
+      <div class="CodeWide"><a name="1165490">objy exportplacement -bootfile RentalCompany.boot -outfile </a>RentalCompany.pmd</div>
+      <div class="Body"><a name="1165501">The </a><span class="Code">RentalCompany.pmd</span> output file contains schema information at the beginning, followed by the rules that define where objects are placed. To learn more about placement, see <span class="Term">Getting Started With Managed Placement</span> (<span class="CodeVar">i</span><span class="CodeVar">nstallDir</span><span class="Code">/placementManage</span><span class="Code">ment.</span><span class="Code">pdf</span>).</div>
+      <div class="Head1"><a name="1165363">Placement of Files in Storage Locations</a></div>
+      <div class="Body"><a name="1165374">By default, the files of all databases added to a federated database are placed on </a>the same host and in the same directory as the system database file. You can use administrative tools to register nondefault storage locations for the placement model to use. Doing so enables Objectivity/DB to create new databases in other storage locations on same network.</div>
+      <div class="Body"><a name="1165166"> </a></div>
+    </div>
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson10.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="Tutorial.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson12.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom">
+          <a href="./Copyright.html" target="external_window">Copyright © 2012, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

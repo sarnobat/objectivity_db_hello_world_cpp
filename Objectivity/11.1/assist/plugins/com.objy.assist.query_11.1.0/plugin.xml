@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="com.objy.assist.query"
+   name="Objectivity/Assist Query"
+   version="11.1.0"
+   provider-name="Objectivity"
+   class="com.objy.assist.query.QueryPlugin">
+
+   <runtime>
+      <library name="query.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+   <requires>
+      <import plugin="org.eclipse.core.runtime.compatibility"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="com.objy.assist.core"/>
+      <import plugin="com.objy.assist.api"/>
+   </requires>
+
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="com.objy.assist.core.model.IModelComponent"
+            nameFilter="Data"
+            id="com.objy.assist.query.data">
+         <action
+               label="Query"
+               icon="icons/search.gif"
+               class="com.objy.assist.query.actions.QueryActionDelegate"
+               menubarPath="navigate"
+               enablesFor="1"
+               id="com.objy.assist.query.action1">
+         </action>
+         <action
+               class="com.objy.assist.query.actions.LookupByOIDActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.query.LookupByOID1"
+               label="Lookup object by OID"
+               menubarPath="navigate"/>
+      </objectContribution>
+      <objectContribution
+            objectClass="com.objy.assist.core.model.IModelComponent"
+            nameFilter="DbData"
+            id="com.objy.assist.query.dbData">
+         <action
+               label="Query"
+               icon="icons/search.gif"
+               class="com.objy.assist.query.actions.QueryActionDelegate"
+               menubarPath="navigate"
+               enablesFor="1"
+               id="com.objy.assist.query.action2">
+               <enablement>
+                    <objectState
+                         name="hasPlacementModel"
+                         value="false">
+                    </objectState>
+               </enablement>
+         </action>
+         <action
+               class="com.objy.assist.query.actions.LookupByOIDActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.query.LookupByOID2"
+               label="Lookup object by OID"
+               menubarPath="navigate"/>
+      </objectContribution>
+      <objectContribution
+            objectClass="com.objy.assist.core.model.IModelComponent"
+            nameFilter="ContainerData"
+            id="com.objy.assist.query.containerData">
+         <action
+               label="Query"
+               icon="icons/search.gif"
+               class="com.objy.assist.query.actions.QueryActionDelegate"
+               menubarPath="navigate"
+               enablesFor="1"
+               id="com.objy.assist.query.container">
+               <enablement>
+                    <objectState
+                         name="hasPlacementModel"
+                         value="false">
+                    </objectState>
+               </enablement>
+         </action>
+         <action
+               class="com.objy.assist.query.actions.LookupByOIDActionDelegate"
+               enablesFor="1"
+               id="com.objy.assist.query.LookupByOID3"
+               label="Lookup object by OID"
+               menubarPath="navigate"/>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Query"
+            icon="icons/search.gif"
+            filenames="Dummy"
+            contributorClass="com.objy.assist.core.editors.ModelComponentEditorContributor"
+            class="com.objy.assist.query.editors.PqlQueryEditor"
+            id="com.objy.assist.query.pqlQueryEditor">
+      </editor>
+   </extension>
+   <extension
+         point="com.objy.assist.core.modelComponentPresentation">
+      <customPresentation
+            componentTypeName="PqlQuery"
+            presentationClass="com.objy.assist.query.modelExtensions.PqlQueryModelComponentPresentation"
+            image="icons/search.gif">
+      </customPresentation>
+   </extension>
+
+</plugin>

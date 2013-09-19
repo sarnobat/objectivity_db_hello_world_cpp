@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Lesson 8: Searching and Indexing</title>
+    <link rel="StyleSheet" href="css/tutorial.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <script type="text/javascript" src="js/helper.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson7.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <img src="images/nextx.gif" alt="Next" border="0" />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum">Lesson 8: Searching and Indexing</div>
+      <div class="Head1">Introduction</div>
+      <div class="Body">This lesson will build on the basic search implemented in <a href="lesson5.html">Lesson 5</a>.  You will build a predicate query (refer to <a href="../assistTutorial/lesson13.html">Lesson 13</a> in the Objectivity/DB Basics Tutorial for review) and create an index to improve query performance.</div>
+      <div class="Head1">Creating a predicate query</div>
+      <div class="Body">In the Objectivity/DB Basics Tutorial we introduced the Objectivity/DB <span class="Term">predicate-query language (PQL)</span>. Now you will use <span class="Term">PQL</span> to enhance your search for <span class="Code">Vehicle</span> objects.</div> 
+      <div class="Body">Recall that a <span class="Term">predicate-query language (PQL)</span> contains at least two operands and one operator.</div> 
+      <div class="Anchor"><img class="Default" src="images/lesson_8_img_1.jpg" width="312" height="148" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Create a <span class="Term">PQL</span> string.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">char* pql = "lastName =~ 'Jon.*'";</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Use <span class="Code">scan</span> to initialize a federation wide iterator.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">ooItr(Customer) customerItr;</div>
+      <div class="CodeIndented1">customerItr.scan(fd, pql);</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Iterate through the results using the iterator to access the current <span class="Code">Customer</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">customerItr.scan(fd, pql);</div>
+      <div class="CodeIndented1">ooHandle(Customer) customer;</div>
+      <div class="CodeIndented1">&nbsp;</div>
+      <div class="CodeIndented1">while (customerItr.next())</div>
+      <div class="CodeIndented1">{</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; customerItr->getLastName() &lt;&lt; endl;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;...</div>
+      <div class="CodeIndented1">}</div>
+      <div class="Head1">Creating an index</div>
+      <div class="Body">An <span class="Term">index</span> stores references to persistent objects. When you search for objects using a predicate query Objectivity/DB searches all objects of the class specified. If you use an index, your query will only need to search the index making it more efficient because it not longer needs to open each object to qualify its contents.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_8_img_2.jpg" width="715" height="323" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Body">For more detailed information and examples refer to Chapter 4 of <span class="Emphasis">Getting Started With Managed Object Placement</span> which is included in your installation.</div>
+      <div class="Body">To create an index you need to do the following:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Add a key specification using the command line tool <span class="Code">AddKeySpecification</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">objy AddKeySpecification -name CustKey -class Customer -attribute lastName -attribute firstName:20 -bootFile RentalCompany.boot</div>
+      <div class="Indented1">The key specification created by this command:</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Identifies <span class="Code">Customer</span> as the indexed class.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Designates <span class="Code">lastName</span> and <span class="Code">firstName</span> as key fields, in that order.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Limits the stored key values to the first 24 characters (default) of <span class="Code">lastName</span> strings, and the first 20 characters of <span class="Code">firstName</span> strings.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Add an index specification using the command line tool <span class="Code">AddIndexSpecification</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">objy AddIndexSpecification -name CustIndex -keyspecification CustKey -bootFile RentalCompany.boot</div>
+      <div class="Indented1">The index specification created by this command:</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Is based on the key specification <span class="Code">CustKey</span> added above.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Implicitly specifies that any index created from it is nonunique (allows objects with duplicate keys).</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Add the index to the federated database using the command line tool <span class="Code">AddIndex</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">objy AddIndex -indexSpecification CustIndex -bootFile RentalCompany.boot</div>
+      <div class="Indented1">The added indexes:</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Are based on the index specification called <span class="Code">CustIndex</span> added above.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Include all persistent <span class="Code">Customer</span> objects in the federated database.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Body"><span class="Button">Note:</span> Alternately you can edit the PMD file to accomplish the above steps.</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Lastly, you can display all indexes for a federated database by using the <span class="Code">ListIndexes</span> administrative tool.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">objy ListIndexes -bootFile RentalCompany.boot</div>
+      <div class="Indented1">For each index, the output lists:</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">The index specification on which the index is based.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table summary="" border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;"><span class="zNumbers">■</span></div>
+
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Each object placer that maintains a scope in which one or more of the indexed objects reside.</div>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="Head2">Exercise 8.1</div>
+      <div class="Body">Modify the code in <span class="Code">main.cpp</span> as follows:</div>
+      <div class="Body">In the read transaction:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Create a <span class="Code">PQL</span> string that will match a customer first name.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">"firstName =~ 'Joe.*2'";</div>
+      <div class="Indented1"><span class="Button">Note:</span> The query above will work if you are using the provided solution code from previous lessons. If this is not the case, base your query on the code you used to set first and last names of <span class="Code">Customer</span> objects.</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Iterate through the results printing the first and last name of each customer.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body">From the command line or using your pre-build event:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Recreate the federated database. If you did not include the PMD import command in your pre-build event this federation will use default placement.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  <div class="Indented1"><span class="Button">Note:</span> Disconnect from the federated database in Objectivity/Assist before rebuilding your application.</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Add a key specification named <span class="Code">CustKey</span> to the federation.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Add an index specification named <span class="Code">CustIndex</span> based on the <span class="Code">CustKey</span> key specification.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Add the index with the index specification <span class="Code">CustIndex</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">5.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">List the indexes for the federation to confirm your index was successfully added.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body">Finish up:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Run the program.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Inspect the contents of the federated database in Objectivity/Assist. Notice the internal <span class="Code">ooKeyDesc</span> and <span class="Code">ooKeyField</span> objects created in the <span class="Code">pmV2-Default_1</span> container. These objects are used to store the index you created.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_8_img_3.jpg" width="478" height="673" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Body"></div>
+    </div>
+    <!-- Start View Solution Block -->
+    <div class="Body">
+    <br />
+    <form name="form" id="form" onsubmit="return false">
+    <input name="button" type="button" onclick="return toggleMe('solution')" value="View Solution" /><br />
+    </form>
+    <div id="solution" style="display:none">
+    Pre-Build Event - Updated to create index
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/8.1/commands.txt" border="0" > </object>
+	</pre>
+    main.cpp
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/8.1/main.cpp" border="0" > </object>
+	</pre>
+    </div><br />
+    </div>
+    <!-- End View Solution Block -->
+    <!-- Start Bottom Navigation Block -->
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson7.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <img src="images/nextx.gif" alt="Next" border="0" />
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- End Bottom Navigation Block -->
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom" colspan="1" rowspan="1">
+        <a href="./Copyright.html" shape="rect">Copyright © 2013, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

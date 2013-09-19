@@ -1,0 +1,8 @@
+if exist "$(ProjectDir)data\RentalCompany.boot" oocleanup -local "$(ProjectDir)data\RentalCompany.boot"
+if exist "$(ProjectDir)data\RentalCompany.boot" oodeletefd -f "$(ProjectDir)data\RentalCompany.boot"
+del "$(ProjectDir)data\*.DB"
+del "$(ProjectDir)ddlFiles\"*_ref.h
+del "$(ProjectDir)ddlFiles\"*_ddl.cpp
+del "$(ProjectDir)ddlFiles\"*.h
+
+objy createfd -fdname "RentalCompany" -fddirpath "$(ProjectDir)data"  -lockserverhost $(COMPUTERNAME)

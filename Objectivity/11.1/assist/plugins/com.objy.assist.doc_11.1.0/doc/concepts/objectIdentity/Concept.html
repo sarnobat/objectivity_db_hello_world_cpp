@@ -1,0 +1,39 @@
+<html>
+
+<head>
+<title>Object Identity</title>
+</head>
+
+<body>
+
+<p><b><font size="5">Object Identity</font></b></p>
+<p>Every Objectivity/DB object has an identifier that uniquely 
+distinguishes it among other objects in the federation. The identifier for an 
+object is called its object identifier or OID. An object identifier corresponds 
+to the exact storage location of the object within the federated database; it is 
+unique within the entire federated database. An object’s OID can change during 
+the lifetime of the object only if the object is moved. After an object is moved 
+or deleted its previous object identifier is reused for any new object that is 
+created in the former location of the moved or deleted object. The identifier of 
+a database or container can be expressed in the object identifier format, so 
+object identifiers provide a general mechanism for uniquely identifying any 
+object in the federated database.</p>
+<p>Objectivity/DB uses object identifiers instead of memory 
+addresses to identify objects, because they provide:</p>
+<ul>
+  <li>Transparent access at runtime to objects located 
+  anywhere in the network </li>
+  <li>Full interoperability across all platforms </li>
+  <li>Access to more objects than a direct memory address permits </li>
+  <li>Integrity constraints and runtime type checking that are 
+  not possible through direct memory addresses </li>
+</ul>
+<p>The OID is a 64-bit value broken down in to 4 16 bit 
+integers. The 1<sup>st</sup> 16 bits represent the database id, the 2<sup>nd</sup> 
+16 bits represent the container id, the 3<sup>rd</sup> 16 bits represent the 
+logical page number and the last 16 bits represent the logical slot number 
+within a page.</p>
+
+</body>
+
+</html>

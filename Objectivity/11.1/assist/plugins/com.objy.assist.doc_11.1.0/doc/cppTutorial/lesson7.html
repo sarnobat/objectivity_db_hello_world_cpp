@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Lesson 7: Managed Placement</title>
+    <link rel="StyleSheet" href="css/tutorial.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <script type="text/javascript" src="js/helper.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson6.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson8.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum">Lesson 7: Managed Placement</div>
+      <div class="Head1">Introduction</div>
+      <div class="Body">Objectivity/DB manages the placement of objects in the federation through the use of a <span class="Emphasis">placement manager</span>. In this lesson you will learn how to export the default placement model, customize your placement, import your custom placement, and view the results in Objectivity/Assist.</div>
+      <div class="Head1">Placement Basics</div>
+      <div class="Body">This lesson will introduce you to the basics of placement. For more detailed information and examples refer to <span class="Emphasis">Getting Started With Managed Object Placement</span> which is included in your installation (installDir\doc\placementManagement.pdf).</div>
+      <div class="Body">Every persistent object in an Objectivity/DB federated database is <span class="Term">placed</span> in a particular location within a federated database. The placement of persistent objects within a federated database significantly affects the performance of operations that find, read, and update those objects.</div>
+      <div class="Body">Each federation contains a <span class="Term">placement model</span> that defines rules regarding where to place objects.  The <span class="Term">placement manager</span> uses the information stored in the <span class="Term">placement model</span> to place objects when they are created by your application.</div>
+      <div class="Body">Recall the storage hierarchy from <a href="../assistTutorial/lesson11.html">Lesson 11</a> in the Objectivity/DB Basics Tutorial.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_7_img_1.jpg" width="576" height="216" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Body">The <span class="Term">placement model</span> defines <span class="Term">placers</span> for each level of the hierarchy.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_7_img_2.jpg" width="667" height="80" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><span class="Term">Object Placer</span> defines the rules for placing objects in containers.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><span class="Term">Container Placer</span> defines the rules for placing containers in databases.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet1_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet1_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet1_inner"><span class="Term">Database Placer</span> defines the rules for placing databases in the federation.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Head1">Placement Model Document</div>
+      <div class="Body">You define a placement model by editing a placement model document (PMD):</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">In a command prompt, navigate to the <span class="Code">installDir\samples\cxx\tutorial\RentalCompany</span> folder.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Export your federated database's placement model into a PMD. At the command prompt, enter:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">objy ExportPlacement -outFile default.pmd -bootFile RentalCompany.boot</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">In an XML editor, view the default.pmd file. You use this file to define new rules to customize your placement based on your application's needs.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Save your changes and import the customized placement model. At the command prompt, enter:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">    objy ImportPlacement -inFile updated.pmd -bootFile RentalCompany.boot</div>
+      <div class="Head1">Default Placement</div>
+      <div class="Body">By default all objects will be stored in a single container until that container becomes full. At that time a new container will be created and all new objects will be placed in the new container.  This cycle will repeat as necessary and may involve the creation of a new database if the current database becomes full.</div>
+      <div class="Body">The default placement for your application can be visualized by the following diagram where all the different types of objects are contained in a single container within a single database. This database is contained with the federated database (not shown) and could be one of many.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_7_img_3.jpg" width="614" height="574" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head1">Custom Placement</div>
+      <div class="Body">By updating the exported <span class="Code">pmd</span> file you will be able to store each individual <span class="Code">RentalCompany</span> with its related <span class="Code">Vehicles</span> in its own container. All <span class="Code">Customer</span> objects will remain in the default container. This could be useful if each rental company has its own fleet of vehicles but shares customers with other rental companies.</div>
+      <div class="Anchor"><img class="Default" src="images/lesson_7_img_4.jpg" width="618" height="574" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head2">Exercise 7.1</div>
+      <div class="Body"><span class="Button">Note:</span> Since this is an introductory lesson you will be provided with the exact code segments required to update the <span class="Code">pmd</span> file.</div>
+      <div class="Body">Update your pmd:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Export the <span class="Code">default.pmd</span> using the command line tool, <span class="Code">ExportPlacement</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Save a copy of the <span class="Code">pmd</span> as <span class="Code">updated.pmd</span> and make the following changes to the new <span class="Code">pmd</span> file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+            <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Starting at the bottom of the file replace the empty <span class="Code">&lt;Rules/&gt;</span> element with the following code segment:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">&lt;Rules&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Rule objectClass="RentalCompany" objectPlacer="RentalCompanyPlacer"/&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Rule objectClass="Vehicle" objectPlacer="VehiclePlacer"&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;PlacementRelationship relatedObjectClass="RentalCompany"/&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Rule&gt;</div>
+      <div class="CodeIndented1">&lt;/Rules&gt;</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;"> </div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">This code creates two rules. The first rule applies to <span class="Code">RentalCompany</span> objects and is named <span class="Code">RentalCompanyPlacer</span>. The second rule applies to <span class="Code">Vehicle</span> objects, is named <span class="Code">VehiclePlacer</span>, and identifies that <span class="Code">Vehicle</span> objects are related to <span class="Code">RentalCompany</span> objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Scroll up and add the following immediately after the <span class="Code">&lt;ObjectPlacers&gt;</span> line, and above the default object placer:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">&lt;ObjectPlacer name="RentalCompanyPlacer" description="Places RentalCompany objects."</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;placeInto="OwnScope" containerPlacer="RentalCompanyPlacer"&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Scope&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ContainerGroupPerObject/&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Scope&gt;</div>
+      <div class="CodeIndented1">&lt;/ObjectPlacer&gt;</div>
+      <div class="CodeIndented1">&lt;ObjectPlacer name="VehiclePlacer"</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;description="Places Vehicle objects by RentalCompany objects."</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;placeInto="RelatedObjectScope" /&gt;</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;"> </div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">The custom object placers will use <span class="Code">RentalCompanyPlacer</span> to place <span class="Code">RentalCompany</span> objects in their own container group (<span class="Code">&lt;/ContainerGroupPerObject&gt;</span>) and <span class="Code">VehiclePlacer</span> will place <span class="Code">Vehicle</span> objects by their related object (in this case <span class="Code">RentalCompany</span>).</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+            <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;">■</div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">Scroll up and add the following immediately after the <span class="Code">&lt;ContainerPlacers&gt;</span> line, and above the default container placer:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CodeIndented1">&lt;ContainerPlacer name="RentalCompanyPlacer"</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;description="Places containers of RentalCompany objects."</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;placeInto="OwnScope"&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Scope&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;SingleDatabaseGroup/&gt;</div>
+      <div class="CodeIndented1">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Scope&gt;</div>
+      <div class="CodeIndented1">&lt;/ContainerPlacer&gt;</div>
+      <div class="Bullet2_outer" style="margin-left: 90pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="Bullet2_inner" style="width: 18pt; white-space: nowrap;"> </div>
+            </td>
+            <td width="100%">
+              <div class="Bullet2_inner">The custom <span class="Code">ContainerPlacer</span> will use <span class="Code">RentalCompanyPlacer</span> to place containers of <span class="Code">RentalCompany</span> objects in a single database group (<span class="Code">&lt;/SingleDatabaseGroup&gt;</span>).</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Save your customized PMD, <span class="Code">updated.pmd</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body">Modify the code in <span class="Code">main.cpp</span> as follows:</div>
+      <div class="Body">In the update transaction:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Update the call to create a new <span class="Code">Vehicle</span> object so that it references the current <span class="Code">RentalCompany</span>. This information will be used to place each <span class="Code">Vehicle</span> near its related <span class="Code">RentalCompany</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Body">Finish up:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">Rebuild the project and recreate the database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+	  <div class="Indented1"><span class="Button">Note:</span> Disconnect from the federated database in Objectivity/Assist before rebuilding your application.</div>  
+      <div class="Indented1"><span class="Button">Note:</span> You can run step 2 manually from the command line or add the command to your pre-build event so that your rebuild recreates the federated database and imports the new <span class="Code">updated.pmd</span>.</div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Import <span class="Code">updated.pmd</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">3.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Run the program.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">4.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Inspect the contents of the federated database. Each <span class="Code">RentalCompany</span> now has its own container which includes its related <span class="Code">Vehicle</span> objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_7_img_5.jpg" width="479" height="673" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">5.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">Open the default container <span class="Button">pmV2-Default_1</span> which contains all of the <span class="Code">Customer</span> objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/lesson_7_img_6.jpg" width="478" height="674" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Body"></div>
+    </div>
+    <!-- Start View Solution Block -->
+    <div class="Body">
+    <br />
+    <form name="form" id="form" onsubmit="return false">
+    <input name="button" type="button" onclick="return toggleMe('solution')" value="View Solution" /><br />
+    </form>
+    <div id="solution" style="display:none">
+    Pre-Build Event - Updated to export default.pmd and import updated.pmd
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/7.1/commands.txt" border="0" > </object>
+	</pre>
+    main.cpp
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/7.1/main.cpp" border="0" > </object>
+	</pre>
+    updated.pmd<br/>
+    <span class="Button">Note:</span> If you copy this file you will need to edit line 2 of <span class="Code">updated.pmd</span> to include your install path in place of <span class="Code">INSTALL_DIR</span>.
+    <pre>
+    <object width="650" height="300" type="text/plain" data="solutions/7.1/updated.pmd" border="0" > </object>
+	</pre>
+    </div><br />
+    </div>
+    <!-- End View Solution Block -->
+    <!-- Start Bottom Navigation Block -->
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson6.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson8.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- End Bottom Navigation Block -->
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom" colspan="1" rowspan="1">
+        <a href="./Copyright.html" shape="rect">Copyright © 2013, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

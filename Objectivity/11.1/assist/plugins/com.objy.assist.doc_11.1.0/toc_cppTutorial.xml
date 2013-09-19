@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Objectivity/C++ Tutorial">
+	<topic label="Introduction" href="doc/cppTutorial/introduction.html">
+	</topic>
+	<topic label="Setting Up" href="doc/cppTutorial/setup.html">
+	</topic>
+	<topic label="Lesson 1: Getting Started" href="doc/cppTutorial/lesson1.html">
+	</topic>
+	<topic label="Lesson 2: Connections and Sessions" href="doc/cppTutorial/lesson2.html">
+	</topic>
+	<topic label="Lesson 3: Creating Persistent Objects" href="doc/cppTutorial/lesson3.html">
+	</topic>
+	<topic label="Lesson 4: User-Defined Classes" href="doc/cppTutorial/lesson4.html">
+	</topic>
+	<topic label="Lesson 5: Working with User-Defined Classes" href="doc/cppTutorial/lesson5.html">
+	</topic>
+	<topic label="Lesson 6: Defining Associations" href="doc/cppTutorial/lesson6.html">
+	</topic>
+	<topic label="Lesson 7: Managed Placement" href="doc/cppTutorial/lesson7.html">
+	</topic>
+	<topic label="Lesson 8: Searching and Indexing" href="doc/cppTutorial/lesson8.html">
+	</topic>
+</toc>

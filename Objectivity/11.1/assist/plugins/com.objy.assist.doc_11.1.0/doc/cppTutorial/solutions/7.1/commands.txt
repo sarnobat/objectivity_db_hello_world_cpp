@@ -1,0 +1,17 @@
+if exist "$(ProjectDir)data\RentalCompany.boot" oocleanup -local "$(ProjectDir)data\RentalCompany.boot"
+if exist "$(ProjectDir)data\RentalCompany.boot" oodeletefd -f "$(ProjectDir)data\RentalCompany.boot"
+del "$(ProjectDir)data\*.DB"
+del "$(ProjectDir)ddlFiles\"*_ref.h
+del "$(ProjectDir)ddlFiles\"*_ddl.cpp
+del "$(ProjectDir)ddlFiles\"*.h
+
+objy createfd -fdname "RentalCompany" -fddirpath "$(ProjectDir)data"  -lockserverhost $(COMPUTERNAME)
+
+cd "$(ProjectDir)ddlFiles"
+if exist "$(ProjectDir)ddlFiles\RentalCompany.ddl" ooddlx "$(ProjectDir)ddlFiles\RentalCompany.ddl" "$(ProjectDir)data\RentalCompany.boot"
+if exist "$(ProjectDir)ddlFiles\Vehicle.ddl" ooddlx "$(ProjectDir)ddlFiles\Vehicle.ddl" "$(ProjectDir)data\RentalCompany.boot"
+if exist "$(ProjectDir)ddlFiles\Truck.ddl" ooddlx "$(ProjectDir)ddlFiles\Truck.ddl" "$(ProjectDir)data\RentalCompany.boot"
+if exist "$(ProjectDir)ddlFiles\Customer.ddl" ooddlx "$(ProjectDir)ddlFiles\Customer.ddl" "$(ProjectDir)data\RentalCompany.boot"
+
+objy ExportPlacement -outFile "$(ProjectDir)pmdFiles\default.pmd" -bootfile "$(ProjectDir)data\RentalCompany.boot"
+if exist "$(ProjectDir)pmdFiles\updated.pmd" objy ImportPlacement -inFile "$(ProjectDir)pmdFiles\updated.pmd" -bootfile "$(ProjectDir)data\RentalCompany.boot"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<welcomePage title="Objectivity/Assist" format="nowrap">
+	<intro>This page will help familiarize you with the Objectivity/Assist Eclipse feature.
+To get started, read the sections below and click on the related links.</intro>
+
+<item><b>Objectivity/DB Basics Tutorial</b>
+To get started learning about Objectivity/DB you can run the <topic id="/com.objy.assist.doc/toc.xml" href="/com.objy.assist.doc/doc/assistTutorial/Tutorial.html">Basics Tutorial</topic>.</item>
+
+<item><b>Java Tutorial</b>
+To get started learning about Objectivity/DB's Java binding you can run the <topic id="/com.objy.assist.doc/toc.xml" href="/com.objy.assist.doc/doc/javaTutorial/lesson0/Lesson.html">Java Tutorial</topic>.</item>
+	
+<item><b>C++ Tutorial</b>
+To get started learning about Objectivity/DB's C++ binding you can run the <topic id="/com.objy.assist.doc/toc.xml" href="/com.objy.assist.doc/doc/cppTutorial/lesson0/Lesson.html">C++ Tutorial</topic>.</item>
+
+<item><b>Learn more </b>
+To learn about the Eclipse workbench you can browse the <topic id="/org.eclipse.platform.doc.user/toc.xml">Workbench User Guide</topic>.</item>
+
+</welcomePage>

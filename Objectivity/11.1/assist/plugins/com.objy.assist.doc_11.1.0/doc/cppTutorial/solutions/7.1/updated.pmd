@@ -1,0 +1,109 @@
+<pre>
+&lt;?xml version="1.0" encoding="US-ASCII"?&gt;
+&lt;PMD pmdSchemaVersion="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="INSTALL_DIR/etc/PMD.xsd"&gt;
+  &lt;IndexTypesSnapshot&gt;
+    &lt;IndexType
+      name="Traditional"
+      description="Traditional Objectivity built-in index."
+      isOrdered="true"
+      duplicatesAreAllowed="true"
+      supportsRangeAccess="true"&gt;
+      &lt;KeyCharacteristics
+        allAttributesAreRequired="false"
+        attributesAreOrdered="true"
+        minimumNumberOfAttributes="1" maximumNumberOfAttributes="0"&gt;
+        &lt;SupportedAttributeTypes&gt;
+          &lt;Numeric/&gt;
+          &lt;String/&gt;
+        &lt;/SupportedAttributeTypes&gt;
+      &lt;/KeyCharacteristics&gt;
+    &lt;/IndexType&gt;
+  &lt;/IndexTypesSnapshot&gt;
+  &lt;SchemaSnapshot&gt;
+    &lt;Class name="RentalCompany" objectSize="40"&gt;
+      &lt;StringAttribute name="name" isFixedLength="false"/&gt;
+      &lt;AssociationEnd name="mVehicles" cardinality="ToMany"/&gt;
+      &lt;AssociationEnd name="mCustomers" cardinality="ToMany"/&gt;
+    &lt;/Class&gt;
+    &lt;Class name="Vehicle" objectSize="24"&gt;
+      &lt;NumericAttribute name="license" type="UInt32"/&gt;
+      &lt;NumericAttribute name="seatingCapacity" type="UInt8"/&gt;
+      &lt;Subclasses&gt;
+        &lt;Class name="Truck" objectSize="32"&gt;
+          &lt;NumericAttribute name="loadCapacity" type="UInt16"/&gt;
+        &lt;/Class&gt;
+      &lt;/Subclasses&gt;
+    &lt;/Class&gt;
+    &lt;Class name="Customer" objectSize="40"&gt;
+      &lt;StringAttribute name="firstName" isFixedLength="false"/&gt;
+      &lt;StringAttribute name="lastName" isFixedLength="false"/&gt;
+      &lt;AssociationEnd name="mCompany" cardinality="ToOne"/&gt;
+    &lt;/Class&gt;
+  &lt;/SchemaSnapshot&gt;
+  &lt;MainStorageGroup&gt;
+    &lt;StorageGroupConfiguration selection="Any"/&gt;
+    &lt;StorageAcquisitionPolicy waitSeconds="25" storageUnavailablePolicy="UseDefault"/&gt;
+  &lt;/MainStorageGroup&gt;
+  &lt;PlacementModel
+    name="Application"
+    version="1" status="Current" id="27021602059452417"&gt;
+    &lt;KeySpecifications/&gt;
+    &lt;IndexSpecifications/&gt;
+    &lt;DatabasePlacers/&gt;
+    &lt;ContainerPlacers&gt;
+        &lt;ContainerPlacer name="RentalCompanyPlacer"
+            description="Places containers of RentalCompany objects."
+            placeInto="OwnScope" &gt;
+            &lt;Scope&gt;
+                &lt;SingleDatabaseGroup/&gt;
+            &lt;/Scope&gt;
+        &lt;/ContainerPlacer&gt;
+      &lt;ContainerPlacer
+        name="Default"
+        description="Default placer used for placing containers when no specific container placer is specified"
+        placeInto="OwnScope"&gt;
+        &lt;Scope&gt;
+          &lt;SingleDatabaseGroup/&gt;
+          &lt;DatabaseGroupConfiguration selection="Any"&gt;
+            &lt;DatabaseConfiguration
+              databasePageSize="0"/&gt;
+          &lt;/DatabaseGroupConfiguration&gt;
+        &lt;/Scope&gt;
+      &lt;/ContainerPlacer&gt;
+    &lt;/ContainerPlacers&gt;
+    &lt;ObjectPlacers&gt;
+    &lt;ObjectPlacer name="RentalCompanyPlacer" description="Places RentalCompany objects."
+        placeInto="OwnScope" containerPlacer="RentalCompanyPlacer"&gt;
+        &lt;Scope&gt;
+            &lt;ContainerGroupPerObject/&gt;
+        &lt;/Scope&gt;
+    &lt;/ObjectPlacer&gt;
+    &lt;ObjectPlacer name="VehiclePlacer" description="Places Vehicle objects by RentalCompany objects."
+        placeInto="RelatedObjectScope" /&gt;
+      &lt;ObjectPlacer
+        name="Default"
+        description="Default placer used for placing objects when no specific object placer is specified"
+        placeInto="OwnScope"
+        placeOnNewPage="false"
+        containerPlacer="Default"&gt;
+        &lt;Scope&gt;
+          &lt;SingleContainerGroup/&gt;
+          &lt;ContainerGroupConfiguration selection="Any"&gt;
+            &lt;ContainerConfiguration
+              growByPolicy="PercentageOfCurrentSize" growBy="100"
+              initialNumberOfPages="100" pageLimit="50000"
+              placeInOwnFile="false"
+              maintainObjectCounts="true"/&gt;
+          &lt;/ContainerGroupConfiguration&gt;
+        &lt;/Scope&gt;
+      &lt;/ObjectPlacer&gt;
+    &lt;/ObjectPlacers&gt;
+    &lt;Rules&gt;
+        &lt;Rule objectClass="RentalCompany" objectPlacer="RentalCompanyPlacer"/&gt;
+        &lt;Rule objectClass="Vehicle" objectPlacer="VehiclePlacer"&gt;
+        &lt;PlacementRelationship relatedObjectClass="RentalCompany"/&gt;
+        &lt;/Rule&gt;
+    &lt;/Rules&gt;
+  &lt;/PlacementModel&gt;
+&lt;/PMD&gt;
+</pre>

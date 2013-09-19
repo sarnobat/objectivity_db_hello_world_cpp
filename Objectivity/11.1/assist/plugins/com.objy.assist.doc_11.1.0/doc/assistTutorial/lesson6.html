@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Lesson 6: Inspecting a Federated Database</title>
+    <link rel="StyleSheet" href="css/lesson6.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson5.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="Tutorial.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson7.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum"><a name="1064132">Lesson 6: Inspecting a Federated Database </a></div>
+      <div class="Body"><a name="1035697">Let’s look at the properties of a federated database.</a> </div>
+      <div class="Head1"><a name="1164646">F</a>ederated-database identity</div>
+      <div class="Body"><a name="1164647">Several properties identify the federated database.</a></div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner"><a name="1164649">In the FD Project Explorer, click </a><span class="Bold">+TutorialProject</span> to expand the entry. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner"><a name="1166138">Double-click </a><span class="Bold">Federated Database </span><span class="Bold">(Rental</span><span class="Bold">Company)</span> to display various properties of the federated database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><a name="1164073"><img class="Default" src="images/scrnInspectFD_1.jpg" width="674" height="320" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1166253">In the Properties box of the editor, notice the federated database’s </a><span class="Emphasis">system name, </span>RentalCompany<span class="Emphasis">.</span><span class="Emphasis"> </span>The system name must be unique among the federated databases serviced by the same lock server. </div>
+      <div class="Body"><a name="1094026">Below the system name, the FD Number field displays the federated database’s </a><span class="Emphasis">identifier. </span>A federated database’s identifier is a unique integer among the federated databases serviced by the same lock server.</div>
+      <div class="Body"><a name="1166272">T</a>he system name and identifier were set when the federated database was created, and they were preserved by the <span class="Code">ooinstallfd</span> command you entered. </div>
+      <div class="Body"><a name="1165533">You can </a><span class="Term">disconnect</span> a federated database so that it is no longer active in Assist. To do so, click the disconnect icon:</div>
+      <div class="Anchor"><a name="1165537"><img class="Default" src="images/scrnDisconnectFD.jpg" width="283" height="157" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1166176">To reconnect, double-click the federated database again in the Project Explorer.</a></div>
+      <div class="Head1"><a name="1166181">O</a>bjectivity/DB resources</div>
+      <div class="Body"><a name="1166185">Several properties represent locations of the </a><span class="Term">O</span><span class="Term">bjectivity/DB resources</span> that are used or managed by the federated database.</div>
+      <div class="Body"><a name="1137565">Look at the Resource Locations box in the federated-database editor</a>.</div>
+      <div class="Anchor"><a name="1164086"><img class="Default" src="images/scrnInspectFD_2.jpg" width="355" height="121" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></a></div>
+      <div class="Body"><a name="1137570">In this list, we see the following </a>Objectivity/DB resources.</div>
+      <div class="Head4"><span class="Bold"><a name="1040026">Lock server host</a></span></div>
+      <div class="IndentAfterCode"><a name="1070558">The host (network node) running the lock server that services this federated </a>database. A lock server manages concurrent access to a federated database. Applications accessing this federated database will request locks from the lock server running on this host. A single lock server can manage concurrency for multiple federated databases.</div>
+      <div class="Head4"><span class="Bold"><a name="1041183">Boot file host and path</a></span></div>
+      <div class="IndentAfterCode"><a name="1070566">The location of the boot file. The boot file contains a list of the federated </a>database’s properties. Applications specify the boot file to start their use of the federated database; Objectivity/DB reads the file to find the resources it needs. (Objectivity/Assist used the boot file <span class="Code">Rental</span><span class="Code">Company</span><span class="Code">.</span><span class="Code">boot</span> to open this federated database.) By convention, the name of a boot file consists of the federated database’s system name with a <span class="Code">.boot</span> extension.</div>
+      <div class="Head4"><span class="Bold"><a name="1041186">System-database file host and path</a></span></div>
+      <div class="IndentAfterCode"><a name="1070573">The location of the file containing the system database. This is a special </a>database that is managed by Objectivity/DB, and contains internal data such as the federated database’s global catalog and schema. </div>
+      <div class="Head4"><span class="Bold"><a name="1041189">Journal directory host and path</a></span></div>
+      <div class="IndentAfterCode"><a name="1143039">The location of journal files. These files are where </a>Objectivity/DB records uncommitted updates, enabling Objectivity/DB to recover the federated database to its last consistent state, e.g., when a transaction is aborted or terminated. Objectivity/DB creates and deletes journal files automatically.</div>
+      <div class="Body"><a name="1145895">These host and path properties were set when the federated database was </a>created, and then adjusted by the command that installed the federated database on your host. It is possible to change any host or path property at any time, as described in the <span class="Emphasis">O</span><span class="Emphasis">bjectivity/DB Administration</span> online book.</div>
+      <div class="Body" style="color: #000000; font-size: 10.0pt; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline;"><a name="1033913"> </a></div>
+    </div>
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="lesson5.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="Tutorial.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson7.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom">
+          <a href="./Copyright.html" target="external_window">Copyright © 2012, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

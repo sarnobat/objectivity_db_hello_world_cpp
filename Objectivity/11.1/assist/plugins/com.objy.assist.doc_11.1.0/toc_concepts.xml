@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Concepts">
+	<topic label="Storage Hierarchy" href="doc/concepts/storageHierarchy/Concept.html">
+	</topic>
+	<topic label="Object Identity" href="doc/concepts/objectIdentity/Concept.html">
+	</topic>
+</toc>

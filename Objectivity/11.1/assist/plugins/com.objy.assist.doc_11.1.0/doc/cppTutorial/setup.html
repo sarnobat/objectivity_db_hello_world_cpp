@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Setting Up</title>
+    <link rel="StyleSheet" href="css/tutorial.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+  </head>
+  <body class="" style="">
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="introduction.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson1.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr align="left" />
+    <!-- Jen: Changed blockquote to div on line below -->
+    <div>
+      <div class="ChapNoNum">Setting Up</div>
+      <div class="Head2">Before you begin</div>
+      <div class="Body">Make sure you completed your installation of Objectivity/C++.  For details, see the <a href="http://support.objectivity.com/docs" target="_blank">installation and configuration documentation</a> on the Objectivity Developer Network.</div>
+      <div class="Head2">Setting up Objectivity/Assist for C++ development</div>
+      <div class="Body">To set up Objectivity/Assist for C++ development:</div>
+      <div class="NumFirst_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumFirst_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">1.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumFirst_inner">From the Objectivity/Assist main window, select <span class="Button">Window &gt; Preferences</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NumNext_outer" style="margin-left: 72pt;">
+        <table border="0" cellspacing="0" cellpadding="0" summary="">
+          <tr style="vertical-align: baseline;">
+            <td>
+              <div class="NumNext_inner" style="width: 18pt; white-space: nowrap;">
+                <span class="zNumbers">2.&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="NumNext_inner">In the <span class="Button">Preferences</span> dialog, click on <span class="Button">Objectivity/Assist</span>, select <span class="Button">C++</span>, and click <span class="Button">OK</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="Anchor"><img class="Default" src="images/setup_AssistCpp.jpg" width="629" height="549" style="display: block; float: none; left: 0.0; top: 0.0;" alt="" /></div>
+      <div class="Head1">Pre-build instructions in project files</div>
+      <div class="Body">The Visual C++ project files for most of the tutorial examples include pre-build instructions that set up an Objectivity federated database and apply schema updates to that database. The instructions use the Tool Runner command <span class="Code">createfd</span> to create the federated database and use the DDL processor (<span class="Code">ooddlx)</span> to apply schema updates to the newly created federated database. Finally, the Tool Runner command <span class="Code">exportplacement</span> is use to export the default placement model. You can find detailed information about the Tool Runner in &#x22;Chapter 19: Tool Runner&#x22; of the <span class="Emphasis">Objectivity/DB Administration Guide</span>. </div>
+      <div class="Body"><span class="Bold">Important:</span> If you are not using Visual Studio you will need to run the following commands from the command line manually or by creating a script.</div>
+      <div class="Body">You can optionally inspect these pre-build instructions in the configuration properties in your Visual C++ IDE. You do <span class="Term">not</span> need to modify these instructions in order to build and run the examples.</div>	
+      <div class="Body"><span class="Bold">Note:</span> The pre-build instructions used by the examples vary slightly according to the version of the Visual C++ IDE to which they apply. The following sections show the pre-build instructions for Visual C++ 10.0.</div>
+      <div class="Body" style="color: #000000; font-size: 12.0pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 7.0pt; margin-top: 7.0pt; text-transform: none; vertical-align: baseline;"><span style="color: #000000; font-size: 12.0pt; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline;">Pre-build instructions for creating the federated database</span></div>
+      <div class="Body">The following show the pre-build instructions that check for the presence of a federated database, clean up any of its transactions, and delete it if necessary, then recreate a new one. </div>
+      <div class="Body">Commands:</div>      
+      <div class="Code">if exist $(ProjectDir)data\<span class="CodeVar">SystemName</span>.boot oocleanup -local $(ProjectDir)data\<span class="CodeVar">SystemName</span>.boot</div>
+      <div class="Code">if exist $(ProjectDir)data\<span class="CodeVar">SystemName</span>.boot oodeletefd -f $(ProjectDir)data\<span class="CodeVar">SystemName</span>.boot</div>
+      <div class="Code">objy createfd -fdname <span class="CodeVar">SystemName</span> -fddirpath "$(ProjectDir)data"  -lockserverhost $(COMPUTERNAME)</div>
+      <div class="Body">Outputs:</div>
+      <div class="Code">$(ProjectDir)data\<span class="CodeVar">SystemName</span>.fdb</div>
+      <div class="Code">$(ProjectDir)data\<span class="CodeVar">SystemName</span>.boot</div>
+      <div class="Body" style="color: #000000; font-size: 12.0pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 7.0pt; margin-top: 7.0pt; text-transform: none; vertical-align: baseline;"><span style="color: #000000; font-size: 12.0pt; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline;">Pre-build instructions for applying schema changes </span></div>
+      <div class="Body">The following show the pre-build instructions that apply schema changes to the federated database using the DDL processor.</div>
+      <div class="Body">Commands:</div>
+      <div class="Code">ooddlx $(ProjectDir)ddlFiles\<span class="CodeVar">ClassName</span>.ddl $(ProjectDir)data\<span class="CodeVar">SystemName</span>.boot</div>
+      <div class="Body">Outputs:</div>
+      <div class="Code">$(ProjectDir)ddlFiles\<span class="CodeVar">ClassName</span>.h</div>
+      <div class="Code">$(ProjectDir)ddlFiles\<span class="CodeVar">ClassName</span>_ddl.cpp</div>
+      <div class="Code">$(ProjectDir)ddlFiles\<span class="CodeVar">ClassName</span>_ref.h</div>
+      <div class="Body"><span class="Bold">Note:</span> For more detailed information see &#x22;Setting Up the Visual C++ IDE&#x22; and &#x22;Adding a Pre-Build Event to Create a Federation&#x22; in the   <a href="http://support.objectivity.com/docs" target="_blank">installation and configuration documentation</a>.</div>
+      <div class="Body"></div>
+    </div>
+    <hr align="left" />
+    <div style="text-align: left;">
+      <table cellspacing="0" summary="">
+        <tr>
+          <td>
+            <a href="introduction.html"><img src="images/prev.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: Added following lines for start.gif in navBar  -->
+          <td>
+            <a href="introduction.html"><img src="images/start.gif" alt="Previous" border="0" /></a>
+          </td>
+          <!-- Jen: End added lines  -->
+          <td>
+            <a href="lesson1.html"><img src="images/next.gif" alt="Next" border="0" /></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <table align="left" summary="">
+      <tr>
+        <td class="WebWorks_Company_Name_Bottom" colspan="1" rowspan="1">
+        <a href="./Copyright.html" shape="rect">Copyright © 2013, Objectivity, Inc. All rights reserved.</a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
